@@ -1,10 +1,10 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Link from 'next/link';
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <h1 className={styles.title}>Welcome to Idiomind</h1>
+    <main>
+      <h1>Welcome to Idiomind</h1>
+      <Link href = "/home"> hacia home</Link>
     </main>
   );
 }
