@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
 import { Footer } from 'app/components/shared/Footer'
-import { HeaderComponent } from "app/components/shared/Header";
+import { Navbar } from "app/components/shared/Navbar";
 import { lexend, roboto, rubik } from "app/utils/fonts";
 
 import "app/styles/globals.scss";
+
 
 export const metadata: Metadata = {
   title: "IdioMind",
@@ -19,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className= {`${rubik} ${lexend} ${roboto}`}>
-        <HeaderComponent />
+        <Navbar />
         {children}
         <Footer />
       </body>

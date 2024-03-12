@@ -1,0 +1,17 @@
+@import "../../../styles/variables.scss";
+
+.button{
+    display: flex;
+    border: none;
+    width: auto;
+    padding: 18px 36px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 33px;
+    background-color: $primary-color;
+    color: $main-color;
+    font-family: $main-font;
+    font-size: 16px;
+    font-weight: 700;
+}
