@@ -15,10 +15,9 @@ export const Footer = () => {
         <li><a href="/blog"><Image src="/icons/instagramIcon.svg" alt="Twitter" width={32} height={32} /></a></li>
       </ul>
       <ul className={styles.footer__items}>
-        <li><Link href="/" className={styles.footer__link}>Home</Link></li>
-        <li><Link href="/aboutUs" className={styles.footer__link}>About</Link></li>
-        <li><Link href="/blog" className={styles.footer__link}>Blog</Link></li>
-        <li><Link href="/pricing" className={styles.footer__link}>Pricing</Link></li>
+        <li><Link href="/contactUs" className={styles.footer__link}>Contact us</Link></li>
+        <li><Link href="/aboutUs" className={styles.footer__link}>Terms of use</Link></li>
+        <li><Link href="/blog" className={styles.footer__link}>Privacy policy</Link></li>
       </ul>
     </footer>
   );

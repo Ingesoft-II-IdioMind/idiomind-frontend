@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function NotFound() {
   return (
-    <main className="contentWithFooterAndNavbar">
+    <>
       <div>
         <Image
           src="/images/errorImage.svg"
@@ -12,6 +12,6 @@ export default function NotFound() {
         />
         <h1>Error 404: Page not found</h1>
       </div>
-    </main>
+    </>
   );
 }

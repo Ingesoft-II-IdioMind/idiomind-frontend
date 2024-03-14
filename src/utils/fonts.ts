@@ -1,5 +1,6 @@
 import { Rubik, Lexend, Roboto } from "next/font/google";
 
+
 const rubik_init = Rubik({
   subsets: ["latin"],
   weight: ["400", "500", "700"],

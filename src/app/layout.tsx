@@ -1,15 +1,20 @@
-import type { Metadata } from "next"
-import { Footer } from 'app/components/shared/Footer'
+import type { Metadata } from "next";
+import { Footer } from "app/components/shared/Footer";
 import { Navbar } from "app/components/shared/Navbar";
 import { lexend, roboto, rubik } from "app/utils/fonts";
+import localFont from 'next/font/local'
 
 import "app/styles/globals.scss";
+
+const myFont = localFont({
+  src: '../../public/fonts/Lexend-VariableFont_wght.ttf',
+})
 
 
 export const metadata: Metadata = {
   title: "IdioMind",
   description: "Inmersive language learning",
-  icons: {icon: "/appLogo.svg"},
+  icons: { icon: "/appLogo.svg" },
 };
 
 export default function RootLayout({
@@ -19,9 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className= {`${rubik} ${lexend} ${roboto}`}>
+      <body className={myFont.className}>
         <Navbar />
-        {children}
+         <main className="content">{children}</main>
         <Footer />
       </body>
     </html>

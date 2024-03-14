@@ -1,61 +1,62 @@
 @import "../../../styles/variables.scss";
 
-.navbar{
-    z-index: 1;
-    background-color: $main-color;
-    width: calc(100% - 2*$lateral-padding);
-    padding-right: $lateral-padding;
-    padding-left: $lateral-padding;
-    height: $navbar-height;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0px 1px 30.1px -2px rgba(0, 0, 0, 0.25);
-}
+.navbar {
+  z-index: 1;
+  background-color: $main-color;
+  width: calc(100% - 2 * $lateral-padding);
+  padding-right: $lateral-padding;
+  padding-left: $lateral-padding;
+  height: clamp(65px, 1.5vw, $navbar-height) ;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0px 1px 30.1px -2px rgba(0, 0, 0, 0.25);
 
-.navbar__logo{
+  &__logo {
     display: flex;
     flex-direction: row;
     align-items: center;
     height: 100%;
     text-decoration: none;
-    h5{
-        font-size: clamp(20px, 1.5vw, 32px);
-        color: $primary-color;
-        font-weight: 800;
-        line-height: normal;
-        letter-spacing: -1.2px;
+    h5 {
+      font-size: clamp(20px, 1.5vw, 32px);
+      color: $primary-color;
+      font-weight: 800;
+      line-height: normal;
+      letter-spacing: -1.2px;
     }
-    img{
-        min-width: 30px;
-        max-width: 70px;
-        width: 25%;
-        height: auto;
+    img {
+      min-width: 30px;
+      max-width: 70px;
+      width: 25%;
+      height: auto;
     }
-}
+  }
 
-.navbar__items{
+  &__items, &__itemsActive {
     display: flex;
+    padding: 0px;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     height: 100%;
     margin: 0;
-    li{
-        display: flex;
-        align-items: center;
-        height: 100%;
-        list-style: none;
-        color: $black-color;
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 24px;
-        letter-spacing: -0.5px;
+    li {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      list-style: none;
+      color: $black-color;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      letter-spacing: -0.5px;
     }
-}
+  }
 
-.navbar__link{
+  &__link {
     display: flex;
     align-items: center;
     padding: 0 16px;
@@ -63,10 +64,98 @@
     text-align: center;
     text-decoration: none;
     font-family: $main-font;
-    font-size: clamp(16px, 1.5vw, 20px);
+    font-size: clamp(16px, 1vw, 20px);
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     letter-spacing: -0.4px;
     color: $black-color;
+    transition: 0.3s ease-in-out;
+    &:hover,
+    &--active {
+      color: $primary-color;
+      border-bottom: 2px solid $primary-color;
+    }
+    &__log{
+      padding: 14px 20px;
+      height: auto;
+      color: $main-color;
+      border-radius: 32px;
+      background-color: $primary-color;
+      margin-right: 8px;
+      &:hover {
+        background-color: $main-color;
+        color: $primary-color;
+      }
+    }
+    &__sign{
+      color: $primary-color;
+      display: inline-flex;
+      padding: 12px 20px;
+      height: auto;
+      border-color: $primary-color;
+      border-radius: 32px;
+      border: 2px solid var(--Primary, #E67320);
+      &:hover {
+        background-color: $primary-color;
+        color: $main-color;
+      }
+    }
+  }
+  &__mobile {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 806px) {
+  .navbar {
+    align-items: start;
+    justify-items: end;
+    &__items {
+        align-items: center;
+        justify-content: center;
+      display: none;
+      transition: 0.3s ease-in-out;
+      &Active {
+        display: flex;
+        position: absolute;
+        flex-direction: column;
+        background: $main-color;
+        width: 50%;
+        height: auto;
+        margin-bottom: 0.25rem;
+        margin-top: $navbar-height;
+        box-shadow: 0px 1px 30.1px -2px rgba(0, 0, 0, 0.25);
+        li {
+            height: auto;
+            list-style: none;
+          }
+      }
+    }
+
+    &__link, &__link__log, &__link__sign {
+      padding: 16px 0;
+      width: 100%;
+      text-align: center;
+      border-bottom: 1px solid $black-color;
+      color: $black-color;
+      background-color: $main-color;
+      border-style: none;
+      border-radius: 0px;
+      border-bottom: 2px solid $primary-color;
+    }
+
+    &__mobile {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: auto;
+      height: 100%;
+      &__icon {
+        position: absolute;
+        font-size: 24px;
+        cursor: pointer;
+      }
+    }
+  }
 }
