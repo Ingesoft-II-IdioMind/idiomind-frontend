@@ -1,0 +1,43 @@
+@import "../../styles/variables.scss";
+
+.libraryContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .searchDocument{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 24px;
+        margin: 32px;
+
+        .searchIcon{
+            width: 40px;
+            height: 40.008px;
+        }
+
+        .searchBar{
+            display: flex;
+            width: 681px;
+            padding: 16px 26px;
+            align-items: center;
+            gap: 16px;
+
+            border-radius: 16px;
+            border: 1.5px solid rgba(0, 0, 0, 0.40);
+        }
+    }
+
+    .documentsContainer{
+        margin: 32px;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        align-items: flex-start;
+        align-content: flex-start;
+        gap: 32px;
+        flex-wrap: wrap;
+    }
+}
