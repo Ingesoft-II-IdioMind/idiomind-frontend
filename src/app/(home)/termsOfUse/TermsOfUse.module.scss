@@ -1,0 +1,49 @@
+@import "../../../styles/variables.scss";
+
+.termsContainer {
+    background-color: #faf2ec;
+    width: 60%;
+    margin: auto;
+    padding: 32px;
+    display: grid; 
+    gap: 32px;
+    margin-bottom: 32px;
+    border-radius: 50px;
+  }
+
+.termsContainer h4 {
+    color: $primary-color;
+    background-color: #faf2ec;
+  }
+
+  .navigation {
+    padding: 10px;
+  }
+  
+  .navigation ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .navigation ul li {
+    margin-bottom: 5px;
+  }
+  
+  .navigation ul li a {
+    font-family: $second-font;;
+    color: $primary-color;
+    text-decoration: none;
+    display: block;
+    padding: 5px;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .navigation ul li a:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .navigation ul li a::before {
+    content: attr(data-number) ". ";
+    font-weight: bold;
+  }
