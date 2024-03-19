@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook } from "@fortawesome/free-solid-svg-icons/faBook";
 import { WelcomeBanner } from "app/components/home/Welcome/WelcomeBanner";
 import { Reasons } from "app/components/home/Welcome/Reasons";
-import { Questions } from "app/components/home/Welcome/Questions";
+import { ModuleFAQ } from "app/components/home/Welcome/FAQ";
 import { FirstMessage } from "app/components/home/Welcome/FirstMessage";
 import { SecondMessage } from "app/components/home/Welcome/SecondMessage";
 
@@ -16,7 +16,7 @@ export default function Home() {
       <FirstMessage />
       <Reasons/>
       <SecondMessage/>
-      <Questions/>
+      <ModuleFAQ />
     </>
   );
 }

@@ -38,3 +38,10 @@ transition: all 1s ease;
         height: 100px;
     }
   }
+
+  @media screen and (max-width: 806px) {
+    #MainBox{
+      padding-top: 24px;
+      width: 100%;
+    }
+  }

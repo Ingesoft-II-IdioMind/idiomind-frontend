@@ -6,10 +6,10 @@ html {
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
+  font-size: clamp(13px, 1.5vw, 16px);
 }
 
 body {
-  font-family: $second-font, Georgia, "Times New Roman", Times, serif;
   background-color: $main-color;
   margin: 0px;
   padding: 0px;
@@ -19,7 +19,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-    position: fixed;
+  position: fixed;
   width: 10px; /* You can change the background color */
   &-track {
     background: $main-color; /* You can change the background color */
@@ -44,13 +44,13 @@ h1 {
   line-height: 100%; /* 64px */
   letter-spacing: -1.28px;
   color: $primary-color;
-  padding: 32px 0px;
+  padding: 2rem 0px;
 }
 
 h2 {
   margin: 0px;
   font-family: $main-font;
-  font-size: 48px;
+  font-size: 3rem;
   font-style: normal;
   font-weight: 700;
   line-height: 95.5%; /* 45.84px */
@@ -62,7 +62,7 @@ h2 {
 h3 {
   margin: 0px;
   font-family: $main-font;
-  font-size: 40px;
+  font-size: 2.5rem;
   font-style: normal;
   font-weight: 600;
   //line-height: 95.5%; /* 38.2px */
@@ -71,7 +71,7 @@ h3 {
 h4 {
   margin: 0px;
   font-family: $main-font;
-  font-size: 32px;
+  font-size: 2rem;
   font-style: normal;
   font-weight: 600;
   //line-height: 95.5%; /* 30.56px */
@@ -99,7 +99,7 @@ h6 {
 p {
   margin: 0px;
   font-family: $second-font;
-  font-size: 16px;
+  font-size: 1.5rem;
   font-style: normal;
   font-weight: 400;
   //line-height: 101.5%; /* 16.24px */
@@ -107,6 +107,7 @@ p {
 
 a {
   margin: 0px;
+  color: $primary-color;
   font-style: none;
 }
 
@@ -118,11 +119,24 @@ a {
   padding: 0px $lateral-padding;
 }
 
-.BB{
-    font-family: $second-font;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 118.3%;
-    text-align: start;
+.ST {
+  font-family: $second-font;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 118.3%;
+  text-align: start;
+}
+
+.BB {
+  font-family: $second-font;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 118.3%;
+  text-align: start;
+}
+
+.center{
+  text-align: center;
 }
