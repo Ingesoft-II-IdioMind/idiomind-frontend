@@ -1,14 +1,4 @@
-<<<<<<< HEAD
-export default function TermsOfUse() {
-    return (
-      <>
-        <h1>Terms of use</h1>
-      </>
-    );
-  }
-  
-=======
-import styles from "./TermsOfUse.module.scss";
+import styles from "../../../styles/TermsOfUse.module.scss";
 
 export default function TermsOfUse() {
   return (
@@ -190,4 +180,3 @@ export default function TermsOfUse() {
     </main>
   );
 }
->>>>>>> 29527a95b1fd17794b55878a054149ebb77a28d9

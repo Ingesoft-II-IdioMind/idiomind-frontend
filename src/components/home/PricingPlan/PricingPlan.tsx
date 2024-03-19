@@ -6,11 +6,12 @@ import Link from "next/link";
 interface PricingPlanProps {
   benefits: string[];
   price: string,
+  name: string,
   periodicity: string,
   cardTypeRecommended: boolean;
 }
 
-export const PricingPlan: React.FC<PricingPlanProps> = ({ benefits, price, cardTypeRecommended, periodicity }) => {
+export const PricingPlan: React.FC<PricingPlanProps> = ({ benefits, price, cardTypeRecommended, periodicity,name }) => {
 
   const checkIconURL = cardTypeRecommended ? "/icons/checkIconRecommended.svg" : "/icons/checkIcon.svg";
   const titleText = cardTypeRecommended ? "Most Common" : "Recommended";
@@ -18,12 +19,13 @@ export const PricingPlan: React.FC<PricingPlanProps> = ({ benefits, price, cardT
   return (
     <div className={cardTypeRecommended ? styles.cardTypeRecommended : styles.pricingPlan }>
       <div className={styles.title}>
-        <p style={{ textAlign: "right" }}>{titleText}</p>
-        <h5>{periodicity}</h5> 
+        {cardTypeRecommended? 
+        <p style={{ textAlign: "right" }}>{titleText}</p>:<></>}
+        <h5>{name}</h5> 
         <p>{periodicity}</p>
       </div>
       <h5 className={styles.price}>{price}</h5>
-      <Button />
+      <Button text="Subscribe"/>
       <ul>
         {benefits.map((benefit, index) => (
           <li key={index}>

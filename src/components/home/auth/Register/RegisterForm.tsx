@@ -7,13 +7,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { FormDivider } from "../FormDivider";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { startTransition, useState } from "react";
 
 type FormInputs = {
   name: string;
   surname: string;
   email: string;
   password: string;
+  repeatPassword: string;
 };
 
 export default function RegisterForm() {
@@ -25,6 +26,27 @@ export default function RegisterForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormInputs>();
+
+  const onSubmit = handleSubmit(async (data) => {
+    startTransition(() => {
+      console.log(data);
+    });
+    //setError("Invalid credentials. Please try again.");
+
+    // const res = await signIn("credentials", {
+    //   email: data.email,
+    //   password: data.password,
+    //   redirect: false,
+    // });
+
+    // console.log(res)
+    // if (res.error) {
+    //   setError(res.error)
+    // } else {
+    //   router.push('/dashboard')
+    //   router.refresh()
+    // }
+  });
 
   return (
     <div className={styles.auth__form}>
@@ -117,7 +139,7 @@ export default function RegisterForm() {
             </svg>
           )}
         </TextField>
-        <TextField label="Password">
+        <TextField label="Confirm password">
           <input
             type={visiblePassword2 ? "text" : "password"}
             {...register("password", {
