@@ -1,69 +1,154 @@
-@import 'variables.scss';
+@import "variables.scss";
+
+html {
+  width: 100vw;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+  font-size: clamp(13px, 1.2vw, 16px);
+}
 
 body {
-    font-family: $second-font;
-    background-color: $main-color;
-    margin: 0;
-    padding:0;
+  background-color: $main-color;
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+::-webkit-scrollbar {
+  position: fixed;
+  width: 10px; /* You can change the background color */
+  &-track {
+    background: $main-color; /* You can change the background color */
+    border-radius: 16px;
+  }
+  &-thumb {
+    background: $primary-color; /* You can change the thumb color */
+    border-radius: 16px;
+    &:hover {
+      background: #555;
+    }
+  }
 }
 
 h1 {
-    font-family: $main-font;
-    font-size: 4rem;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 100%; /* 64px */
-    letter-spacing: -1.28px;
+  margin: 0px;
+  font-family: $main-font;
+  font-size: 4rem;
+  font-style: normal;
+  font-weight: 700;
+  text-align: center;
+  line-height: 100%; /* 64px */
+  letter-spacing: -1.28px;
+  color: $primary-color;
+  padding: 1.5rem 0px;
 }
-    
+
 h2 {
-    font-family: $main-font;
-    font-size: 48px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 95.5%; /* 45.84px */
+  margin: 0px;
+  font-family: $main-font;
+  font-size: 3rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 95.5%; /* 45.84px */
+  text-align: start;
+  color: $primary-color;
+  padding: 16px 0px;
 }
 
 h3 {
-    font-family: $main-font;
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 95.5%; /* 38.2px */
+  margin: 0px;
+  font-family: $main-font;
+  font-size: 2.5rem;
+  font-style: normal;
+  font-weight: 600;
+  //line-height: 95.5%; /* 38.2px */
 }
 
 h4 {
-    font-family: $main-font;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 95.5%; /* 30.56px */
+  margin: 0px;
+  font-family: $main-font;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 600;
+  //line-height: 95.5%; /* 30.56px */
 }
 
 h5 {
-    font-family: $main-font;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 95%; /* 22.8px */
+  margin: 0px;
+  font-family: $main-font;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  //line-height: 95%; /* 22.8px */
 }
 
 h6 {
-    font-family: $main-font;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 95%; /* 19px */
+  margin: 0px;
+  font-family: $main-font;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  margin: 0px;
+  //line-height: 95%; /* 19px */
 }
 
-p{
-    font-family: $second-font;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 101.5%; /* 16.24px */
+p {
+  margin: 0px;
+  font-family: $second-font;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 400;
+  //line-height: 101.5%; /* 16.24px */
 }
 
-a{
-    font-style: none;
+a {
+  margin: 0px;
+  color: $primary-color;
+  font-style: none;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 1;
+  padding: 0px $lateral-padding;
+}
+
+.ST {
+  font-family: $second-font;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 118.3%;
+  text-align: start;
+}
+
+.BB {
+  font-family: $second-font;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 118.3%;
+  text-align: start;
+}
+
+.center{
+  text-align: center;
+}
+
+@media screen and (max-width: 1000px) {
+  h1{
+    font-size: 40px;
+  }
+  h2{
+    font-size: 32px;
+  }
+  h3{
+    font-size: 24px;
+  }
 }

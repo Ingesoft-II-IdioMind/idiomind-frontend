@@ -1,12 +1,16 @@
 // colors
-$main-color: #E4EBF6;
+$main-color: #fffcf7;
 $primary-color: #E67320;
 $secondary-color: #0B6EE1;
 $black-color: #353739;
 
 // fonts
 $main-font: var(--font-lexend);
-$second-font: var(--font-rubik);
+$second-font: var(--font-quicksand);
 
 // padding
-$lateral-padding: 9%;
+$lateral-padding: 10vw;
+
+// heights
+$navbar-height: 80px;
+$footer-height: 60px;
