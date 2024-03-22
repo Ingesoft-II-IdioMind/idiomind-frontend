@@ -140,8 +140,8 @@ export default function LoginForm() {
           <Image
             src="/icons/googleColor.svg"
             alt="Google icon"
-            width={30}
-            height={30}
+            width={25}
+            height={25}
           />
         )}
       />

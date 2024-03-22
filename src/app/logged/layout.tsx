@@ -1,5 +1,5 @@
 import NavbarLogged from "app/components/shared/Navbar/NavbarLogged";
-
+import "app/styles/globals.scss";
 
 export default function LoggedLayout({
   children,
@@ -8,8 +8,8 @@ export default function LoggedLayout({
 }>) {
   return (
     <>
-    <NavbarLogged />
-    <main className="content">{children}</main>
-  </>
+      <NavbarLogged />
+      <main className="content">{children}</main>
+    </>
   );
 }

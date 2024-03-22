@@ -1,15 +1,10 @@
 import type { Metadata } from "next";
-import { Footer } from "app/components/shared/Footer";
-import { Navbar } from "app/components/shared/Navbar";
-import { lexend, roboto, rubik } from "app/utils/fonts";
+//import { lexend, roboto, rubik } from "app/utils/fonts";
 import { Lexend, Quicksand, Rubik } from "next/font/google";
 import localFont from "next/font/local";
 
 import "app/styles/globals.scss";
 
-const myFont = localFont({
-  src: "../../public/fonts/Lexend-VariableFont_wght.ttf",
-});
 
 const myFont3 = Quicksand({
   subsets: ["latin"],

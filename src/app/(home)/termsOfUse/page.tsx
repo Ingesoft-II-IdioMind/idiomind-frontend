@@ -2,10 +2,11 @@ import styles from "../../../styles/TermsOfUse.module.scss";
 
 export default function TermsOfUse() {
   return (
-    <main>
+    <>
       <h1>Terms and Conditions of Use</h1>
       <div className={styles.termsContainer}>
         <nav className={styles.navigation}>
+          <h4>Table of Contents</h4>
           <ul>
             <li>
               <a href="#introduction" data-number="1">
@@ -149,7 +150,7 @@ export default function TermsOfUse() {
 
         <section id="payment-plans">
           <h4>9. Payment Plans</h4>
-          <div>
+          <p>
             We offer different payment plans for accessing all the features of
             our platform:
             <ul>
@@ -165,7 +166,7 @@ export default function TermsOfUse() {
             </ul>
             By subscribing to any of our payment plans, you agree to these terms
             and conditions of use.
-          </div>
+          </p>
         </section>
 
         <section id="contact">
@@ -177,6 +178,6 @@ export default function TermsOfUse() {
           </p>
         </section>
       </div>
-    </main>
+    </>
   );
 }

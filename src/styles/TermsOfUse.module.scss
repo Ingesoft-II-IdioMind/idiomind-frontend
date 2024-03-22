@@ -2,48 +2,48 @@
 
 .termsContainer {
     background-color: #faf2ec;
-    width: 60%;
+    width: auto;
     margin: auto;
-    padding: 32px;
+    padding: 2rem 3rem;
     display: grid; 
-    gap: 32px;
-    margin-bottom: 32px;
-    border-radius: 50px;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 45px;
+    section{
+      h4{
+        margin-bottom: 1rem;
+      }
+      
+    }
   }
 
 .termsContainer h4 {
     color: $primary-color;
     background-color: #faf2ec;
   }
-
-  .navigation {
-    padding: 10px;
-  }
   
   .navigation ul {
     list-style-type: none;
     padding: 0;
+    li a {
+      font-family: $second-font;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: $primary-color;
+      text-decoration: none;
+      display: block;
+      padding: 5px;
+      border-radius: 3px;
+      transition: background-color 0.3s ease;
+      &:hover {
+        background-color: #e0e0e0;
+      }
+      &::before {
+        content: attr(data-number) ". ";
+        font-weight: bold;
+      }
+    }
   }
   
-  .navigation ul li {
-    margin-bottom: 5px;
-  }
   
-  .navigation ul li a {
-    font-family: $second-font;;
-    color: $primary-color;
-    text-decoration: none;
-    display: block;
-    padding: 5px;
-    border-radius: 3px;
-    transition: background-color 0.3s ease;
-  }
   
-  .navigation ul li a:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .navigation ul li a::before {
-    content: attr(data-number) ". ";
-    font-weight: bold;
-  }

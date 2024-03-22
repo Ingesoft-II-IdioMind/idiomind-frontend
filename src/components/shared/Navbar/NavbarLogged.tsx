@@ -22,15 +22,16 @@ export default function NavbarLogged () {
           <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} className={styles.navbar__mobile__icon}/>
         </div>
         <ul className={menuOpen ? styles.navbar__itemsActive : styles.navbar__items} onClick={() => setMenuOpen(!menuOpen)}>
-            <li><Link href="/" className={styles.navbar__link}>Library</Link></li>
-            <li><Link href="/aboutUs" className={styles.navbar__link}>Grammar</Link></li>
-            <li><Link href="/blog" className={styles.navbar__link}>Speaking</Link></li>
-            <li><Link href="/pricing" className={styles.navbar__link}>Flashcards</Link></li>
+            <li><Link href="/logged" className={styles.navbar__link}>Library</Link></li>
+            <li><Link href="/logged/grammar" className={styles.navbar__link}>Grammar</Link></li>
+            <li><Link href="/logged/speaking" className={styles.navbar__link}>Speaking</Link></li>
+            <li><Link href="/logged/decks" className={styles.navbar__link}>Flashcards</Link></li>
         </ul>
         <ul className={`${styles.dropDown} ${configOpen ? styles.dropDown__active : styles.dropDown__innactive}`}>
-          <li><Link href="/" className={styles.navbar__link}>Library</Link></li>
-          <li><Link href="/" className={styles.navbar__link}>Library</Link></li>
-          <li><Link href="/" className={styles.navbar__link}>Log out</Link></li>
+          <li><Link href="/logged/profile" >Profile</Link></li>
+          <li><Link href="/pricing" >Plans</Link></li>
+          <li><Link href="/help" >Help</Link></li>
+          <li><Link href="/" >Log out</Link></li>
         </ul>       
       </nav>
     );

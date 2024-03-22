@@ -3,6 +3,7 @@ import styles from "./PricingPlan.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 
+
 interface PricingPlanProps {
   benefits: string[];
   price: string,
@@ -20,12 +21,12 @@ export const PricingPlan: React.FC<PricingPlanProps> = ({ benefits, price, cardT
     <div className={cardTypeRecommended ? styles.cardTypeRecommended : styles.pricingPlan }>
       <div className={styles.title}>
         {cardTypeRecommended? 
-        <p style={{ textAlign: "right" }}>{titleText}</p>:<></>}
+        <p style={{ textAlign: "right", fontWeight:700, marginBottom: 8,}}>{titleText}</p>:<></>}
         <h5>{name}</h5> 
         <p>{periodicity}</p>
       </div>
       <h5 className={styles.price}>{price}</h5>
-      <Button text="Subscribe"/>
+      <Link href={"/register"}><Button text="Choose plan"/></Link>
       <ul>
         {benefits.map((benefit, index) => (
           <li key={index}>

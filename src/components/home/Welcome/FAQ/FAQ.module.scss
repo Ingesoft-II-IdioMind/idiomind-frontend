@@ -17,8 +17,9 @@
         align-items: center;
         gap: 64px;
         width: 100%;
-        h3{
+        h5{
             text-align: start;
+            font-weight: 700;
             font-family: $second-font;
             color: $primary-color;
         }
@@ -34,7 +35,8 @@
         padding: 16px 0px 16px 32px;
         
         p{
-            font-size: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 500;
         }
         &__clossed{
             display: none;

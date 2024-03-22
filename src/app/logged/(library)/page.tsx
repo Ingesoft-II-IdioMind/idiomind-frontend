@@ -1,8 +1,14 @@
+"use client";
+import { Modal } from "app/components/shared/Modal";
+import { useState } from "react";
+
 export default function Library() {
+
+
     return (
-      <div>
+      <>
         <h1>Library</h1>
-      </div>
+      </>
     );
   }
   

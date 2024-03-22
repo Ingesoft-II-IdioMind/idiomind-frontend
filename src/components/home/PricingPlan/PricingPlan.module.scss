@@ -2,7 +2,7 @@
 
 .pricingPlan, .cardTypeRecommended {
   display: flex;
-  width: 25%;
+  width: 24%;
   height:fit-content;
   padding: 1.5rem 2rem;
   flex-direction: column;
@@ -15,10 +15,17 @@
   .title {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0.1rem;
     align-self: stretch;
+    p{
+      font-size: 1rem;
+    }
   }
   
+  a{
+    text-decoration: none;
+  }
+
   ul {
     display: flex;
     flex-direction: column;

@@ -18,7 +18,7 @@ export const Navbar = () => {
         <div className={styles.navbar__mobile} onClick={() => setMenuOpen(!menuOpen)}>
           <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} className={styles.navbar__mobile__icon}/>
         </div>
-        <ul className={menuOpen ? styles.navbar__itemsActive : styles.navbar__items} onClick={() => setMenuOpen(!menuOpen)}>
+        <ul className={menuOpen ? styles.navbar__itemsActive : styles.navbar__items} onClick={menuOpen ? () => setMenuOpen(!menuOpen) : undefined}>
             <li><Link href="/" className={styles.navbar__link}>Home</Link></li>
             <li><Link href="/aboutUs" className={styles.navbar__link}>About</Link></li>
             <li><Link href="/blog" className={styles.navbar__link}>Blog</Link></li>

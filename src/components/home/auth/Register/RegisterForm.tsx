@@ -14,7 +14,7 @@ type FormInputs = {
   surname: string;
   email: string;
   password: string;
-  repeatPassword: string;
+  confirmPassword: string;
 };
 
 export default function RegisterForm() {
@@ -23,9 +23,13 @@ export default function RegisterForm() {
 
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm<FormInputs>();
+
+  const password = watch("password");
+  const confirmPassword = watch("confirmPassword");
 
   const onSubmit = handleSubmit(async (data) => {
     startTransition(() => {
@@ -70,9 +74,9 @@ export default function RegisterForm() {
         )}
       />
       <FormDivider />
-      <form action="">
+      <form onSubmit={onSubmit}>
         <div className={styles.auth__form__names}>
-          <TextField label="Name">
+          <TextField label="Name*">
             <input
               type="name"
               {...register("name", {
@@ -82,18 +86,21 @@ export default function RegisterForm() {
                 },
               })}
               className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
-              placeholder="user@email.com"
+              placeholder="Jack"
             />
           </TextField>
           <TextField label="Surname">
             <input
               type="surname"
               className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
-              placeholder="user@email.com"
+              placeholder="Muller"
             />
           </TextField>
         </div>
-        <TextField label="E-mail">
+        {errors.name && (
+          <span className={styles.errorInput}>{errors.name.message}</span>
+        )}
+        <TextField label="E-mail*">
           <input
             type="email"
             {...register("email", {
@@ -110,7 +117,10 @@ export default function RegisterForm() {
             placeholder="user@email.com"
           />
         </TextField>
-        <TextField label="Password">
+        {errors.email && (
+          <span className={styles.errorInput}>{errors.email.message}</span>
+        )}
+        <TextField label="Password*">
           <input
             type={visiblePassword ? "text" : "password"}
             {...register("password", {
@@ -118,8 +128,16 @@ export default function RegisterForm() {
                 value: true,
                 message: "*Password is required",
               },
+              minLength: {
+                value: 8,
+                message: "*Password must have at least 8 characters",
+              },
+              pattern: {
+                value: /\d/,
+                message: "*Password must contain at least one number",
+              },
             })}
-            placeholder="******"
+            placeholder="(At least 8 characters and 1 number)"
           />
           {!visiblePassword ? (
             <svg
@@ -139,14 +157,19 @@ export default function RegisterForm() {
             </svg>
           )}
         </TextField>
-        <TextField label="Confirm password">
+        {errors.password && (
+          <span className={styles.errorInput}>{errors.password.message}</span>
+        )}
+        <TextField label="Confirm password*">
           <input
             type={visiblePassword2 ? "text" : "password"}
-            {...register("password", {
+            {...register("confirmPassword", {
               required: {
                 value: true,
-                message: "*Password is required",
+                message: "*Confirmation is required",
               },
+              validate: (value) =>
+                value === password || "*The passwords don't match",
             })}
             placeholder="******"
           />
@@ -168,6 +191,11 @@ export default function RegisterForm() {
             </svg>
           )}
         </TextField>
+        {errors.confirmPassword && (
+          <span className={styles.errorInput}>
+            {errors.confirmPassword.message}
+          </span>
+        )}
         <label className={styles.auth__form__terms}>
           <input type="checkbox" id="terms" name="terms" />
           <p>
@@ -188,7 +216,6 @@ export default function RegisterForm() {
       <p>
         You already have an account? <Link href={"/login"}>auth here</Link>
       </p>
-      
     </div>
   );
 }

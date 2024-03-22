@@ -4,14 +4,13 @@
     display: flex;
     border: none;
     width: 100%;
-    padding: 18px 36px;
+    padding: 1rem 2rem;
     justify-content: center;
     align-items: center;
     gap: 10px;
     border-radius: 33px;
-
     font-family: $main-font;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 700;
     transition: 0.3s ease-in-out;
     &:hover{
@@ -24,7 +23,7 @@
         color: $main-color;
     }
     &__secondary{
-        background-color: none;
+        background-color: $main-color;
         color: $primary-color;
         border: 2px solid $primary-color;
     }
