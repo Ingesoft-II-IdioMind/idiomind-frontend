@@ -1,0 +1,47 @@
+#MainBox{
+    width: 50%;
+    height: auto;
+}
+
+#Book {
+  transition: all 1s ease;
+  animation-name: appear;
+  animation-duration: 4s;
+  animation-direction: reverse;
+  animation-delay: 2s;
+  animation-iteration-count: 3;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 100;
+  }
+}
+
+#Logo{
+transition: all 1s ease;
+  animation-name: other;
+  animation-duration: 4s;
+  animation-direction: reverse;
+  animation-delay: 2s;
+  animation-iteration-count: 3;
+}
+
+@keyframes other {
+    from {
+      height: 0px;
+    }
+    to {
+        height: 100px;
+    }
+  }
+
+  @media screen and (max-width: 806px) {
+    #MainBox{
+      padding-top: 24px;
+      width: 100%;
+    }
+  }
