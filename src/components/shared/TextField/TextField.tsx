@@ -9,7 +9,7 @@ interface TextFieldProps {
 export default function TextField({ label = "", children }: TextFieldProps){
   return (
     <div className={styles.textField}>
-      <label className={styles.textField__label}>{label}</label>
+      {label=="" ? <></> : <label className={styles.textField__label}>{label}</label> }
       <div className={styles.textField__input}>
         {children}
       </div>

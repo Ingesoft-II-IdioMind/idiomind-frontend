@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 //import { lexend, roboto, rubik } from "app/utils/fonts";
 import { Lexend, Quicksand, Rubik } from "next/font/google";
-import localFont from "next/font/local";
-
 import "app/styles/globals.scss";
+import { SmoothScrolling } from "app/components/shared/Scroller";
+import Provider from "../redux/provider";
 
 
 const myFont3 = Quicksand({
@@ -30,6 +30,7 @@ export const metadata: Metadata = {
   icons: { icon: "/appLogo.svg" },
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -40,7 +41,11 @@ export default function RootLayout({
       <body
         className={`${myFont2.variable} ${myFont3.variable} ${myFont4.variable}`}
       >
+      <SmoothScrolling>
+        <Provider>
         {children}
+        </Provider>
+      </SmoothScrolling>
       </body>
     </html>
   );

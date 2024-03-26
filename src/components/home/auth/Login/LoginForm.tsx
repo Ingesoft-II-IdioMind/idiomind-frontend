@@ -10,6 +10,7 @@ import { useState, useTransition } from "react";
 import { FormDivider } from "../FormDivider";
 import { FormError } from "../FormError";
 import { login } from "app/actions/login";
+import { set } from "zod";
 
 
 type FormInputs = {
@@ -37,14 +38,13 @@ export default function LoginForm() {
         if (data?.error) {
           setError(data.error);
         }
-
         if (data?.success) {
           //setSuccess(data.success);
         }
       }
       );
     });
-    //setError("Invalid credentials. Please try again.");
+    setError("Invalid credentials. Please try again.");
 
     // const res = await signIn("credentials", {
     //   email: data.email,

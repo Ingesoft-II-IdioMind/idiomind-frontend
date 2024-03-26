@@ -10,9 +10,9 @@ export const Footer = () => {
           <h6>© 2024 IdioMind. All rights reserved.</h6>
       </div>
       <ul className={styles.footer__networks}>
-        <li><a href="/"> <Image src="/icons/facebookIcon.svg" alt="Facebook" width={32} height={32} /></a></li>
-        <li><a href="/aboutUs"><Image src="/icons/tiktokIcon.svg" alt="Tiktok" width={32} height={32} /></a></li>
-        <li><a href="/blog"><Image src="/icons/instagramIcon.svg" alt="Twitter" width={32} height={32} /></a></li>
+        <li><a href="https://www.facebook.com/profile.php?id=61556364793601&sk=about_details "> <Image src="/icons/facebookIcon.svg" alt="Facebook" width={32} height={32} /></a></li>
+        <li><a href="https://www.tiktok.com/@idiomindapp?is_from_webapp=1&sender_device=pc"><Image src="/icons/tiktokIcon.svg" alt="Tiktok" width={32} height={32} /></a></li>
+        <li><a href="https://www.twitter.com/@idiomindapp"><Image src="/icons/instagramIcon.svg" alt="Twitter" width={32} height={32} /></a></li>
       </ul>
       <ul className={styles.footer__items}>
         <li><Link href="/contactUs" className={styles.footer__link}>Contact us</Link></li>

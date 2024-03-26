@@ -2,14 +2,41 @@
 
 import { Button } from "app/components/shared/Button";
 import { Modal } from "app/components/shared/Modal";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-export default function Profile() {
+
+
+export default async function Profile() {
   const [isUploadOpen, setIsUploadOpen] = useState(false);
+   const [data, setData] = useState([]);
+
+    // const {data, error,refetch, isError, isLoading} = useQuery({
+    //     queryKey: ['mydata'],
+    //     queryFn: async () => {
+    //       const {data} = await axios.get("https://idio-mind-backend-ten.vercel.app/")
+    //     },
+    //   }
+    // )
+
+    // useEffect(() => {
+    //   const fetchData = async () => {
+    //     try {
+    //       const response = await axios.get("https://idio-mind-backend-ten.vercel.app/api/Accounts/");
+    //       console.log("Data fetched:", response.data);
+    //       setData(response.data);
+    //     } catch (error) {
+    //       console.error("Error fetching data:", error);
+    //     }
+    //   };
+    
+    //   fetchData();
+    // }, []);
+
+  
   return (
     <>
       <h1>Profile</h1>
-
       <button
         onClick={() => {
           setIsUploadOpen(true);
@@ -52,3 +79,7 @@ export default function Profile() {
     </>
   );
 }
+function useQuery(arg0: { queryKey: string; queryFn: () => Promise<void>; }) {
+  throw new Error("Function not implemented.");
+}
+

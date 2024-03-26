@@ -7,19 +7,28 @@ import Link from "next/link";
 import Image from "next/image";
 import { FormDivider } from "../FormDivider";
 import { useForm } from "react-hook-form";
-import { startTransition, useState } from "react";
+import { useState, useTransition } from "react";
+import { register as registerAction } from "app/actions/register";
+import { FormError } from "../FormError";
+import { FormSuccess } from "../FormSuccess";
+import { useRegisterMutation } from "app/redux/features/authApiSlice";
 
 type FormInputs = {
-  name: string;
-  surname: string;
+  first_name: string;
+  last_name: string;
   email: string;
   password: string;
   confirmPassword: string;
+  terms: boolean;
 };
 
 export default function RegisterForm() {
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [visiblePassword2, setVisiblePassword2] = useState(false);
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
+  const [isPending, startTransition] = useTransition();
+  const [register2,{isLoading}] = useRegisterMutation();
 
   const {
     register,
@@ -31,25 +40,32 @@ export default function RegisterForm() {
   const password = watch("password");
   const confirmPassword = watch("confirmPassword");
 
-  const onSubmit = handleSubmit(async (data) => {
-    startTransition(() => {
-      console.log(data);
-    });
-    //setError("Invalid credentials. Please try again.");
+  const onSubmit = handleSubmit((data: any) => {
+    register2(data)
+      .unwrap()
+      .then(() => {
+        setError(undefined);
+        setSuccess("You have been registered successfully");
+      })
+      .catch(() =>{
+        setSuccess(undefined);
+        setError("There was an error while registering, please try again");
+      })
 
-    // const res = await signIn("credentials", {
-    //   email: data.email,
-    //   password: data.password,
-    //   redirect: false,
+
+    // startTransition(() => {
+    //   registerAction(data).then((data) => {
+    //     if (data?.error) {
+    //       console.log(data.error);
+    //       setSuccess(undefined);
+    //       setError(data.error);
+    //     }
+    //     if (data?.success) {
+    //       setError(undefined);
+    //       setSuccess(data.success);
+    //     }
+    //   });
     // });
-
-    // console.log(res)
-    // if (res.error) {
-    //   setError(res.error)
-    // } else {
-    //   router.push('/dashboard')
-    //   router.refresh()
-    // }
   });
 
   return (
@@ -76,29 +92,28 @@ export default function RegisterForm() {
       <FormDivider />
       <form onSubmit={onSubmit}>
         <div className={styles.auth__form__names}>
-          <TextField label="Name*">
+          <TextField label="First name*">
             <input
-              type="name"
-              {...register("name", {
+              type="first_name"
+              {...register("first_name", {
                 required: {
                   value: true,
                   message: "*Name is required",
                 },
               })}
-              className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
               placeholder="Jack"
             />
           </TextField>
-          <TextField label="Surname">
+          <TextField label="Last name">
             <input
-              type="surname"
-              className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
-              placeholder="Muller"
+              type="last_name"
+              {...register("last_name", {})}
+              placeholder="Doe"
             />
           </TextField>
         </div>
-        {errors.name && (
-          <span className={styles.errorInput}>{errors.name.message}</span>
+        {errors.first_name && (
+          <span className={styles.errorInput}>{errors.first_name.message}</span>
         )}
         <TextField label="E-mail*">
           <input
@@ -197,7 +212,16 @@ export default function RegisterForm() {
           </span>
         )}
         <label className={styles.auth__form__terms}>
-          <input type="checkbox" id="terms" name="terms" />
+          <input
+            type="checkbox"
+            {...register("terms", {
+              required: {
+                value: true,
+                message:
+                  "*You have to accept the terms and conditions to continue",
+              },
+            })}
+          />
           <p>
             {" "}
             I confirm that I have read and accept our{" "}
@@ -205,16 +229,16 @@ export default function RegisterForm() {
             <Link href="/privacyPolicy">Privacy Policy</Link>
           </p>
         </label>
-        <Button
-          type="submit"
-          text="Sign up"
-          onClick={() => {
-            console.log("Button clicked!");
-          }}
-        />
+        {errors.terms && (
+          <span className={styles.errorInput}>{errors.terms.message}</span>
+        )}
+        <FormError message={error} />
+        <FormSuccess message={success} />
+        <Button type="submit" text="Sign up" />
       </form>
+
       <p>
-        You already have an account? <Link href={"/login"}>auth here</Link>
+        You already have an account? <Link href={"/login"}>Log in here</Link>
       </p>
     </div>
   );

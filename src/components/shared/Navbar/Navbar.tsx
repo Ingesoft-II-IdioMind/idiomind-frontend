@@ -23,8 +23,8 @@ export const Navbar = () => {
             <li><Link href="/aboutUs" className={styles.navbar__link}>About</Link></li>
             <li><Link href="/blog" className={styles.navbar__link}>Blog</Link></li>
             <li><Link href="/pricing" className={styles.navbar__link}>Pricing</Link></li>
-            <li><Link href="/login" className={`${styles.navbar__link} ${styles.navbar__link__log}`}>Log in</Link></li>
-            <li><Link href="/register" className={`${styles.navbar__link} ${styles.navbar__link__sign}`}>Sign up</Link></li>
+            <li><Link href="/auth/login" className={`${styles.navbar__link} ${styles.navbar__link__log}`}>Log in</Link></li>
+            <li><Link href="/auth/register" className={`${styles.navbar__link} ${styles.navbar__link__sign}`}>Sign up</Link></li>
         </ul>       
       </nav>
     );

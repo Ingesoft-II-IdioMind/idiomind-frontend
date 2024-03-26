@@ -28,10 +28,10 @@ export default function NavbarLogged () {
             <li><Link href="/logged/decks" className={styles.navbar__link}>Flashcards</Link></li>
         </ul>
         <ul className={`${styles.dropDown} ${configOpen ? styles.dropDown__active : styles.dropDown__innactive}`}>
-          <li><Link href="/logged/profile" >Profile</Link></li>
-          <li><Link href="/pricing" >Plans</Link></li>
-          <li><Link href="/help" >Help</Link></li>
-          <li><Link href="/" >Log out</Link></li>
+          <Link href="/logged/profile" ><li>Profile</li></Link>
+          <Link href="/pricing" ><li>Plans</li></Link>
+          <Link href="/help" ><li>Help</li></Link>
+          <Link href="/" ><li>Log out</li></Link>
         </ul>       
       </nav>
     );

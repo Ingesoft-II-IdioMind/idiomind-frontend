@@ -11,7 +11,7 @@ export const SecondMessage = () => {
         learn at your own pace, anytime and anywhere with amazing tools that
         you can’t find in other places.”
       </h5>
-      <h5 className={styles.secondMessage__author}>-Andrew Hoberman, user of IdioMind</h5>
+      <h4 className={styles.secondMessage__author}>-Andrew Hoberman, user of IdioMind</h4>
     </div >
     );
   };

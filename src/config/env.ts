@@ -1,1 +1,3 @@
-const BACKEND_URL = "http://localhost:3000";
+export const env = {
+    BACKEND_URL: process.env.BACKEND_URL || "",
+}
