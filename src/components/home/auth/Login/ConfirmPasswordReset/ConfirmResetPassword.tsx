@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "app/components/shared/Button";
-import styles from "../Auth.module.scss";
+import styles from "../../Auth.module.scss";
 import { TextField } from "app/components/shared/TextField";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -12,6 +12,7 @@ import { useAppDispatch } from "app/redux/hooks";
 import { setAuth } from "app/redux/features/authSlice";
 import { useRouter } from "next/navigation";
 import { FormError } from "../../FormError";
+import { Loader } from "app/components/shared/Loader";
 
 interface Props {
   uid: string;
@@ -97,7 +98,7 @@ export default function ResetPasswordForm({ uid, token }: Props) {
         )}
         <FormError message={error} />
         <FormSuccess message={success} />
-        <Button text={isLoading ? "..." : "Log in"} type="submit" />
+        <Button type="submit" >{isLoading ? <Loader color="white"/> : "Log in"}</Button>
         
       </form>
       <div></div>

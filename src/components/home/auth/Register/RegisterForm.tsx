@@ -8,7 +8,6 @@ import Image from "next/image";
 import { FormDivider } from "../FormDivider";
 import { useForm } from "react-hook-form";
 import { useState, useTransition } from "react";
-import { register as registerAction } from "app/actions/register";
 import { FormError } from "../FormError";
 import { FormSuccess } from "../FormSuccess";
 import { useRegisterMutation } from "app/redux/features/authApiSlice";

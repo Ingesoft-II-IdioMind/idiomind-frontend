@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import styles from "../../../../../components/home/auth/Auth.module.scss";
 import { ConfirmResetPasswordForm } from "app/components/home/auth/Login/ConfirmPasswordReset";
 
 export const metadata: Metadata = {
@@ -16,7 +15,7 @@ interface Props {
 
 export default function ResetPage({ params: { uid, token } }: Props) {
   return (
-    <div className={styles.auth}>
+    <div>
       <ConfirmResetPasswordForm uid={uid} token={token} />
     </div>
   );
