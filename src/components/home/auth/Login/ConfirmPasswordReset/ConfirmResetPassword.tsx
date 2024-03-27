@@ -1,30 +1,32 @@
 "use client";
 
-import Image from "next/image";
 import { Button } from "app/components/shared/Button";
 import styles from "../Auth.module.scss";
 import { TextField } from "app/components/shared/TextField";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useState, useTransition } from "react";
-import { FormDivider } from "../FormDivider";
-import { FormError } from "../FormError";
-import { login } from "app/actions/login";
 import { useLoginMutation } from "app/redux/features/authApiSlice";
-import { FormSuccess } from "../FormSuccess";
+import { FormSuccess } from "../../FormSuccess";
 import { useAppDispatch } from "app/redux/hooks";
 import { setAuth } from "app/redux/features/authSlice";
-import { useRouter } from 'next/navigation';
-import { Loader } from "app/components/shared/Loader";
+import { useRouter } from "next/navigation";
+import { FormError } from "../../FormError";
+
+interface Props {
+  uid: string;
+  token: string;
+}
 
 type FormInputs = {
   email: string;
   password: string;
 };
 
-export default function LoginForm() {
+export default function ResetPasswordForm({ uid, token }: Props) {
   const router = useRouter();
   const [visiblePassword, setVisiblePassword] = useState(false);
+  const [visiblePassword2, setVisiblePassword2] = useState(false);
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [login2, { isLoading }] = useLoginMutation();
@@ -39,13 +41,13 @@ export default function LoginForm() {
   //const router = useRouter()
 
   const onSubmit = handleSubmit((data) => {
-    login2({email: data.email, password: data.password})
+    login2({ email: data.email, password: data.password })
       .unwrap()
       .then(() => {
         dispatch(setAuth());
         setError(undefined);
         setSuccess("You have been logged successfully");
-        router.push('/logged');
+        router.push("/logged");
       })
       .catch(() => {
         setSuccess(undefined);
@@ -57,30 +59,10 @@ export default function LoginForm() {
     <div className={styles.auth__form}>
       <div className={styles.auth__form__logo}>
         <img src="/appLogo.svg" alt="IdioMind logo" />
-        <h2>Login</h2>
+        <h2>New password</h2>
       </div>
       <form onSubmit={onSubmit}>
-        <TextField label="E-mail">
-          <input
-            type="email"
-            disabled={isLoading}
-            {...register("email", {
-              required: {
-                value: true,
-                message: "*Email is required",
-              },
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                message: "*Invalid email address",
-              },
-            })}
-            placeholder="user@email.com"
-          />
-        </TextField>
-        {errors.email && (
-          <span className={styles.errorInput}>{errors.email.message}</span>
-        )}
-        <TextField label="Password">
+        <TextField label="New password">
           <input
             disabled={isLoading}
             type={visiblePassword ? "text" : "password"}
@@ -113,30 +95,11 @@ export default function LoginForm() {
         {errors.password && (
           <span className={styles.errorInput}>{errors.password.message}</span>
         )}
-        <p className={styles.auth__form__resetPassword}>
-          Did you forget your password?{" "}
-          <Link href={"/auth/password-reset"}>Reset password here</Link>
-        </p>
         <FormError message={error} />
         <FormSuccess message={success} />
-        <Button type="submit" disabled={isLoading}> {isLoading ? <Loader color="white"/> : "Log in"}</Button>
-        <p className={styles.auth__form__register}>
-          You dont have an account?{" "}
-          <Link href={"/auth/register"}>Register here</Link>
-        </p>
+        <Button text={isLoading ? "..." : "Log in"} type="submit" />
+        
       </form>
-      <FormDivider />
-      <Button
-        haveIcon={true}
-        Icon={() => (
-          <Image
-            src="/icons/googleColor.svg"
-            alt="Google icon"
-            width={25}
-            height={25}
-          />
-        )}
-      >Log in with google</Button>
       <div></div>
     </div>
   );

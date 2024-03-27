@@ -12,13 +12,14 @@ import { register as registerAction } from "app/actions/register";
 import { FormError } from "../FormError";
 import { FormSuccess } from "../FormSuccess";
 import { useRegisterMutation } from "app/redux/features/authApiSlice";
+import { Loader } from "app/components/shared/Loader";
 
 type FormInputs = {
   first_name: string;
   last_name: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  re_Password: string;
   terms: boolean;
 };
 
@@ -38,14 +39,14 @@ export default function RegisterForm() {
   } = useForm<FormInputs>();
 
   const password = watch("password");
-  const confirmPassword = watch("confirmPassword");
+  const confirmPassword = watch("re_Password");
 
   const onSubmit = handleSubmit((data: any) => {
-    register2(data)
+    register2({first_name: data.first_name, last_name: data.last_name, email: data.email, password: data.password, re_password: data.re_Password, terms: data.terms})
       .unwrap()
       .then(() => {
         setError(undefined);
-        setSuccess("You have been registered successfully");
+        setSuccess("We have sent you an email to confirm your account. Please check your inbox.");
       })
       .catch(() =>{
         setSuccess(undefined);
@@ -75,7 +76,6 @@ export default function RegisterForm() {
         <h2>Sign up</h2>
       </div>
       <Button
-        text="Sign up with google"
         onClick={() => {
           console.log("Button clicked!");
         }}
@@ -88,7 +88,7 @@ export default function RegisterForm() {
             height={30}
           />
         )}
-      />
+      >Sign up with google</Button>
       <FormDivider />
       <form onSubmit={onSubmit}>
         <div className={styles.auth__form__names}>
@@ -178,7 +178,7 @@ export default function RegisterForm() {
         <TextField label="Confirm password*">
           <input
             type={visiblePassword2 ? "text" : "password"}
-            {...register("confirmPassword", {
+            {...register("re_Password", {
               required: {
                 value: true,
                 message: "*Confirmation is required",
@@ -206,9 +206,9 @@ export default function RegisterForm() {
             </svg>
           )}
         </TextField>
-        {errors.confirmPassword && (
+        {errors.re_Password && (
           <span className={styles.errorInput}>
-            {errors.confirmPassword.message}
+            {errors.re_Password.message}
           </span>
         )}
         <label className={styles.auth__form__terms}>
@@ -234,11 +234,11 @@ export default function RegisterForm() {
         )}
         <FormError message={error} />
         <FormSuccess message={success} />
-        <Button type="submit" text="Sign up" />
+        <Button type="submit" disabled={isLoading}> {isLoading ? <Loader color="white"/> : "Sign up"}</Button>
       </form>
 
       <p>
-        You already have an account? <Link href={"/login"}>Log in here</Link>
+        You already have an account? <Link href={"/auth/login"}>Log in here</Link>
       </p>
     </div>
   );

@@ -85,7 +85,7 @@ export default function ContactUsForm() {
             height={200}
           />
         </TextField>
-        <Button text="Send message" type="submit" />
+        <Button type="submit">Send message</Button>
       </form>
     </div>
   );

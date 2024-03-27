@@ -1,12 +1,16 @@
 import LoginForm from "app/components/home/auth/Login/LoginForm";
 import { LoginImage } from "app/components/home/auth/Login/LoginImage";
 import styles from "../../../../components/home/auth/Auth.module.scss";
-import { MainAccounts } from "app/components/home/MainAccounts";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: 'Login',
+	description: 'login page',
+};
 
 export default function Login() {
   return (
     <div className={styles.auth}>
-      {/* <MainAccounts /> */}
       <LoginImage />
       <LoginForm />
     </div>

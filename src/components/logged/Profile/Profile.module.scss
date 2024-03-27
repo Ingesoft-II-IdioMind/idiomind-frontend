@@ -1,0 +1,70 @@
+@import "../../../styles/variables.scss";
+
+.profile{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    &Content {
+     width: 40%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+}
+
+
+
+.userData {
+  width: 100%;
+  max-width: 30rem;
+  padding: 0px;
+}
+
+.userOptions {
+  width: 95%;
+  display: flex;
+  max-width: 28rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 20px;
+
+  text-align: center;
+  li {
+    width: 100%;
+    max-width: 30rem;
+    padding: 1rem;
+    background-color: $primary-color;
+    font-family: $main-font;
+    font-size: 1rem;
+    font-weight: 700;
+    color: $main-color;
+    border-radius: 2rem;
+    transition: 0.3s ease-in-out;
+    &:hover {
+      cursor: pointer;
+      opacity: 0.6;
+      transition: 0.3s ease-in-out;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .profileContent {
+    flex-direction: column;
+    margin-top: 0px;
+    width: 100%;
+  }
+  .userData {
+    width: 100%;
+  }
+  .userOptions {
+    width: 100%;
+  }
+    
+}

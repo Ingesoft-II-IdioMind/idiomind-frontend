@@ -4,6 +4,7 @@ import { Lexend, Quicksand, Rubik } from "next/font/google";
 import "app/styles/globals.scss";
 import { SmoothScrolling } from "app/components/shared/Scroller";
 import Provider from "../redux/provider";
+import { useAppSelector } from "app/redux/hooks";
 
 
 const myFont3 = Quicksand({
@@ -36,6 +37,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body
@@ -43,6 +45,7 @@ export default function RootLayout({
       >
       <SmoothScrolling>
         <Provider>
+
         {children}
         </Provider>
       </SmoothScrolling>

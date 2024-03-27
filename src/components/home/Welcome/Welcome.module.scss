@@ -154,3 +154,17 @@
         }
     }
 }
+
+@media screen and (max-width: 706px) {
+    .reasons{
+        img{
+            display: none;
+        }
+        &__block{
+            flex-direction: column;
+            div{
+                width: 100%;
+            }
+        }
+    }
+}
