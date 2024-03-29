@@ -5,31 +5,59 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { TextField } from "app/components/shared/TextField";
 import { ProfileImage } from "./ProfileImage/ProfileImage";
+import { useRetrieveUserQuery } from "app/redux/features/authApiSlice";
+import { Loader } from "app/components/shared/Loader";
 
 export default function ProfileContent() {
+  const { data: user, isLoading, isFetching } = useRetrieveUserQuery();
+  console.log(user);
   const [isDeleteAccountOpen, setIsDeleteAccountOpen] = useState(false);
+  const [isEditPasswordOpen, setIsEditPasswordOpen] = useState(false);
+
+  if (isLoading || isFetching) {
+    return (
+      <div className={styles.profile}>
+        <Loader color="orange" />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.profile}>
-    <ProfileImage />
+      <ProfileImage />
       <div className={styles.profileContent}>
         <ul className={styles.userData}>
-            <li>
-                <TextField label="First Name"><input type="text" disabled={true} value="Andres"/></TextField>
-            </li>
-            <li>
-                <TextField label="Last Name"><input type="text" disabled={true} value="Andres"/></TextField>
-            </li>
-            <li>
-                <TextField label="Email"><input type="text" disabled={true} value="Andres"/></TextField>
-            </li>
-            <li>
-                <TextField label="Subscription"><input type="text" disabled={true} value="Andres"/></TextField>
-            </li>
+          <li>
+            <TextField label="First Name">
+              <input type="text" disabled={true} value={user?.first_name} />
+            </TextField>
+          </li>
+          <li>
+            <TextField label="Last Name">
+              <input type="text" disabled={true} value={user?.last_name} />
+            </TextField>
+          </li>
+          <li>
+            <TextField label="Email">
+              <input type="text" disabled={true} value={user?.email} />
+            </TextField>
+          </li>
+          <li>
+            <TextField label="Subscription">
+              <input type="text" disabled={true} value={user?.first_name} />
+            </TextField>
+          </li>
         </ul>
         <ul className={styles.userOptions}>
           <li>Edit names</li>
           <li>Change subscription</li>
-          <li>Change password</li>
+          <li
+            onClick={() => {
+              setIsEditPasswordOpen(true);
+            }}
+          >
+            Change password
+          </li>
           <li
             onClick={() => {
               setIsDeleteAccountOpen(true);
@@ -60,13 +88,50 @@ export default function ProfileContent() {
             onClick={() => {
               setIsDeleteAccountOpen(false);
             }}
-          >Cancel</Button>
+          >
+            Cancel
+          </Button>
           <Button
             outlined={true}
             onClick={() => {
               setIsDeleteAccountOpen(false);
             }}
-            >Delete</Button>
+          >
+            Delete
+          </Button>
+        </div>
+      </Modal>
+      <Modal
+        isOpen={isEditPasswordOpen}
+        onClose={() => {
+          setIsEditPasswordOpen(false);
+        }}
+        title="Edit Password"
+      >
+        <form action="">
+          <TextField label="Document title">
+            <input type="text" />
+          </TextField>
+          <TextField label="Document file">
+            <input type="file" />
+          </TextField>
+        </form>
+        <div>
+          <Button
+            onClick={() => {
+              setIsEditPasswordOpen(false);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            outlined={true}
+            onClick={() => {
+              setIsEditPasswordOpen(false);
+            }}
+          >
+            Delete
+          </Button>
         </div>
       </Modal>
     </div>

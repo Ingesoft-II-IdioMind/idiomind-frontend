@@ -1,4 +1,10 @@
 import { PostsMapping } from "app/components/home/BlogPosts";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: 'Blog',
+	description: 'Blog page',
+};
 
 export default function Blog() {
     return (

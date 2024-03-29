@@ -1,25 +1,26 @@
-"use client"
+'use client';
 
-import { useAppSelector } from "app/redux/hooks";
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation';
+import { useAppSelector } from 'app/redux/hooks';
+import { Loader } from '../Loader';
 
 interface Props {
 	children: React.ReactNode;
 }
 
-export default function RequireNoAuth({ children }: Props) {
+export default function RequireAuth({ children }: Props) {
 	const { isLoading, isAuthenticated } = useAppSelector(state => state.auth);
-	console.log(isAuthenticated);
-	console.log(isLoading);
-	// if (isLoading) {
-	// 	return (
-	// 		<div className="center">
-	// 			<Loader color="orange"/>
-	// 		</div>
-	// 	);
-	// }
+
+	if (isLoading) {
+		return (
+			<div className='flex justify-center my-8'>
+				<Loader color="naranja" />
+			</div>
+		);
+	}
 
 	if (isAuthenticated) {
+		console.log('Redirecting to logged');
 		redirect('/logged');
 	}
 

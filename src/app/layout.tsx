@@ -3,9 +3,10 @@ import type { Metadata } from "next";
 import { Lexend, Quicksand, Rubik } from "next/font/google";
 import "app/styles/globals.scss";
 import { SmoothScrolling } from "app/components/shared/Scroller";
-import Provider from "../redux/provider";
-import { useAppSelector } from "app/redux/hooks";
-import { RequireAuth } from "app/components/shared/Middleware";
+import Provider from "app/redux/provider";
+import { Setup } from "app/components/shared/Setup";
+import { Navbars } from "app/components/shared/Navbar";
+import { Footer } from "app/components/shared/Footer";
 
 const myFont3 = Quicksand({
   subsets: ["latin"],
@@ -41,11 +42,14 @@ export default function RootLayout({
       <body
         className={`${myFont2.variable} ${myFont3.variable} ${myFont4.variable}`}
       >
-        <SmoothScrolling>
-          <Provider>
-          {children}
-          </Provider>
-        </SmoothScrolling>
+        {/* <SmoothScrolling> */}
+        <Provider>
+          <Setup />
+          <Navbars />
+          <main className="content">{children}</main>
+          <Footer />
+        </Provider>
+        {/* </SmoothScrolling> */}
       </body>
     </html>
   );
