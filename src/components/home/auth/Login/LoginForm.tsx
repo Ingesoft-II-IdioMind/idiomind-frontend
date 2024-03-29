@@ -138,7 +138,6 @@ export default function LoginForm() {
         )}
         onClick={continueWithGoogle}
       >
-        {/* <button provider='google' onClick={continueWithGoogle}> </button> */}
       Log in with Google 
     </Button>
       <div></div>
