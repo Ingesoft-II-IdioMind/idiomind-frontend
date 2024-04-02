@@ -45,9 +45,9 @@ export default function RootLayout({
         {/* <SmoothScrolling> */}
         <Provider>
           <Setup />
-          <Navbars />
-          <main className="content">{children}</main>
-          <Footer />
+          {/* <Navbars /> */}
+          {children}
+          
         </Provider>
         {/* </SmoothScrolling> */}
       </body>
