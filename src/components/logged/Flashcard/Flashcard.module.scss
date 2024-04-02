@@ -7,6 +7,8 @@
   &__section{
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 80%;
   }
@@ -20,6 +22,9 @@
   }
   &__container {
     display: flex;
+    min-height: 15rem;
+    min-width: 20rem;
+    max-width: 70rem;
     width: 100%;
     height: 100%;
     align-items: center;

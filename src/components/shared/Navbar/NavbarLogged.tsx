@@ -14,7 +14,6 @@ export default function NavbarLogged() {
   const { data: user, isLoading, isFetching } = useRetrieveUserQuery();
 
   const dispatch = useAppDispatch();
-  const { isAuthenticated } = useAppSelector(state => state.auth);
 
   const [logout] = useLogoutMutation();
 
@@ -75,9 +74,7 @@ export default function NavbarLogged() {
         </li>
       </ul>
       <ul
-        className={`${styles.dropDown} ${
-          configOpen ? styles.dropDown__active : styles.dropDown__innactive
-        }`}
+        className={`${configOpen ? styles.dropDown : styles.dropDown__innactive}`}
       >
         <Link href="/logged/profile" onClick={() => setConfigOpen(!configOpen)}>
           <li>Profile</li>
@@ -85,7 +82,7 @@ export default function NavbarLogged() {
         <Link href="/pricing" onClick={() => setConfigOpen(!configOpen)}>
           <li>Plans</li>
         </Link>
-        <Link href="/help" onClick={() => setConfigOpen(!configOpen)}>
+        <Link href="/contactUs" onClick={() => setConfigOpen(!configOpen)}>
           <li>Help</li>
         </Link>
         <Link href="/" onClick={handleLogout}>

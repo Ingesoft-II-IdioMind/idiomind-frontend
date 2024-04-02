@@ -30,6 +30,7 @@ export default function LoginForm() {
   const [success, setSuccess] = useState<string | undefined>("");
   const [login2, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
+  
 
   const {
     register,
@@ -41,9 +42,9 @@ export default function LoginForm() {
     login2({email: data.email, password: data.password})
       .unwrap()
       .then(() => {
-        dispatch(setAuth());
         setError(undefined);
         toast.success('Logged in');
+        dispatch(setAuth());
         setSuccess("You have been logged successfully");
         router.push('/logged');
       })

@@ -13,6 +13,8 @@ import { FormSuccess } from "../FormSuccess";
 import { useRegisterMutation } from "app/redux/features/authApiSlice";
 import { Loader } from "app/components/shared/Loader";
 import { continueWithGoogle } from "app/utils";
+import { useRouter } from 'next/navigation';
+import { toast } from "react-toastify";
 
 type FormInputs = {
   first_name: string;
@@ -24,6 +26,7 @@ type FormInputs = {
 };
 
 export default function RegisterForm() {
+  const router = useRouter();
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [visiblePassword2, setVisiblePassword2] = useState(false);
   const [error, setError] = useState<string | undefined>("");
@@ -55,9 +58,9 @@ export default function RegisterForm() {
       .unwrap()
       .then(() => {
         setError(undefined);
-        setSuccess(
-          "We have sent you an email to confirm your account. Please check your inbox."
-        );
+        setSuccess("You have been registered successfully.");
+        toast.success("You have been registered successfully.");
+        router.push('/auth/login');
       })
       .catch((e) => {
         setSuccess(undefined);

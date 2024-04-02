@@ -122,6 +122,18 @@ $size-font-navbar: clamp(16px, 1vw, 20px);
   }
 }
 
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
 .dropDown {
   position: absolute;
   background-color: $main-color;
@@ -131,6 +143,7 @@ $size-font-navbar: clamp(16px, 1vw, 20px);
   margin: 0px;
   box-shadow: 0px 1px 30.1px -2px rgba(0, 0, 0, 0.25);
   border-radius: 1rem;
+  animation: slideDown 0.5s ease-in-out;
   a {
     font-family: $second-font;
     font-size: $size-font-navbar;
@@ -159,7 +172,7 @@ $size-font-navbar: clamp(16px, 1vw, 20px);
     font-weight: 700;
     line-height: 24px;
     letter-spacing: -0.5px;
-    padding: 1rem 2rem;
+    padding: 1rem 3.5rem;
     text-align: center;
     position: relative; /* Add this to position the pseudo-element relative to the li */
     transition: 0.6s ease-in-out;
@@ -175,13 +188,12 @@ $size-font-navbar: clamp(16px, 1vw, 20px);
     }
   }
   &__active {
-    opacity: 1;
-    transition: transform opacity 0.3s ease;
+    transition: opacity 2s ease-in-out, transform 2s ease-in-out;
   }
   &__innactive {
+    animation: slideDown 0.5s ease-in-out reverse;
     display: none;
     opacity: 0;
-    transition: transform opacity 0.3s ease;
   }
 }
 
@@ -254,5 +266,28 @@ $size-font-navbar: clamp(16px, 1vw, 20px);
         cursor: pointer;
       }
     }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+    
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
   }
 }

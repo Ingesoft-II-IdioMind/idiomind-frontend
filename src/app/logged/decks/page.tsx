@@ -8,7 +8,7 @@ export default function Decks() {
       <>
         <h1>Flashcards decks</h1>
         {/* <MapDecks /> */}
-        <PracticeFlashcards />
+        {/* <PracticeFlashcards /> */}
       </>
     );
   }

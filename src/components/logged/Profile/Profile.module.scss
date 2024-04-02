@@ -12,6 +12,8 @@
     align-items: center;
     justify-content: flex-start;
     flex-wrap: wrap;
+    animation: slideInFromRight2 2s ease-in-out;
+    margin-bottom: 2rem;
   }
 }
 
@@ -31,22 +33,27 @@
   align-items: center;
   padding: 0px;
   margin: 0px;
-  gap: 20px;
   text-align: center;
+  border-radius: 2rem;
+  background-color: $primary-color;
+  box-shadow: 4px 7px 19px -5px rgba(0, 0, 0, 0.25);
+  // border: 
   li {
     width: 100%;
-    max-width: 30rem;
-    padding: 1rem;
-    background-color: $primary-color;
+    // background-color: $primary-color;
     font-family: $main-font;
     font-size: 1rem;
     font-weight: 700;
     color: $main-color;
-    border-radius: 2rem;
     transition: 0.3s ease-in-out;
+    padding: 1.2rem  0px;
+    &:not(:last-child) {
+      border-bottom: 2px solid $main-color;
+    }
     &:hover {
       cursor: pointer;
-      opacity: 0.6;
+      background-color: $main-color;
+      color: $primary-color;
       transition: 0.3s ease-in-out;
     }
   }
@@ -63,5 +70,14 @@
   }
   .userOptions {
     width: 100%;
+  }
+}
+
+@keyframes slideInFromRight2 {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
   }
 }

@@ -10,6 +10,7 @@
   text-align: center;
   margin: 1rem 0px;
   &__form {
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -17,6 +18,7 @@
     padding: 0.5rem 0px;
     height: 100%;
     max-width: 30rem;
+    animation: slideInFromRight 2s ease-in-out;
     form {
       display: flex;
       flex-direction: column;
@@ -174,5 +176,14 @@
       justify-content: start;
       height: fit-content;
     }
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
