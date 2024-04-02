@@ -7,7 +7,16 @@ interface Props {
   children: React.ReactNode;
 }
 
-export default function Layout({ children }: Props) {
+export default function Layout2({ children }: Props) {
 
-  return <RequireAuth>{children}</RequireAuth>;
+  return (<>
+    <NavbarLogged />
+    <RequireAuth>
+    <main className="content">
+      {children}
+      </main>
+      </RequireAuth>;
+    </>)
+  
+  
 }
