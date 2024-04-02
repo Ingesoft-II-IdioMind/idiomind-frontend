@@ -16,7 +16,7 @@ export const RegisterImage = () => {
         cy="274.553"
         r="274"
         fill="#E67320"
-        fillOpacity="0.15"
+        fillOpacity="0.1"
       />
       <g id="book4">
         <path

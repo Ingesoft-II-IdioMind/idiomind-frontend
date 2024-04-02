@@ -1,5 +1,7 @@
 import { apiSlice } from '../services/apiSlice';
 
+//http://localhost:3000/auth/google?state=bPlGrzeDv9nbj6Pja3nBf2efhUPgK8Yq&code=4%2F0AeaYSHBuQBq18njR6qDOYYtkaDzy4bLoGKZBxBWiWpyj4gcXW04vtkiuBkpBrISakdBKVQ&scope=email+profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=0&prompt=consent
+
 interface User {
 	first_name: string;
 	last_name: string;
@@ -65,8 +67,22 @@ const authApiSlice = apiSlice.injectEndpoints({
 		}),
 		logout: builder.mutation({
 			query: () => ({
-				url: '/logout/',
+				url: '/jwt/logout/',
 				method: 'POST',
+			}),
+		}),
+		deleteAccount: builder.mutation({
+			query: ({current_password}) => ({
+				url: '/users/me/',
+				method: 'DELETE',
+				body: {current_password},
+			}),
+		}),
+		changePassword: builder.mutation({
+			query: ({new_password,re_new_password,current_password}) => ({
+				url: '/users/set_password/',
+				method: 'POST',
+				body: {new_password,re_new_password,current_password},
 			}),
 		}),
 		activation: builder.mutation({
@@ -100,6 +116,8 @@ export const {
 	useRegisterMutation,
 	useVerifyMutation,
 	useLogoutMutation,
+	useChangePasswordMutation,
+	useDeleteAccountMutation,
 	useActivationMutation,
 	useResetPasswordMutation,
 	useResetPasswordConfirmMutation,

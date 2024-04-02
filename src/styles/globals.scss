@@ -156,3 +156,12 @@ ul, ol {
     font-size: 24px;
   }
 }
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

@@ -1,7 +1,7 @@
-import { env } from "app/config/env"
+// import { env } from "app/config/env"
 
-export const backendUrls = {
-    accounts:{
-        'all': `${env.BACKEND_URL}/api/Accounts/`
-    }
-}
+// export const backendUrls = {
+//     accounts:{
+//         'all': `${env.BACKEND_URL}/api/Accounts/`
+//     }
+// }

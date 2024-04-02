@@ -5,12 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useState } from "react";
 import { useAppSelector, useAppDispatch } from 'app/redux/hooks';
-import { useLogoutMutation } from 'app/redux/features/authApiSlice';
+import { useLogoutMutation, useRetrieveUserQuery } from 'app/redux/features/authApiSlice';
 import { logout as setLogout } from 'app/redux/features/authSlice';
 
 export default function NavbarLogged() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [configOpen, setConfigOpen] = useState(false);
+  const { data: user, isLoading, isFetching } = useRetrieveUserQuery();
 
   const dispatch = useAppDispatch();
 
@@ -28,7 +29,7 @@ export default function NavbarLogged() {
     <nav className={styles.navbar}>
       <div className={styles.navbar__logo}>
         <img src="/appLogo.svg" alt="IdioMind logo" />
-        <h5>Andres</h5>
+        <h5>{user?.first_name}</h5>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
@@ -73,20 +74,18 @@ export default function NavbarLogged() {
         </li>
       </ul>
       <ul
-        className={`${styles.dropDown} ${
-          configOpen ? styles.dropDown__active : styles.dropDown__innactive
-        }`}
+        className={`${configOpen ? styles.dropDown : styles.dropDown__innactive}`}
       >
-        <Link href="/logged/profile">
+        <Link href="/logged/profile" onClick={() => setConfigOpen(!configOpen)}>
           <li>Profile</li>
         </Link>
-        <Link href="/pricing">
+        <Link href="/pricing" onClick={() => setConfigOpen(!configOpen)}>
           <li>Plans</li>
         </Link>
-        <Link href="/help">
+        <Link href="/contactUs" onClick={() => setConfigOpen(!configOpen)}>
           <li>Help</li>
         </Link>
-        <Link href="#" onClick={handleLogout}>
+        <Link href="/" onClick={handleLogout}>
           <li>Log out</li>
         </Link>
       </ul>
