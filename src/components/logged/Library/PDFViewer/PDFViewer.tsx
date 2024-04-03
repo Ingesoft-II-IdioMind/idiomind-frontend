@@ -25,7 +25,7 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
   );
 
   return (
-    <div style={{ height: "100vh", width: "120%" }}>
+    <div style={{ height: "100%", width: "100%" }}>
       <PdfViewer
         url={pdfUrl}
         onTextSelection={handleTextSelection}

@@ -10,8 +10,8 @@ interface Props {
 export default function Layout2({ children }: Props) {
 
   return (<>
-    <NavbarLogged />
     <RequireAuth>
+    <NavbarLogged />
     <main className="content">
       {children}
       </main>

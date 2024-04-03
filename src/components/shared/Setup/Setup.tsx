@@ -5,6 +5,7 @@ import { finishInitialLoad, setAuth } from 'app/redux/features/authSlice';
 import { useAppDispatch } from 'app/redux/hooks';
 import { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
+import toast from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Setup() {
@@ -23,5 +24,5 @@ export default function Setup() {
 			});
 	}, []);
 
-	return <ToastContainer />;
+	return <ToastContainer position="bottom-left" theme="colored"/>;
 }

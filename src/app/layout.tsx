@@ -47,7 +47,6 @@ export default function RootLayout({
           <Setup />
           {/* <Navbars /> */}
           {children}
-          
         </Provider>
         {/* </SmoothScrolling> */}
       </body>

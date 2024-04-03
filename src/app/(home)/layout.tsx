@@ -9,12 +9,11 @@ interface Props {
 }
 
 export default function Layout3({ children }: Props) {
-  return(
+  return (
     <>
-    <Navbar />
-    <main>{children}</main>
-    <Footer />
-  </>
+      <Navbar />
+      <main className="content">{children}</main>
+      <Footer />
+    </>
   );
-  
 }
