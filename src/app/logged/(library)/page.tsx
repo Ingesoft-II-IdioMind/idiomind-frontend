@@ -188,7 +188,7 @@ export default function Library() {
         }}
         title="Upload document"
       >
-        <form>
+        <form >
           <TextField label="Document title">
           <input 
           type="text" 
