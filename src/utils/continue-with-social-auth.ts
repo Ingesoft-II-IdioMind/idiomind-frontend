@@ -11,7 +11,7 @@ export default async function continueWithSocialAuth(
 			process.env.NEXT_PUBLIC_HOST
 		}/api/o/${provider}/?redirect_uri=${
 			process.env.NODE_ENV === 'production'
-				? newRedirectUrl
+				? newRedirectUrl + "/auth/google"
 				: 'http://localhost:3000'
 		}`;
 
