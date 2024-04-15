@@ -1,13 +1,14 @@
 import Link from "next/link";
 import styles from "./NavDocument.module.scss";
 import { useState } from "react";
-import { useDeleteDocumentMutation } from "app/redux/features/funcApiSlice";
+import { useDeleteDocumentMutation } from "app/redux/features/docApiSlice";
 import { Modal } from "../Modal";
 import { Button } from "../Button";
 import { FormError } from "app/components/home/auth/FormError";
 import { FormSuccess } from "app/components/home/auth/FormSuccess";
 import { useRouter } from 'next/navigation';
 import { toast } from "react-toastify";
+import { useSidebar } from "app/components/logged/Library/PDFViewer/SideBarProvider";
 
 
 export default function NavDocument({name,id}:{name:string, id:string}) {
@@ -17,6 +18,12 @@ export default function NavDocument({name,id}:{name:string, id:string}) {
   const [deleteDocument2, { isLoading }] = useDeleteDocumentMutation();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
+  const { setIsSidebarOpen } = useSidebar();
+
+  const handleOpenNotes = () => {
+    setIsSidebarOpen(true);
+    setIsOpen(false);
+  };
 
   function deleteDocument() {
     deleteDocument2({id:id})
@@ -35,6 +42,8 @@ export default function NavDocument({name,id}:{name:string, id:string}) {
         );
       });
   }
+
+
 
   return (
     <nav className={styles.navDocument}>
@@ -55,11 +64,11 @@ export default function NavDocument({name,id}:{name:string, id:string}) {
 
       {isOpen && (
         <ul className={styles.dropdownMenu}>
+          <li onClick={handleOpenNotes}>Notes</li>
+          <li>Edit name</li>
           <li onClick={() => {
               setIsDeleteDocumentOpen(true);
-            }}>Delete Document</li>
-          <li>Edit Name</li>
-          <li>Other</li>
+            }}>Delete document</li>
         </ul>
       )}
       <Modal

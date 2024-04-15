@@ -7,6 +7,7 @@ import Provider from "app/redux/provider";
 import { Setup } from "app/components/shared/Setup";
 import { Navbars } from "app/components/shared/Navbar";
 import { Footer } from "app/components/shared/Footer";
+import { SidebarProvider } from "app/components/logged/Library/PDFViewer/SideBarProvider";
 
 const myFont3 = Quicksand({
   subsets: ["latin"],
@@ -44,9 +45,11 @@ export default function RootLayout({
       >
         {/* <SmoothScrolling> */}
         <Provider>
+        <SidebarProvider>
           <Setup />
           {/* <Navbars /> */}
           {children}
+          </SidebarProvider>
         </Provider>
         {/* </SmoothScrolling> */}
       </body>

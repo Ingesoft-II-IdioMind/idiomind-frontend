@@ -8,23 +8,24 @@ import { setAuth, logout } from '../features/authSlice';
 import { Mutex } from 'async-mutex';
 
 const mutex = new Mutex();
-const baseQuery2 = fetchBaseQuery({
-	baseUrl: `${process.env.NEXT_PUBLIC_HOST}/documents/api`,
+const baseQueryDeck = fetchBaseQuery({
+	baseUrl: `${process.env.NEXT_PUBLIC_HOST}/deck/api`,
 	credentials: 'include',
 });
-const baseQueryWithReauth2: BaseQueryFn<
+
+const baseQueryWithReauthDeck: BaseQueryFn<
 	string | FetchArgs,
 	unknown,
 	FetchBaseQueryError
 > = async (args, api, extraOptions) => {
 	await mutex.waitForUnlock();
-	let result = await baseQuery2(args, api, extraOptions);
+	let result = await baseQueryDeck(args, api, extraOptions);
 
 	if (result.error && result.error.status === 401) {
 		if (!mutex.isLocked()) {
 			const release = await mutex.acquire();
 			try {
-				const refreshResult = await baseQuery2(
+				const refreshResult = await baseQueryDeck(
 					{
 						url: '/jwt/refresh/',
 						method: 'POST',
@@ -35,7 +36,7 @@ const baseQueryWithReauth2: BaseQueryFn<
 				if (refreshResult.data) {
 					api.dispatch(setAuth());
 
-					result = await baseQuery2(args, api, extraOptions);
+					result = await baseQueryDeck(args, api, extraOptions);
 				} else {
 					api.dispatch(logout());
 				}
@@ -44,14 +45,14 @@ const baseQueryWithReauth2: BaseQueryFn<
 			}
 		} else {
 			await mutex.waitForUnlock();
-			result = await baseQuery2(args, api, extraOptions);
+			result = await baseQueryDeck(args, api, extraOptions);
 		}
 	}
 	return result;
 };
 
-export const apiSlice2 = createApi({
-	reducerPath: 'documents/api',
-	baseQuery: baseQueryWithReauth2,
+export const apiSliceDeck = createApi({
+	reducerPath: 'deck/api',
+	baseQuery: baseQueryWithReauthDeck,
 	endpoints: builder => ({}),
 });

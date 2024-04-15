@@ -13,7 +13,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { FormError } from "app/components/home/auth/FormError";
 import { FormSuccess } from "app/components/home/auth/FormSuccess";
-import { useBringDocumentsMutation, useUploadDocumentMutation } from "app/redux/features/funcApiSlice";
+import { useBringDocumentsMutation, useUploadDocumentMutation } from "app/redux/features/docApiSlice";
 import { toast } from "react-toastify";
 import { Loader } from "app/components/shared/Loader";
 
