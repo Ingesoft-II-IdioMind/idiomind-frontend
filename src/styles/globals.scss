@@ -137,6 +137,10 @@ a {
   text-align: start;
 }
 
+ul, ol {
+  list-style: none;
+}
+
 .center{
   text-align: center;
 }
@@ -151,4 +155,26 @@ a {
   h3{
     font-size: 24px;
   }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+
+.Toastify__toast--success {
+  font-family: $second-font;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.Toastify__toast--error {
+  font-family: $second-font;
+  font-size: 1.2rem;
+  font-weight: 700;
 }

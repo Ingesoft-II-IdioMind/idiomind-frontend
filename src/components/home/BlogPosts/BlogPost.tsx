@@ -18,7 +18,7 @@ export default function BlogPost(props: any) {
               <p className={styles.blogPost__content__text__description}>Lorem ipsum dolor sit amet consectetur. Volutpat commodo nunc ullamcorper dignissim augue euismod sed fermentum.ullamcorper dignissim augue euismod sed fermentum</p>
               <p className={styles.blogPost__content__text__date}>29/08/2024</p>
             </div>
-            <Button text="Read more"/>
+            <Button>Read more</Button>
         </div>
     </Link>
   );
