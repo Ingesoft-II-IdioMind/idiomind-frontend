@@ -1,6 +1,6 @@
-import { apiSlice2 } from "../services/apiSlice2";
+import { apiSliceDoc } from "../services/apiSliceDoc";
 
-const authApiSlice2 = apiSlice2.injectEndpoints({
+const authApiSliceDoc = apiSliceDoc.injectEndpoints({
 	endpoints: builder => ({
 		bringDocuments: builder.mutation({
 			query: () => ({
@@ -35,4 +35,4 @@ export const {
 	useUploadDocumentMutation,
 	useBringOneDocumentMutation,
 	useDeleteDocumentMutation,
-} = authApiSlice2;
+} = authApiSliceDoc;

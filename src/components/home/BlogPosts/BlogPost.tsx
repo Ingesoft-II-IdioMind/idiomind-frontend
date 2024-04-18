@@ -3,9 +3,9 @@ import styles from "./Blog.module.scss";
 import Link from "next/link";
 import { Button } from "app/components/shared/Button";
 
-export default function BlogPost(props: any) {
+export default function BlogPost({id}:{id:string}) {
   return (
-    <Link className={styles.blogPost} href="/">
+    <Link className={styles.blogPost} href={`/blog/1`}>
         <Image src="/images/exampleImage.png"
         alt="foto of post"
         width={300}

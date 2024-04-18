@@ -1,10 +1,13 @@
 "use client";
 
-import { PDFViewer } from "app/components/logged/Library/PDFViewer";
+
 import { NavDocument } from "app/components/shared/NavDocument";
-import { useBringOneDocumentMutation } from "app/redux/features/funcApiSlice";
+import { useBringOneDocumentMutation } from "app/redux/features/docApiSlice";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { HighlightArea, MessageIcon, RenderHighlightTargetProps, highlightPlugin } from '@react-pdf-viewer/highlight';
+import { PDFViewer } from "app/components/logged/Library/PDFViewer/PDFViewer";
+
 
 interface DocumentDataType {
   titulo: string;
@@ -35,14 +38,14 @@ export default function PageBook({ params }: { params: { id: string } }) {
       });
   };
 
-  const pdfUrl = "http://localhost:3000/docExample/cuestionario.pdf";
+  const fileUrl = "http://localhost:3000/docExample/cuestionario.pdf";
 
 
   return (
     <>
       <NavDocument name={document.titulo} id={params.id} />
       <PDFViewer
-        pdfUrl={pdfUrl}
+        fileUrl={fileUrl}
       />
     </>
   );

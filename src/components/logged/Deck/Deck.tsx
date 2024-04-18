@@ -1,12 +1,73 @@
+import { useState } from "react";
 import styles from "./Deck.module.scss";
+import { useRouter } from 'next/navigation';
+import { useDeleteDeckMutation } from "app/redux/features/deckApiSlice";
 
-export const Deck = () => {
+import { FormError } from "app/components/home/auth/FormError";
+import { Button } from "app/components/shared/Button";
+import { Modal } from "app/components/shared/Modal";
+import { TextField } from "app/components/shared/TextField";
+import { Loader } from "app/components/shared/Loader";
+
+export const Deck = ({id}:{id:string}) => {
+
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+  const [isDeleteDeckOpen,  setIsDeleteDeckOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [nameDeck, setNameDeck] = useState<string>("");
+  const [deleteDeck2, { isLoading }] = useDeleteDeckMutation();
+  console.log(id);
+
+  const handleSvgClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsOpen(!isOpen);
+  };
+
+  const handleNameDeckChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNameDeck(e.target.value);
+  }
+
+  const openDeleteDeck = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsDeleteDeckOpen(true);
+  };
+
+  const openEditDeck = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsEditOpen(true);
+  };
+
+  const deleteDeck = (e: React.MouseEvent) =>{ 
+    e.stopPropagation();
+    deleteDeck2({id: id})
+    .unwrap()
+    .then(() => {
+      console.log("Deck deleted");
+    })
+    .catch((e) => {
+      console.log("Error while deleting deck");
+    });
+  }
+
+  const editDeck = () =>{
+    console.log("Edit deck");
+  }
+
+  const handleClick = () => {
+    
+    router.push('/logged/decks/1'); // Reemplaza '/newPage' con la ruta a la que deseas navegar
+    
+  };
+
   return (
-    <div className={styles.deckNav}>
+    <>
+    <div className={styles.deckNav} onClick={handleClick}>
       <h6>Main Deck</h6>
       <div className={styles.deckNav__options}>
         <p>64 cards to study</p>
         <svg
+         onClick={handleSvgClick}
           width="9"
           height="32"
           viewBox="0 0 9 32"
@@ -20,6 +81,76 @@ export const Deck = () => {
           />
         </svg>
       </div>
+      {isOpen && (
+        <ul className={styles.deckNav__dropdown}>
+          <li onClick={openDeleteDeck}>Delete deck</li>
+          <li onClick={openEditDeck}>Edit Name</li>
+          <li>Duplicate</li>
+        </ul>
+      )}
     </div>
+    <Modal
+    isOpen={isDeleteDeckOpen}
+    onClose={() => {
+      setIsDeleteDeckOpen(false);
+    }}
+    title="Delete Deck"
+  >
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" />
+      </svg>
+      <p>
+        Are you sure you want to delete your deck?, once you delete it you
+        can no longer recover it.
+      </p>
+    </div>
+    <div>
+      <Button
+        onClick={() => {
+          setIsDeleteDeckOpen(false);
+        }}
+      >
+        Cancel
+      </Button>
+      <Button outlined={true} onClick={deleteDeck}>
+        Delete
+      </Button>
+    </div>
+  </Modal>
+  <Modal
+        isOpen={isEditOpen}
+        onClose={() => {
+          setIsEditOpen(false);
+        }}
+        title="Edit deck"
+      >
+        <form>
+          <TextField label="New deck name">
+            <input
+              value = {nameDeck}
+              type="text"
+              placeholder="French deck"
+              onChange={handleNameDeckChange}
+            />
+          </TextField>
+        </form>
+        <div>
+          <Button
+            outlined={true}
+            onClick={() => {
+              setIsEditOpen(false);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button onClick={editDeck}>
+            {isLoading? <Loader color="white"></Loader> : "Create"}
+          </Button>
+        </div>
+      </Modal>
+  </>
+
+    
   );
 };

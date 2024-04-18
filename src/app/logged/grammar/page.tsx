@@ -4,8 +4,8 @@ export default function Grammar() {
     return (
       <>
         <h1>Grammar exercises</h1>
-        {/* <GrammarLenguage /> */}
-        {/* <GrammarExercises /> */}
+        <GrammarLenguage />
+        <GrammarExercises />
       </>
     );
   }
