@@ -26,7 +26,7 @@ export default function Error({ error, reset }: ErrorProps) {
           height={200}
         />
       <h1>:c Ha ocurrido un error</h1>
-      <Button text="Cargar de nuevo"  onClick={reset}/>
+      <Button onClick={reset}>Cargar de nuevo</Button>
     </div>
   )
 }

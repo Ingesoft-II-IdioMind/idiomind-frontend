@@ -6,11 +6,17 @@ import styles from "../Auth.module.scss";
 import { TextField } from "app/components/shared/TextField";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { FormDivider } from "../FormDivider";
 import { FormError } from "../FormError";
-import { login } from "app/actions/login";
-
+import { useLoginMutation } from "app/redux/features/authApiSlice";
+import { FormSuccess } from "../FormSuccess";
+import { useAppDispatch } from "app/redux/hooks";
+import { setAuth } from "app/redux/features/authSlice";
+import { useRouter } from 'next/navigation';
+import { Loader } from "app/components/shared/Loader";
+import { toast } from "react-toastify";
+import { continueWithGoogle } from "app/utils";
 
 type FormInputs = {
   email: string;
@@ -18,9 +24,13 @@ type FormInputs = {
 };
 
 export default function LoginForm() {
+  const router = useRouter();
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [error, setError] = useState<string | undefined>("");
-  const [isPending, startTransition] = useTransition();
+  const [success, setSuccess] = useState<string | undefined>("");
+  const [login2, { isLoading }] = useLoginMutation();
+  const dispatch = useAppDispatch();
+  
 
   const {
     register,
@@ -28,37 +38,20 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm<FormInputs>();
 
-  //const router = useRouter()
-
-  const onSubmit = handleSubmit(async (data) => {
-    startTransition(() => {
-      login(data)
-      .then((data) => {
-        if (data?.error) {
-          setError(data.error);
-        }
-
-        if (data?.success) {
-          //setSuccess(data.success);
-        }
-      }
-      );
-    });
-    //setError("Invalid credentials. Please try again.");
-
-    // const res = await signIn("credentials", {
-    //   email: data.email,
-    //   password: data.password,
-    //   redirect: false,
-    // });
-
-    // console.log(res)
-    // if (res.error) {
-    //   setError(res.error)
-    // } else {
-    //   router.push('/dashboard')
-    //   router.refresh()
-    // }
+  const onSubmit = handleSubmit((data) => {
+    login2({email: data.email, password: data.password})
+      .unwrap()
+      .then(() => {
+        setError(undefined);
+        toast.success('Logged in');
+        dispatch(setAuth());
+        setSuccess("You have been logged successfully");
+        router.push('/logged');
+      })
+      .catch((e) => {
+        setSuccess(undefined);
+        setError(e.data.detail || "There was an error while login, please try again");
+      });
   });
 
   return (
@@ -71,7 +64,7 @@ export default function LoginForm() {
         <TextField label="E-mail">
           <input
             type="email"
-            disabled={isPending}
+            disabled={isLoading}
             {...register("email", {
               required: {
                 value: true,
@@ -90,7 +83,7 @@ export default function LoginForm() {
         )}
         <TextField label="Password">
           <input
-            disabled={isPending}
+            disabled={isLoading}
             type={visiblePassword ? "text" : "password"}
             {...register("password", {
               required: {
@@ -123,18 +116,18 @@ export default function LoginForm() {
         )}
         <p className={styles.auth__form__resetPassword}>
           Did you forget your password?{" "}
-          <Link href={"/register"}>Reset password here</Link>
+          <Link href={"/auth/password-reset"}>Reset password here</Link>
         </p>
         <FormError message={error} />
-        <Button text="Sign in" type="submit" />
+        <FormSuccess message={success} />
+        <Button type="submit" disabled={isLoading}> {isLoading ? <Loader color="white"/> : "Log in"}</Button>
         <p className={styles.auth__form__register}>
           You dont have an account?{" "}
-          <Link href={"/register"}>Register here</Link>
+          <Link href={"/auth/register"}>Register here</Link>
         </p>
       </form>
       <FormDivider />
       <Button
-        text="Log in with google"
         haveIcon={true}
         Icon={() => (
           <Image
@@ -144,7 +137,10 @@ export default function LoginForm() {
             height={25}
           />
         )}
-      />
+        onClick={continueWithGoogle}
+      >
+      Log in with Google 
+    </Button>
       <div></div>
     </div>
   );

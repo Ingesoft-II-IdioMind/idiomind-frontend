@@ -26,7 +26,7 @@ export const PricingPlan: React.FC<PricingPlanProps> = ({ benefits, price, cardT
         <p>{periodicity}</p>
       </div>
       <h5 className={styles.price}>{price}</h5>
-      <Link href={"/register"}><Button text="Choose plan"/></Link>
+      <Link href={"/auth/register"}><Button >Choose this plan</Button></Link>
       <ul>
         {benefits.map((benefit, index) => (
           <li key={index}>

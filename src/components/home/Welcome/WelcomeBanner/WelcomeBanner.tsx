@@ -12,10 +12,8 @@ export const WelcomeBanner = () => {
       <div className={styles.welcomeBanner__Message}>
         <p>Caring for learning.</p>
         <h2>Immerse yourself in a new language with IdioMind.</h2>
-        <Link href={"/register"} className={styles.noStyles}>
-          <Button
-            text="Start your journey here"
-          />
+        <Link href={"/auth/register"} className={styles.noStyles}>
+          <Button>Start your journey here</Button>
         </Link>
         
       </div>

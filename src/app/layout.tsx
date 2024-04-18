@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 //import { lexend, roboto, rubik } from "app/utils/fonts";
 import { Lexend, Quicksand, Rubik } from "next/font/google";
-import localFont from "next/font/local";
-
 import "app/styles/globals.scss";
-
+import { SmoothScrolling } from "app/components/shared/Scroller";
+import Provider from "app/redux/provider";
+import { Setup } from "app/components/shared/Setup";
+import { Navbars } from "app/components/shared/Navbar";
+import { Footer } from "app/components/shared/Footer";
 
 const myFont3 = Quicksand({
   subsets: ["latin"],
@@ -40,7 +42,13 @@ export default function RootLayout({
       <body
         className={`${myFont2.variable} ${myFont3.variable} ${myFont4.variable}`}
       >
-        {children}
+        {/* <SmoothScrolling> */}
+        <Provider>
+          <Setup />
+          {/* <Navbars /> */}
+          {children}
+        </Provider>
+        {/* </SmoothScrolling> */}
       </body>
     </html>
   );

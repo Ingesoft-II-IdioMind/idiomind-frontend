@@ -8,7 +8,7 @@ export const TeamCards = () => {
         name="Andres David Ramirez Chiquillo"
         rol="Front-end developer and ML analyst"
         fotoLink="/images/aboutUs/AndresChiquillo.jpeg"
-        githubLink="#"
+        githubLink="https://github.com/Andrurachi"
         linkedinLink="#"
         mailLink="#"
       />
@@ -16,7 +16,7 @@ export const TeamCards = () => {
         name="Andres Felipe Morales Cortes"
         rol="Back-end developer and ML analyst"
         fotoLink="/images/aboutUs/AndresMorales.png"
-        githubLink="#"
+        githubLink="https://github.com/Amoralesco"
         linkedinLink="#"
         mailLink="#"
       />
@@ -24,7 +24,7 @@ export const TeamCards = () => {
         name="Carlos Enrique Amaya Angarita"
         rol="Back-end developer and ML analyst"
         fotoLink="/images/aboutUs/CarlosAmaya.jpeg"
-        githubLink="#"
+        githubLink="https://github.com/caeamayaan"
         linkedinLink="#"
         mailLink="#"
       />
@@ -32,9 +32,9 @@ export const TeamCards = () => {
         name="Jefferson Duvan Ramirez Castañeda"
         fotoLink="/images/aboutUs/JeffersonRamirez.png"
         rol="Front-end developer and ML analyst"
-        githubLink="#"
+        githubLink="https://github.com/jeramirezca"
         linkedinLink="#"
-        mailLink="#"
+        mailLink="jeramirezca@unal.edu.co"
       />
     </div>
   );
