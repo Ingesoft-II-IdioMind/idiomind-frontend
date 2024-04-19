@@ -1,15 +1,25 @@
 import { useState } from "react";
 import styles from "./Deck.module.scss";
 import { useRouter } from 'next/navigation';
-import { useDeleteDeckMutation } from "app/redux/features/deckApiSlice";
+import { useDeleteDeckMutation, useEditDeckMutation } from "app/redux/features/deckApiSlice";
 
 import { FormError } from "app/components/home/auth/FormError";
 import { Button } from "app/components/shared/Button";
 import { Modal } from "app/components/shared/Modal";
 import { TextField } from "app/components/shared/TextField";
 import { Loader } from "app/components/shared/Loader";
+import { toast } from "react-toastify";
+import { set } from "zod";
 
-export const Deck = ({id}:{id:string}) => {
+interface DeckProps {
+  id: string;
+  fetchDecks: () => void;
+  name:string;
+  ultima_Practica: string | null;
+  flashcards_count: number;
+}
+
+export const Deck = ({id,fetchDecks,name,ultima_Practica,flashcards_count}:DeckProps) => {
 
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +27,7 @@ export const Deck = ({id}:{id:string}) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [nameDeck, setNameDeck] = useState<string>("");
   const [deleteDeck2, { isLoading }] = useDeleteDeckMutation();
+  const [editDeck2, { isLoading:isLoading2 }] = useEditDeckMutation();
   console.log(id);
 
   const handleSvgClick = (e: React.MouseEvent) => {
@@ -34,38 +45,54 @@ export const Deck = ({id}:{id:string}) => {
   };
 
   const openEditDeck = (e: React.MouseEvent) => {
+    setNameDeck(name);
     e.stopPropagation();
     setIsEditOpen(true);
   };
 
   const deleteDeck = (e: React.MouseEvent) =>{ 
     e.stopPropagation();
-    deleteDeck2({id: id})
+    deleteDeck2({id:id})
     .unwrap()
     .then(() => {
-      console.log("Deck deleted");
+      toast.success("Deck deleted successfully");
+      setIsDeleteDeckOpen(false);
+      fetchDecks();
     })
     .catch((e) => {
-      console.log("Error while deleting deck");
+      toast.error("Error while deleting deck");
     });
   }
 
   const editDeck = () =>{
-    console.log("Edit deck");
+    editDeck2({ nombre: nameDeck, ultima_Practica:ultima_Practica, id:id})
+      .unwrap()
+      .then(() => {
+        toast.success("Deck edited successfully");
+        setIsEditOpen(false);
+        setNameDeck("");
+        fetchDecks();
+      })
+      .catch((e) => {
+        toast.error(
+          e.data.detail ||
+            "There was an error while editing the deck, please try again"
+        );
+      });
   }
 
   const handleClick = () => {
     
-    router.push('/logged/decks/1'); // Reemplaza '/newPage' con la ruta a la que deseas navegar
+    router.push(`/logged/decks/${id}`); // Reemplaza '/newPage' con la ruta a la que deseas navegar
     
   };
 
   return (
     <>
     <div className={styles.deckNav} onClick={handleClick}>
-      <h6>Main Deck</h6>
+      <h6>{name}</h6>
       <div className={styles.deckNav__options}>
-        <p>64 cards to study</p>
+        <p>{flashcards_count} flashcards</p>
         <svg
          onClick={handleSvgClick}
           width="9"
@@ -114,7 +141,7 @@ export const Deck = ({id}:{id:string}) => {
         Cancel
       </Button>
       <Button outlined={true} onClick={deleteDeck}>
-        Delete
+        {isLoading? <Loader color="white"></Loader> : "Delete"}
       </Button>
     </div>
   </Modal>
@@ -145,7 +172,7 @@ export const Deck = ({id}:{id:string}) => {
             Cancel
           </Button>
           <Button onClick={editDeck}>
-            {isLoading? <Loader color="white"></Loader> : "Create"}
+            {isLoading2? <Loader color="white"></Loader> : "Save"}
           </Button>
         </div>
       </Modal>

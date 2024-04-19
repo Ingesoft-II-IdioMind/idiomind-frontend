@@ -17,14 +17,21 @@ const authApiSliceDeck = apiSliceDeck.injectEndpoints({
 		}),
 		bringOneDeck: builder.mutation({
 			query: ({id}) => ({
-				url: `/create/${id}/`,
+				url: `/${id}/`,
 				method: 'GET',
 			}),
 		}),
 		deleteDeck: builder.mutation({
 			query: ({id}) => ({
-				url: `/create/${id}/`,
+				url: `/${id}/`,
 				method: 'DELETE',
+			}),
+		}),
+		editDeck: builder.mutation({
+			query: ({id,nombre,ultima_Practica}) => ({
+				url: `/${id}/`,
+				method: 'PUT',
+				body: {nombre,ultima_Practica},
 			}),
 		}),
 	}),
@@ -35,4 +42,5 @@ export const {
 	useCreateDeckMutation,
 	useBringOneDeckMutation,
 	useDeleteDeckMutation,
+	useEditDeckMutation,
 } = authApiSliceDeck;

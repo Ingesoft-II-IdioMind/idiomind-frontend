@@ -7,6 +7,7 @@ $points_heigth:1rem;
   position: relative;
   width: 80px;
   height: $points_heigth;
+  align-self: center;
 }
 .lds_ellipsis div {
   position: absolute;
