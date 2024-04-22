@@ -15,7 +15,7 @@ import {
 import { toast } from "react-toastify";
 import { Loader } from "app/components/shared/Loader";
 
-interface DeckType {
+export interface DeckType {
   id: string;
   nombre: string;
   ultima_Practica: string | null;
@@ -74,6 +74,8 @@ export default function MapDecks() {
         );
       });
   }
+
+  
 
   return (
     <>

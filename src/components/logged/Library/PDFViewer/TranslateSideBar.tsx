@@ -1,6 +1,5 @@
 import { HighlightArea } from "@react-pdf-viewer/highlight";
 import styles from "./PDFViewer.module.scss";
-
 import { Button } from "app/components/shared/Button";
 import { useTranslatebar } from "./SideBarProvider";
 import { Modal } from "app/components/shared/Modal";
@@ -8,16 +7,6 @@ import { TextField } from "app/components/shared/TextField";
 import { useState } from "react";
 import { FormError } from "app/components/home/auth/FormError";
 import { FormSuccess } from "app/components/home/auth/FormSuccess";
-import { Loader } from "app/components/shared/Loader";
-import { useBringOneDeckMutation } from "app/redux/features/deckApiSlice";
-import { useCreateFlashcardMutation } from "app/redux/features/flashApiSlice";
-
-interface Note {
-  id: number;
-  content: string;
-  highlightAreas: HighlightArea[];
-  quote: string;
-}
 
 interface NotesTranslatebarProps {
   translateWord: String;

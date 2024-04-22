@@ -157,7 +157,13 @@ select{
 
 }
 
-
+select option {
+  background-color: $main-color; /* Change this to your desired color */
+  color: $black-color; /* Change this to your desired color */
+  font-family: Arial;
+  font-weight: 500;
+  font-size: 1rem;
+}
 
 @media screen and (max-width: 1000px) {
   h1{

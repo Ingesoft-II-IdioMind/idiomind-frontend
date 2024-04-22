@@ -9,7 +9,7 @@ import { Mutex } from 'async-mutex';
 
 const mutex = new Mutex();
 const baseQueryDoc = fetchBaseQuery({
-	baseUrl: `${process.env.NEXT_PUBLIC_HOST}/documents/api`,
+	baseUrl: `${process.env.NEXT_PUBLIC_HOST}/document/api`,
 	credentials: 'include',
 });
 const baseQueryWithReauthDoc: BaseQueryFn<

@@ -33,7 +33,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 interface PDFViewerProps {
   fileUrl: string;
 }
-interface Note {
+export interface Note {
   id: number;
   content: string;
   highlightAreas: HighlightArea[];
