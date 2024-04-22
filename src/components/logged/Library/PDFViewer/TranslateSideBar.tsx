@@ -5,12 +5,13 @@ import { Button } from "app/components/shared/Button";
 import { useTranslatebar } from "./SideBarProvider";
 import { Modal } from "app/components/shared/Modal";
 import { TextField } from "app/components/shared/TextField";
-import { useState } from "react";
+import { ChangeEvent, SetStateAction, useState } from "react";
 import { FormError } from "app/components/home/auth/FormError";
 import { FormSuccess } from "app/components/home/auth/FormSuccess";
 import { Loader } from "app/components/shared/Loader";
 import { useBringOneDeckMutation } from "app/redux/features/deckApiSlice";
-import { useCreateFlashcardMutation } from "app/redux/features/flashApiSlice";
+import { useTranslateTextMutation } from "app/redux/features/translateApiSlice";
+import { toast } from "react-toastify";
 
 interface Note {
   id: number;
@@ -23,6 +24,13 @@ interface NotesTranslatebarProps {
   translateWord: String;
 }
 
+interface TranslateResponse {
+  traduction: String;
+  description: String;
+  definition: String;
+  examples: String[];
+}
+
 export const TranslateSidebar: React.FC<NotesTranslatebarProps> = ({
   translateWord,
 }) => {
@@ -30,6 +38,30 @@ export const TranslateSidebar: React.FC<NotesTranslatebarProps> = ({
   const [isCreateFlashcardOpen, setIsCreateFlashcardOpen] = useState(false);
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
+  const [translateText, { isLoading: isLoading2 }] = useTranslateTextMutation();
+  const [sentenceInput, setSentenceInput] = useState("");
+
+  const handleSentenceInput = (event: ChangeEvent<HTMLInputElement>) => {
+    setSentenceInput(event.target.value);
+  };
+
+  const makeTranslation = () => {
+    translateText({
+      word: translateWord,
+      language: "Spanish",
+      sentence: sentenceInput,
+    })
+      .unwrap()
+      .then((response: SetStateAction<TranslateResponse[]>) => {
+        console.log(response);
+      })
+      .catch((e: { data: { detail: any } }) => {
+        toast.error(
+          e.data.detail ||
+            "There was an error while translating, please try again"
+        );
+      });
+  };
 
   function onClose() {
     setIsTranslatebarOpen(false);
@@ -69,6 +101,15 @@ export const TranslateSidebar: React.FC<NotesTranslatebarProps> = ({
             <p>Hola</p>
           </div>
         </div>
+        <TextField label="Back side">
+          <input
+            onBlur={() => {makeTranslation()}}
+            value={sentenceInput}
+            type="text"
+            placeholder="Add the sentence in which the word is used to get the translation with context."
+            onChange={handleSentenceInput}
+          />
+        </TextField>
         <div className={styles.translateSidebar__section}>
           <h6 className={styles.translateSidebar__subtitle}>Description</h6>
           <p>Lorem dfasdnc skjdnckjasnds casdncnsadc</p>
@@ -101,10 +142,18 @@ export const TranslateSidebar: React.FC<NotesTranslatebarProps> = ({
           </TextField>
           <TextField label="Deck">
             <select>
-              <option className={styles.option} value="">Select a deck</option>
-              <option className={styles.option} value="deck1">Deck 1</option>
-              <option className={styles.option} value="deck2">Deck 2</option>
-              <option className={styles.option} value="deck3">Deck 3</option>
+              <option className={styles.option} value="">
+                Select a deck
+              </option>
+              <option className={styles.option} value="deck1">
+                Deck 1
+              </option>
+              <option className={styles.option} value="deck2">
+                Deck 2
+              </option>
+              <option className={styles.option} value="deck3">
+                Deck 3
+              </option>
             </select>
           </TextField>
           <FormError message={error} />
