@@ -39,8 +39,8 @@ export default function PageBook({ params }: { params: { id: string } }) {
       });
   };
 
-  // const fileUrl = "https://idiomind-frontend.vercel.app/docExample/cuestionario.pdf";
-  const fileUrl = "https://http://localhost:3000//docExample/cuestionario.pdf";
+  const fileUrl = "https://idiomind-frontend.vercel.app/docExample/cuestionario.pdf";
+  // const fileUrl = "https://http://localhost:3000//docExample/cuestionario.pdf";
 
   return (
     <>
