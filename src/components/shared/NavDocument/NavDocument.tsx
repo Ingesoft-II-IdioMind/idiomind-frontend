@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styles from "./NavDocument.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDeleteDocumentMutation, useEditDocumentMutation } from "app/redux/features/docApiSlice";
 import { Modal } from "../Modal";
 import { Button } from "../Button";
@@ -20,11 +20,16 @@ export default function NavDocument({name, autor, id}:{name:string,autor:string 
   const [isEditDocumentOpen, setIsEditDocumentOpen] = useState(false);
   const [deleteDocument2, { isLoading }] = useDeleteDocumentMutation();
   const [editDocument2, { isLoading: isLoading2 }] = useEditDocumentMutation();
+  const [nameDoc, setNameDoc] = useState<string>("");
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [editTitle, setEditTitle] = useState("");
   const [editAutor, setEditAutor] = useState("");
   const { setIsSidebarOpen } = useSidebar();
+
+  useEffect(() => {
+    setNameDoc(name);
+  }, []);
 
   const handleOpenNotes = () => {
     setIsSidebarOpen(true);
@@ -53,6 +58,8 @@ export default function NavDocument({name, autor, id}:{name:string,autor:string 
       .unwrap()
       .then(() => {
         toast.success("Document updated successfully");
+        setIsEditDocumentOpen(false);
+        setNameDoc(editTitle);
       })
       .catch((e) => {
         toast.error(
@@ -70,7 +77,7 @@ export default function NavDocument({name, autor, id}:{name:string,autor:string 
         </svg>
       </Link>
 
-      <h1 className={styles.navDocument__title}>{name}</h1>
+      <h1 className={styles.navDocument__title}>{nameDoc}</h1>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 128 512"
