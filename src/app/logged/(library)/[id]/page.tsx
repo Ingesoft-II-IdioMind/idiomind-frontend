@@ -39,7 +39,7 @@ export default function PageBook({ params }: { params: { id: string } }) {
       });
   };
 
-  const fileUrl = "http://localhost:3000/docExample/cuestionario.pdf";
+  const fileUrl = "https://idiomind-frontend.vercel.app/docExample/cuestionario.pdf";
 
   return (
     <>
@@ -47,8 +47,8 @@ export default function PageBook({ params }: { params: { id: string } }) {
       {isLoading ? (
           <Loader color="orange"></Loader>
       ) : (
-        // <PDFViewer fileUrl={fileUrl} idDoc={params.id}/>
-        <PDFViewer fileUrl={document.archivo_url} idDoc={params.id} />
+        <PDFViewer fileUrl={fileUrl} idDoc={params.id}/>
+        // <PDFViewer fileUrl={document.archivo_url} idDoc={params.id} />
       )}
     </>
   );
