@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "./NavDocument.module.scss";
 import { useState } from "react";
-import { useDeleteDocumentMutation } from "app/redux/features/docApiSlice";
+import { useDeleteDocumentMutation, useEditDocumentMutation } from "app/redux/features/docApiSlice";
 import { Modal } from "../Modal";
 import { Button } from "../Button";
 import { FormError } from "app/components/home/auth/FormError";
@@ -9,15 +9,21 @@ import { FormSuccess } from "app/components/home/auth/FormSuccess";
 import { useRouter } from 'next/navigation';
 import { toast } from "react-toastify";
 import { useSidebar } from "app/components/logged/Library/PDFViewer/SideBarProvider";
+import { TextField } from "../TextField";
+import { Loader } from "../Loader";
 
 
-export default function NavDocument({name,id}:{name:string, id:string}) {
+export default function NavDocument({name, autor, id}:{name:string,autor:string ,id:string}) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isDeleteDocumentOpen, setIsDeleteDocumentOpen] = useState(false);
+  const [isEditDocumentOpen, setIsEditDocumentOpen] = useState(false);
   const [deleteDocument2, { isLoading }] = useDeleteDocumentMutation();
+  const [editDocument2, { isLoading: isLoading2 }] = useEditDocumentMutation();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
+  const [editTitle, setEditTitle] = useState("");
+  const [editAutor, setEditAutor] = useState("");
   const { setIsSidebarOpen } = useSidebar();
 
   const handleOpenNotes = () => {
@@ -31,19 +37,30 @@ export default function NavDocument({name,id}:{name:string, id:string}) {
       .then(() => {
         setError(undefined);
         toast.success("Document deleted successfully");
-        setSuccess("Document deleted successfully");
         router.push('/logged');
       })
       .catch((e) => {
         setSuccess(undefined);
-        setError(
+        toast.error(
           e.data.detail ||
             "There was an error while deleting the document, please try again"
         );
       });
   }
 
-
+  function editDocument() {
+    editDocument2({id:id, autor:editAutor, titulo:editTitle})
+      .unwrap()
+      .then(() => {
+        toast.success("Document updated successfully");
+      })
+      .catch((e) => {
+        toast.error(
+          e.data.detail ||
+            "There was an error while deleting the document, please try again"
+        );
+      });
+  }
 
   return (
     <nav className={styles.navDocument}>
@@ -65,7 +82,11 @@ export default function NavDocument({name,id}:{name:string, id:string}) {
       {isOpen && (
         <ul className={styles.dropdownMenu}>
           <li onClick={handleOpenNotes}>Notes</li>
-          <li>Edit name</li>
+          <li onClick={() => {
+              setEditTitle(name);
+              setEditAutor(autor);
+              setIsEditDocumentOpen(true);
+            }}>Edit document</li>
           <li onClick={() => {
               setIsDeleteDocumentOpen(true);
             }}>Delete document</li>
@@ -99,6 +120,45 @@ export default function NavDocument({name,id}:{name:string, id:string}) {
           </Button>
           <Button outlined={true} onClick={deleteDocument}>
             Delete
+          </Button>
+        </div>
+      </Modal>
+      <Modal
+        isOpen={isEditDocumentOpen}
+        onClose={() => {
+          setIsEditDocumentOpen(false);
+        }}
+        title="Edit document"
+      >
+        <form>
+          <TextField label="Document title">
+            <input
+              type="text"
+              placeholder="Book title"
+              value={editTitle}
+              onChange={(e) => setEditTitle(e.target.value)}
+            />
+          </TextField>
+          <TextField label="Author of the text">
+            <input
+              type="text"
+              placeholder="Lernen"
+              value={editAutor}
+              onChange={(e) => setEditAutor(e.target.value)}
+            />
+          </TextField>
+        </form>
+        <div>
+          <Button
+            outlined={true}
+            onClick={() => {
+              setIsEditDocumentOpen(false);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button onClick={editDocument}>
+            {isLoading ? <Loader color="white"></Loader> : "Save"}
           </Button>
         </div>
       </Modal>

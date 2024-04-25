@@ -4,15 +4,28 @@ const authApiSliceFlash = apiSliceFlash.injectEndpoints({
 	endpoints: builder => ({
 		bringFlashcards: builder.mutation({
 			query: () => ({
-				url: '/flashcards/',
+				url: '/users/',
+				method: 'GET',
+			}),
+		}),
+		bringDeckFlashcards: builder.mutation({
+			query: ({id}) => ({
+				url: `/deck/${id}/`,
 				method: 'GET',
 			}),
 		}),
 		createFlashcard: builder.mutation({
-			query: ({titulo,autor,base64}) => ({
-				url: '/flashcards/',
+			query: ({mazo,frente,reverso,proxima_Revision}) => ({
+				url: '/users/',
 				method: 'POST',
-				body: {titulo,autor,base64},
+				body: {mazo,frente,reverso,proxima_Revision},
+			}),
+		}),
+		editFlashcard: builder.mutation({
+			query: ({mazo,frente,reverso,proxima_Revision,id}) => ({
+				url: `/users/${id}/`,
+				method: 'PUT',
+				body: {mazo,frente,reverso,proxima_Revision},
 			}),
 		}),
 		bringOneFlashcard: builder.mutation({
@@ -23,7 +36,7 @@ const authApiSliceFlash = apiSliceFlash.injectEndpoints({
 		}),
 		deleteFlashcard: builder.mutation({
 			query: ({id}) => ({
-				url: `/flashcards/${id}/`,
+				url: `/users/${id}/`,
 				method: 'DELETE',
 			}),
 		}),
@@ -32,7 +45,9 @@ const authApiSliceFlash = apiSliceFlash.injectEndpoints({
 
 export const {
 	useBringFlashcardsMutation,
+	useBringDeckFlashcardsMutation,
 	useCreateFlashcardMutation,
+	useEditFlashcardMutation,
 	useBringOneFlashcardMutation,
 	useDeleteFlashcardMutation,
 } = authApiSliceFlash;

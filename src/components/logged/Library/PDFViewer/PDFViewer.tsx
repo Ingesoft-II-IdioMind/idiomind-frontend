@@ -28,25 +28,32 @@ import { NotesSidebar } from "./NotesSidebar";
 import { TranslateSidebar } from "./TranslateSideBar";
 import { useTranslatebar, useSidebar } from "./SideBarProvider";
 import { set } from "zod";
+import { useBringNotesMutation, useCreateNoteMutation, useDeleteNoteMutation } from "app/redux/features/noteApiSlice";
+import { toast } from "react-toastify";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 interface PDFViewerProps {
   fileUrl: string;
+  idDoc: string;
 }
-interface Note {
+export interface Note {
   id: number;
   content: string;
   highlightAreas: HighlightArea[];
   quote: string;
 }
 
-export const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
+export const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl, idDoc }) => {
   const [message, setMessage] = React.useState("");
   const [notes, setNotes] = React.useState<Note[]>([]);
   const [translateWord, setTranslateWord] = React.useState("");
   let noteId = notes.length;
   const { setIsTranslatebarOpen } = useTranslatebar();
   const { setIsSidebarOpen } = useSidebar();
+  const [bringNotes2, { isLoading: isLoading }] = useBringNotesMutation();
+  const [createNote2 , { isLoading: isLoading2 }] = useCreateNoteMutation();
+  const [deleteNote2 , { isLoading: isLoading3 }] = useDeleteNoteMutation();
+  const [isClicked, setIsClicked] = useState(false);
 
   const noteEles: Map<number, HTMLElement> = new Map();
 
@@ -57,7 +64,57 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
   useEffect(() => {
     setIsSidebarOpen(false);
     setIsTranslatebarOpen(false);
+    fetchNotes();
   }, []);
+
+  const fetchNotes = () => {
+    bringNotes2(undefined)
+      .unwrap()
+      .then((response) => {
+        console.log(response);
+      const mappedResponse = response
+        .filter((item: { documento: any; }) => item.documento == idDoc)
+        .map((item: { id: any; contenido: any; highlight_areas: any; }) => {
+          return {
+            id: item.id,
+            content: item.contenido,
+            highlightAreas: item.highlight_areas,
+            quote: "x",
+          };
+        });
+
+      setNotes([...notes, ...mappedResponse]);
+      })
+      .catch((e: { data: { detail: any } }) => {
+        toast.error(e.data.detail || "There was an error while loading notes");
+      });
+  };
+
+  const createNote = (note:Note) => {
+    createNote2({documento:idDoc, contenido:note.content,highlight_areas:note.highlightAreas})
+      .unwrap()
+      .then((response) => {
+        console.log(response);
+        note.id = response.id;
+        setNotes(notes.concat([note]));
+        setIsSidebarOpen(true);
+      })
+      .catch((e: { data: { detail: any } }) => {
+        toast.error(e.data.detail || "There was an error while loading notes");
+      });
+  };
+
+  const deleteNote = (noteId: number) => {
+    deleteNote2({id: noteId})
+      .unwrap()
+      .then(() => {
+        toast.success("Note deleted successfully");
+        setNotes(notes.filter((item) => item.id !== noteId));
+      })
+      .catch((e) => {
+        toast.error(e.data.detail || "There was an error while loading notes");
+      });
+  }
 
   const handleDocumentLoad = (e: DocumentLoadEvent) => {
     setCurrentDoc(e.doc);
@@ -69,11 +126,11 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
 
   const renderHighlightTarget = (props: RenderHighlightTargetProps) => {
     const onClickTranslate = () => {
-      props.selectionRegion.width= 10;
-      console.log(props.selectedText)
+      setIsClicked(true);
+      props.selectionRegion.width = 10;
+      console.log(props.selectedText);
       // console.log(props.highlightAreas)
-
-      console.log(props)
+      console.log(props);
       setTranslateWord(props.selectedText);
       props.cancel();
       setIsTranslatebarOpen(true);
@@ -124,10 +181,9 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
           highlightAreas: props.highlightAreas,
           quote: props.selectedText,
         };
-        setNotes(notes.concat([note]));
-        // console.log(notes);
+        createNote(note);
         props.cancel();
-        setIsSidebarOpen(true);
+        
       }
     };
 
@@ -181,7 +237,7 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
                 key={idx}
                 style={Object.assign(
                   {},
-                  {background: "orange", opacity: 0.4, borderRadius: "2px"},
+                  { background: "orange", opacity: 0.4, borderRadius: "2px" },
                   props.getCssProperties(area, props.rotation)
                 )}
                 onClick={() => jumpToNote(note)}
@@ -222,8 +278,9 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
 
   return (
     <>
-      <NotesSidebar jumpToHighlightArea={jumpToHighlightArea} notes={notes} />
-      <TranslateSidebar translateWord={translateWord} />
+      <NotesSidebar jumpToHighlightArea={jumpToHighlightArea} notes={notes} deleteNote={deleteNote}/>
+      <TranslateSidebar translateWord={translateWord} isClicked={isClicked} setIsClicked={setIsClicked}/>
+      <div className={styles.floatingNotes} onClick={() => setIsSidebarOpen(true)}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H288V368c0-26.5 21.5-48 48-48H448V96c0-35.3-28.7-64-64-64H64zM448 352H402.7 336c-8.8 0-16 7.2-16 16v66.7V480l32-32 64-64 32-32z"/></svg></div>
       <div style={{ height: "90vh", width: "80%", alignSelf: "center" }}>
         <Viewer
           fileUrl={fileUrl}

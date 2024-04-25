@@ -157,7 +157,24 @@ select{
 
 }
 
+select option {
+  background-color: $main-color; /* Change this to your desired color */
+  color: $black-color; /* Change this to your desired color */
+  font-family: Arial;
+  font-weight: 500;
+  font-size: 1rem;
+}
 
+textarea{
+  width: 95%;
+  background-color: transparent;
+  padding: 0.3rem;
+  border: none;
+  font-family: $second-font;
+  font-size: 1rem;
+  font-weight: 500;
+
+}
 
 @media screen and (max-width: 1000px) {
   h1{

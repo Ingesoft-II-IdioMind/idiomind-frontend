@@ -9,7 +9,7 @@ import { Mutex } from 'async-mutex';
 
 const mutex = new Mutex();
 const baseQueryFlash = fetchBaseQuery({
-	baseUrl: `${process.env.NEXT_PUBLIC_HOST}/flashcards/api`,
+	baseUrl: `${process.env.NEXT_PUBLIC_HOST}/flashcard/api`,
 	credentials: 'include',
 });
 const baseQueryWithReauthFlash: BaseQueryFn<

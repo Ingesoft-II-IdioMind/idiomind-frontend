@@ -8,23 +8,23 @@ import { setAuth, logout } from '../features/authSlice';
 import { Mutex } from 'async-mutex';
 
 const mutex = new Mutex();
-const baseQueryDoc = fetchBaseQuery({
-	baseUrl: `${process.env.NEXT_PUBLIC_HOST}/document/api`,
+const baseQueryTranslate = fetchBaseQuery({
+	baseUrl: `${process.env.NEXT_PUBLIC_HOST}/document/translate/`, //Revisar
 	credentials: 'include',
 });
-const baseQueryWithReauthDoc: BaseQueryFn<
+const baseQueryWithReauthTranslate: BaseQueryFn<
 	string | FetchArgs,
 	unknown,
 	FetchBaseQueryError
 > = async (args, api, extraOptions) => {
 	await mutex.waitForUnlock();
-	let result = await baseQueryDoc(args, api, extraOptions);
+	let result = await baseQueryTranslate(args, api, extraOptions);
 
 	if (result.error && result.error.status === 401) {
 		if (!mutex.isLocked()) {
 			const release = await mutex.acquire();
 			try {
-				const refreshResult = await baseQueryDoc(
+				const refreshResult = await baseQueryTranslate(
 					{
 						url: '/jwt/refresh/',
 						method: 'POST',
@@ -35,7 +35,7 @@ const baseQueryWithReauthDoc: BaseQueryFn<
 				if (refreshResult.data) {
 					api.dispatch(setAuth());
 
-					result = await baseQueryDoc(args, api, extraOptions);
+					result = await baseQueryTranslate(args, api, extraOptions);
 				} else {
 					api.dispatch(logout());
 				}
@@ -44,14 +44,14 @@ const baseQueryWithReauthDoc: BaseQueryFn<
 			}
 		} else {
 			await mutex.waitForUnlock();
-			result = await baseQueryDoc(args, api, extraOptions);
+			result = await baseQueryTranslate(args, api, extraOptions);
 		}
 	}
 	return result;
 };
 
-export const apiSliceDoc = createApi({
-	reducerPath: 'documents/api',
-	baseQuery: baseQueryWithReauthDoc,
+export const apiSliceTranslate = createApi({
+	reducerPath: '/document/api/translate/', //Revisar
+	baseQuery: baseQueryWithReauthTranslate,
 	endpoints: builder => ({}),
 });
