@@ -48,7 +48,7 @@ export default function PageBook({ params }: { params: { id: string } }) {
           <Loader color="orange"></Loader>
       ) : (
         // <PDFViewer fileUrl={fileUrl} idDoc={params.id}/>
-        <PDFViewer fileUrl={document.archivo_url} />
+        <PDFViewer fileUrl={document.archivo_url} idDoc={params.id} />
       )}
     </>
   );
