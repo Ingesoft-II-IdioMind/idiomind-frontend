@@ -22,7 +22,7 @@ import { Loader } from "app/components/shared/Loader";
 
 export interface DocumentObject {
   titulo: string;
-  autro: string;
+  autor: string;
   id: string;
   archivo_url: string;
   portada_url: string;

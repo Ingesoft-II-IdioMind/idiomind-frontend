@@ -8,6 +8,7 @@ const TranslatebarContext = createContext({ isTranslatebarOpen: false, setIsTran
 export const SidebarProvider = ({ children }: { children: ReactNode }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isTranslatebarOpen, setIsTranslatebarOpen] = useState(false);
+
   
     return (
       <SidebarContext.Provider value={{ isSidebarOpen, setIsSidebarOpen }}>

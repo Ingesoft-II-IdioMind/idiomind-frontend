@@ -2,6 +2,13 @@
 
 $points_heigth:1rem;
 
+.bigContainer{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .lds_ellipsis {
   display: inline-block;
   position: relative;

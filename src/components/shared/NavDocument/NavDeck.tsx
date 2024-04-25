@@ -36,7 +36,7 @@ export default function NavDeck({
 }) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [isCreateFlashcardOpen, setIsCreateFlashcardOpen] = useState(false);
+  const [isCreateFlashcardOpen, setIsCreateFlashcardOpen] = useState(false); 
   const [isEditFlashcardOpen, setIsEditFlashcardOpen] = useState(false);
   const [isDeleteFlashcardOpen, setIsDeleteFlashcardOpen] = useState(false);
   const [isAllFlashcardOpen, setIsAllFlashcardOpen] = useState(false);

@@ -43,11 +43,11 @@ export default function PageBook({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <NavDocument name={document.titulo} id={params.id} />
+      <NavDocument name={document.titulo} id={params.id} autor={document.autor}/>
       {isLoading ? (
           <Loader color="orange"></Loader>
       ) : (
-        <PDFViewer fileUrl={fileUrl} />
+        <PDFViewer fileUrl={fileUrl} idDoc={params.id}/>
         // <PDFViewer fileUrl={document.archivo_url} />
       )}
     </>

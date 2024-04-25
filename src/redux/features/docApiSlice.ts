@@ -30,6 +30,13 @@ const authApiSliceDoc = apiSliceDoc.injectEndpoints({
 				method: 'DELETE',
 			}),
 		}),
+		editDocument: builder.mutation({
+			query: ({id, autor, titulo}) => ({
+				url: `/${id}/`,
+				method: 'PUT',
+				body: {autor, titulo},
+			}),
+		}),
 	}),
 });
 
@@ -38,4 +45,5 @@ export const {
 	useUploadDocumentMutation,
 	useBringOneDocumentMutation,
 	useDeleteDocumentMutation,
+	useEditDocumentMutation,
 } = authApiSliceDoc;
