@@ -127,6 +127,11 @@ export default function ProfileContent() {
               <input type="text" disabled={true} value="Free version" />
             </TextField>
           </li>
+          <li>
+            <TextField label="Mother lenguage">
+              <input type="text" disabled={true} value="English" />
+            </TextField>
+          </li>
         </ul>
         <ul className={styles.userOptions}>
           {/* <li>Edit names</li> */}
@@ -134,6 +139,7 @@ export default function ProfileContent() {
           <li
             onClick={() => {
               setIsEditPasswordOpen(true);
+              console.log(user);
             }}
           >
             Change password

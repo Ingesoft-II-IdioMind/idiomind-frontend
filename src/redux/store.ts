@@ -1,16 +1,24 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { apiSlice } from './services/apiSlice';
 import authReducer from './features/authSlice';
-import { apiSlice2 } from './services/apiSlice2';
+import { apiSliceDoc } from './services/apiSliceDoc';
+import { apiSliceDeck } from './services/apiSliceDeck';
+import { apiSliceFlash } from './services/apiSliceFlash';
+import { apiSliceTranslate } from './services/apiSliceTranslate';
+import { apiSliceNote } from './services/apiSliceNote';
 
 export const store = configureStore({
 	reducer: {
 		[apiSlice.reducerPath]: apiSlice.reducer,
-		[apiSlice2.reducerPath]: apiSlice2.reducer,
+		[apiSliceDoc.reducerPath]: apiSliceDoc.reducer,
+		[apiSliceDeck.reducerPath]: apiSliceDeck.reducer,
+		[apiSliceFlash.reducerPath]: apiSliceFlash.reducer,
+		[apiSliceTranslate.reducerPath]: apiSliceTranslate.reducer,
+		[apiSliceNote.reducerPath]: apiSliceNote.reducer,
 		auth: authReducer,
 	},
 	middleware: getDefaultMiddleware =>
-		getDefaultMiddleware().concat(apiSlice.middleware, apiSlice2.middleware),
+		getDefaultMiddleware().concat(apiSlice.middleware, apiSliceDoc.middleware, apiSliceDeck.middleware, apiSliceFlash.middleware, apiSliceTranslate.middleware, apiSliceNote.middleware),
 	devTools: process.env.NODE_ENV !== 'production',
 });
 

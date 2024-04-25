@@ -79,13 +79,13 @@ export default function NavbarLogged() {
         <Link href="/logged/profile" onClick={() => setConfigOpen(!configOpen)}>
           <li>Profile</li>
         </Link>
-        <Link href="/pricing" onClick={() => setConfigOpen(!configOpen)}>
+        <Link href="/logged/pricing" onClick={() => setConfigOpen(!configOpen)}>
           <li>Plans</li>
         </Link>
-        <Link href="/contactUs" onClick={() => setConfigOpen(!configOpen)}>
+        <Link href="/logged/contactUs" onClick={() => setConfigOpen(!configOpen)}>
           <li>Help</li>
         </Link>
-        <Link href="/" onClick={handleLogout}>
+        <Link href="/auth/login" onClick={handleLogout}>
           <li>Log out</li>
         </Link>
       </ul>

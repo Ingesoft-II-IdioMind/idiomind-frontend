@@ -1,30 +1,40 @@
-import { apiSlice2 } from "../services/apiSlice2";
+import { apiSliceDoc } from "../services/apiSliceDoc";
 
-const authApiSlice2 = apiSlice2.injectEndpoints({
+const authApiSliceDoc = apiSliceDoc.injectEndpoints({
 	endpoints: builder => ({
 		bringDocuments: builder.mutation({
 			query: () => ({
-				url: '/documents/',
+				url: '/',
 				method: 'GET',
 			}),
 		}),
 		uploadDocument: builder.mutation({
-			query: ({titulo,autor,base64}) => ({
-				url: '/documents/',
+			query: ({form_data}) => ({
+				url: '/',
 				method: 'POST',
-				body: {titulo,autor,base64},
+				body: form_data,
+				// headers: {
+				// 	"Content-Type": "multipart/form-data",
+				// },
 			}),
 		}),
 		bringOneDocument: builder.mutation({
 			query: ({id}) => ({
-				url: `/documents/${id}/`,
+				url: `/${id}/`,
 				method: 'GET',
 			}),
 		}),
 		deleteDocument: builder.mutation({
 			query: ({id}) => ({
-				url: `/documents/${id}/`,
+				url: `/${id}/`,
 				method: 'DELETE',
+			}),
+		}),
+		editDocument: builder.mutation({
+			query: ({id, autor, titulo}) => ({
+				url: `/${id}/`,
+				method: 'PUT',
+				body: {autor, titulo},
 			}),
 		}),
 	}),
@@ -35,4 +45,5 @@ export const {
 	useUploadDocumentMutation,
 	useBringOneDocumentMutation,
 	useDeleteDocumentMutation,
-} = authApiSlice2;
+	useEditDocumentMutation,
+} = authApiSliceDoc;
