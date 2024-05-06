@@ -10,7 +10,6 @@ import {
   useDeleteFlashcardMutation,
   useEditFlashcardMutation,
 } from "app/redux/features/flashApiSlice";
-import { NavDeck } from "app/components/shared/NavDocument";
 import {
   useBringDecksMutation,
   useBringOneDeckMutation,

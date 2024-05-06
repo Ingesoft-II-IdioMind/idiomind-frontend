@@ -9,17 +9,17 @@ const authApiSliceNote = apiSliceNote.injectEndpoints({
 			}),
 		}),
 		createNote: builder.mutation({
-			query: ({documento, contenido,highlight_areas}) => ({
+			query: ({documento, cita,contenido,highlight_areas}) => ({
 				url: '/users/',
 				method: 'POST',
-				body: {documento, contenido,highlight_areas},
+				body: {documento,cita , contenido,highlight_areas},
 			}),
 		}),
 		editNote: builder.mutation({
-			query: ({mazo,frente,reverso,proxima_Revision,id}) => ({
+			query: ({documento, cita,contenido,highlight_areas, id}) => ({
 				url: `/users/${id}/`,
 				method: 'PUT',
-				body: {mazo,frente,reverso,proxima_Revision},
+				body: {documento, cita,contenido,highlight_areas},
 			}),
 		}),
 		bringOneNote: builder.mutation({

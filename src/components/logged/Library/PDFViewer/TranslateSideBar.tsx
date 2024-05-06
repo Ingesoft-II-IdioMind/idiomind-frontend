@@ -63,7 +63,7 @@ export const TranslateSidebar: React.FC<NotesTranslatebarProps> = ({
       isFirstRender.current = false;
       return;
     }
-    console.log("isClicked", isClicked);
+    // console.log("isClicked", isClicked);
 
     if (isClicked) {
       // Código a ejecutar cuando el botón en el componente padre es clickeado
@@ -80,10 +80,10 @@ export const TranslateSidebar: React.FC<NotesTranslatebarProps> = ({
     })
       .unwrap()
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setTranslation(response[0]);
         setDescription(response[1]);
-        console.log(response[1]);
+        // console.log(response[1]);
         setExamples(response[2]);
       })
       .catch((e: { data: { detail: any } }) => {
@@ -146,9 +146,9 @@ export const TranslateSidebar: React.FC<NotesTranslatebarProps> = ({
   };
 
   const handleDeckChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setNewFlashcardDeck(e.target.value);
-    console.log(newFlashcardDeck);
+    // console.log(newFlashcardDeck);
   }
 
   if (!isTranslatebarOpen) {

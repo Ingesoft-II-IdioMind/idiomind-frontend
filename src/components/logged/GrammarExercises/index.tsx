@@ -1,5 +1,5 @@
 import { GrammarExercises } from "./GrammarExercises";
 import { GrammarLenguage } from "./GrammarLenguage";
+import ExercisePractice from "./ExercisePractice";
 
-export {GrammarExercises}
-export {GrammarLenguage}
+export {GrammarExercises, GrammarLenguage, ExercisePractice}
