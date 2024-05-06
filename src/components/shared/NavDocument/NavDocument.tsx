@@ -77,7 +77,7 @@ export default function NavDocument({name, autor, id}:{name:string,autor:string 
         </svg>
       </Link>
 
-      <h1 className={styles.navDocument__title}>{nameDoc}</h1>
+      <h1 className={styles.navDocument__title}>{name}</h1>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 128 512"

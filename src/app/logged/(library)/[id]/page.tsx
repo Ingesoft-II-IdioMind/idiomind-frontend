@@ -16,9 +16,11 @@ import { Loader } from "app/components/shared/Loader";
 
 export default function PageBook({ params }: { params: { id: string } }) {
   const [bringOneDocument2, { isLoading }] = useBringOneDocumentMutation();
-  const [document, setDocument] = useState<DocumentObject>(
-    {} as DocumentObject
-  );
+  const [document, setDocument] = useState<DocumentObject>();
+  const [documentId, setDocumentId] = useState("");
+  const [documentLink, setDocumentLink] = useState("");
+  const [documentTitle, setDocumentTitle] = useState("");
+  const [documentAutor, setDocumentAutor] = useState("");
 
   useEffect(() => {
     fetchDocument();
@@ -30,6 +32,11 @@ export default function PageBook({ params }: { params: { id: string } }) {
       .then((response) => {
         console.log(response);
         setDocument(response);
+        setDocumentId(response.id);
+        setDocumentLink(response.archivo_url);
+        setDocumentTitle(response.titulo);
+        setDocumentAutor(response.autor);
+        // console.log(document?.titulo);
       })
       .catch((e) => {
         toast.error(
@@ -40,16 +47,16 @@ export default function PageBook({ params }: { params: { id: string } }) {
   };
 
   const fileUrl = "https://idiomind-frontend.vercel.app/docExample/cuestionario.pdf";
-  // const fileUrl = "https://http://localhost:3000//docExample/cuestionario.pdf";
+  // const fileUrl = "https://http://klocalhost:3000//docExample/cuestionario.pdf";
 
   return (
     <>
-      <NavDocument name={document.titulo} id={params.id} autor={document.autor}/>
+      <NavDocument name={documentTitle} id={documentId} autor={documentAutor}/>
       {isLoading ? (
           <Loader color="orange"></Loader>
       ) : (
-        <PDFViewer fileUrl={fileUrl} idDoc={params.id}/>
-        // <PDFViewer fileUrl={document.archivo_url} idDoc={params.id} />
+        // <PDFViewer fileUrl={fileUrl} idDoc={params.id}/>
+        <PDFViewer fileUrl={documentLink} idDoc={params.id} />
       )}
     </>
   );
