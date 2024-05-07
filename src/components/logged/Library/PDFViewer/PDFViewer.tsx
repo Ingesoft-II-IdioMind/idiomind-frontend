@@ -71,8 +71,8 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl, idDoc }) => {
     bringNotes2(undefined)
       .unwrap()
       .then((response) => {
-        console.log(response);
-      const mappedResponse = response
+        // console.log(response);
+        const mappedResponse = response
         .filter((item: { documento: any; }) => item.documento == idDoc)
         .map((item: { id: any; cita:any ;contenido: any; highlight_areas: any; }) => {
           return {
@@ -94,7 +94,7 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl, idDoc }) => {
     createNote2({documento:idDoc, contenido:note.content,cita: note.quote,highlight_areas:note.highlightAreas})
       .unwrap()
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         note.id = response.id;
         setNotes(notes.concat([note]));
         setIsSidebarOpen(true);
@@ -128,9 +128,9 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl, idDoc }) => {
     const onClickTranslate = () => {
       setIsClicked(true);
       props.selectionRegion.width = 10;
-      console.log(props.selectedText);
+      // console.log(props.selectedText);
       // console.log(props.highlightAreas)
-      console.log(props);
+      // console.log(props);
       setTranslateWord(props.selectedText);
       props.cancel();
       setIsTranslatebarOpen(true);

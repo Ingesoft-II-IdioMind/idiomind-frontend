@@ -6,6 +6,8 @@ import { apiSliceDeck } from './services/apiSliceDeck';
 import { apiSliceFlash } from './services/apiSliceFlash';
 import { apiSliceTranslate } from './services/apiSliceTranslate';
 import { apiSliceNote } from './services/apiSliceNote';
+import { apiSlicePost } from './services/apiSlicePost';
+import { apiSliceGrammar } from './services/apiSliceGrammar';
 
 export const store = configureStore({
 	reducer: {
@@ -15,10 +17,12 @@ export const store = configureStore({
 		[apiSliceFlash.reducerPath]: apiSliceFlash.reducer,
 		[apiSliceTranslate.reducerPath]: apiSliceTranslate.reducer,
 		[apiSliceNote.reducerPath]: apiSliceNote.reducer,
+		[apiSlicePost.reducerPath]: apiSlicePost.reducer,
+		[apiSliceGrammar.reducerPath]: apiSliceGrammar.reducer,
 		auth: authReducer,
 	},
 	middleware: getDefaultMiddleware =>
-		getDefaultMiddleware().concat(apiSlice.middleware, apiSliceDoc.middleware, apiSliceDeck.middleware, apiSliceFlash.middleware, apiSliceTranslate.middleware, apiSliceNote.middleware),
+		getDefaultMiddleware().concat(apiSlice.middleware, apiSliceDoc.middleware, apiSliceDeck.middleware, apiSliceFlash.middleware, apiSliceTranslate.middleware, apiSliceNote.middleware, apiSlicePost.middleware,apiSliceGrammar.middleware),
 	devTools: process.env.NODE_ENV !== 'production',
 });
 
