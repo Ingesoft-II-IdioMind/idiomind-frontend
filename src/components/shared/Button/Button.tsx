@@ -9,12 +9,13 @@ interface ButtonProps {
   Icon?: ComponentType;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   children?: ReactNode;
+  isRound?: boolean; // Agregamos la nueva propiedad aquí
 }
 
-export default function Button ({ type = "button", onClick, outlined=false, haveIcon=false, Icon,disabled=false, children}: ButtonProps) {
+export default function Button ({ type = "button", onClick, outlined=false, haveIcon=false, Icon,disabled=false, children, isRound=false}: ButtonProps) {
 
     return (
-      <button type={type} className={`${styles.button} ${outlined ? styles.button__secondary : styles.button__primary}`} onClick={onClick} disabled={disabled}>
+      <button type={type} className={`${styles.button} ${outlined ? styles.button__secondary : styles.button__primary} ${isRound ? styles.button__round : ''}`} onClick={onClick} disabled={disabled}>
         {haveIcon && Icon ? <Icon /> : null}
         {children}
       </button>
