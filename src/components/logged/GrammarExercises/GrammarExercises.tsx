@@ -277,18 +277,19 @@ export const GrammarExercises: React.FC<ExercisesProps> = ({language}) => {
 
   return (
     <div className={styles.grammarContainer}>
-      {sections.map((section, index) => (
-        <div key={index} className={styles.grammarSection}>
+      {sections.map((section, sectionIndex) => (
+        <div key={100+sectionIndex} className={styles.grammarSection}>
           <h2 className={styles.grammarSection__title}>{section.title}</h2>
-          {section.exercises.map((exercise, index) => (
+          {section.exercises.map((exercise, exerciseIndex) => (
             <Link
+              key={200+sectionIndex*100+exerciseIndex} // Añade una clave única aquí
               href={`/logged/grammar/${language}-${exercise.name}`}
               className={styles.grammarSection__exercise}
             >
               <div className={styles.grammarSection__exerciseLevel}>
                 {exercise.level}
               </div>
-              <p key={index} className={styles.grammarSection__exerciseName}>
+              <p className={styles.grammarSection__exerciseName}>
                 {exercise.name}
               </p>
               <IconArrowRight />

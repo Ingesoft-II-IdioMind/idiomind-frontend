@@ -67,7 +67,10 @@ const ExercisePractice = ({
   return (
     <div className={styles.exercise}>
       {isLoading2 ? (
+        <>
+        <div className={styles.exercise__question}>Generating exercise</div>
         <Loader color="orange"></Loader>
+        </>
       ) : (
         <>
           <div className={styles.exercise__question}>{exercise}</div>
