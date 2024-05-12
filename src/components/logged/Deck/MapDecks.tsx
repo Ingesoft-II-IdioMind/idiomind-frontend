@@ -43,7 +43,7 @@ export default function MapDecks() {
     bringDecks2(undefined)
       .unwrap()
       .then((response: SetStateAction<DeckType[]>) => {
-        console.log(response);
+        // console.log(response);
         setDecks(response);
       })
       .catch((e: { data: { detail: any; }; }) => {

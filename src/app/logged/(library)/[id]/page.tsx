@@ -30,7 +30,7 @@ export default function PageBook({ params }: { params: { id: string } }) {
     bringOneDocument2({ id: params.id })
       .unwrap()
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setDocument(response);
         setDocumentId(response.id);
         setDocumentLink(response.archivo_url);

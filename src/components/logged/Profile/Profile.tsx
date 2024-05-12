@@ -20,6 +20,8 @@ import Cookies from "js-cookie";
 import { FormError } from "app/components/home/auth/FormError";
 import { FormSuccess } from "app/components/home/auth/FormSuccess";
 
+import StripeComponent from "app/components/shared/Subscription/StripeComponent";
+
 export default function ProfileContent() {
   const router = useRouter();
   const { data: user, isLoading, isFetching } = useRetrieveUserQuery();
@@ -42,6 +44,7 @@ export default function ProfileContent() {
     useChangePasswordMutation();
 
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    console.log(user);
     setPassword(event.target.value);
   };
 
@@ -106,6 +109,7 @@ export default function ProfileContent() {
     <div className={styles.profile}>
       <ProfileImage />
       <div className={styles.profileContent}>
+      <StripeComponent />
         <ul className={styles.userData}>
           <li>
             <TextField label="First Name">

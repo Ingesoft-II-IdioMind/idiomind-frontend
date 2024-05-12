@@ -31,7 +31,7 @@ export default function PostsMapping() {
     bringPosts2(undefined)
       .unwrap()
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (response != undefined) {
           setPosts(response);
         }

@@ -29,7 +29,7 @@ export const Deck = ({id,fetchDecks,name,ultima_Practica,flashcards_count}:DeckP
   const [deleteDeck2, { isLoading }] = useDeleteDeckMutation();
   const [editDeck2, { isLoading:isLoading2 }] = useEditDeckMutation();
   const [createDeck2, { isLoading:isLoading3 }] = useCreateDeckMutation();
-  console.log(id);
+  // console.log(id);
 
   const handleSvgClick = (e: React.MouseEvent) => {
     e.stopPropagation();

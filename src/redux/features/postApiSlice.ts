@@ -8,9 +8,16 @@ const authApiSlicePost = apiSlicePost.injectEndpoints({
 				method: 'GET',
 			}),
 		}),
+		bringOnePost: builder.mutation({
+			query: ({id}) => ({
+				url: `/${id}/`,
+				method: 'GET',
+			}),
+		}),
 	}),
 });
 
 export const {
 	useBringPostsMutation,
+	useBringOnePostMutation,
 } = authApiSlicePost;
