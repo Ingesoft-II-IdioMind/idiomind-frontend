@@ -79,12 +79,14 @@ export default function PracticeSpeaking({
 }: {
   params: { content: string };
 }) {
+
   // Lists with the exercises per content (word || sentences)
   const [createExamples, { isLoading: isLoading2 }] =
     useCreateExamplesMutation();
   const [evaluatePron, { isLoading: isLoading3 }] = useEvaluatePronMutation();
-  const [sentences, setSentences] = useState<string[]>([]);
-  // const sentences = ["oración uno", "oración dos", "oración tres", "oración cuatro"]
+  // Descomentar cuando se traigan del backend
+  //const [sentences, setSentences] = useState<string[]>([]);
+  const sentences = ["oración uno", "Este es un audio en formato WAV", "oración tres", "oración cuatro"] // Eliminar estas oraciones de ejemplo
   const [audios, setAudios] = useState<string[]>([]);
 
   // A single exercise
@@ -114,13 +116,15 @@ export default function PracticeSpeaking({
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [recordingStopped, setRecordingStopped] = useState<boolean>(false);
 
+  // Endpoint for creating five examples to practice (contet -> list[5 .wav audios in base64 (string)], list[sentences in string])
   const fetchExamples = () => {
     createExamples({
       content: params.content,
     })
       .unwrap()
       .then((response) => {
-        setSentences(response[0]);
+        // Descomentar cuando se traigan del backend
+        //setSentences(response[0]);
         setAudios(
           response[1].map((audio: string) => `data:audio/wav;base64,${audio}`)
         );
@@ -137,7 +141,9 @@ export default function PracticeSpeaking({
       });
   };
 
+  // Endpoint for evaluating the audio created (currentPronunciation) and the sentences examples (currentSentence)
   const evaluatePronunciation = () => {
+    console.log("CurrentPronunciation: ", currentPronunciation);
     evaluatePron({
       audio_file_base64: currentPronunciation,
       target_sentence: currentSentence,
@@ -146,7 +152,6 @@ export default function PracticeSpeaking({
       .then((response) => {
         setCorrect(response[0]);
         setIncorrect(response[1]);
-        console.log(correct);
       })
       .catch((e: { data: { detail: any } }) => {
         toast.error(
@@ -162,13 +167,7 @@ export default function PracticeSpeaking({
   }, []);
 
 
-  const retry = () => {
-    setCorrect(null);
-    setIncorrect(null);
-    setRecordingStopped(false);
-    setChunks([]);
-  };
-
+  // start recording: When the record Button is clicked for the first time
   const startRecording = () => {
     navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
       const newMediaRecorder = new MediaRecorder(stream);
@@ -182,56 +181,63 @@ export default function PracticeSpeaking({
       };
   
       newMediaRecorder.onstop = async () => {
-        const blob = new Blob(chunks, { type: "audio/wav; codecs=0" });
-        console.log("Audio blob:", blob);
+        const blob = new Blob(chunks, { type: "audio/wav" });
         const audioURL = window.URL.createObjectURL(blob);
-        console.log("Audio URL:", audioURL);
-  
         if (audioRef.current) {
           audioRef.current.src = audioURL;
-          console.log("Audio element updated:", audioRef.current);
         }
-  
-        // Convert audio to base64 (using FileReader)
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = () => {
-          if (reader.result) {
-            const base64Audio = reader.result as string;
-            console.log("Audio in base64:", base64Audio);
-            // You can use this base64Audio for further processing or storage
-          } else {
-            console.error("Error converting audio to base64");
-          }
-        };
-      };
-  
-      
-      
-
+      };  
     });
   };
   
 
   useEffect(() => {
     if (chunks.length > 0) {
-      const blob = new Blob(chunks, { type: "audio/wav; codecs=0" });
+      const blob = new Blob(chunks, { type: "audio/wav" });
       const audioURL = window.URL.createObjectURL(blob);
       if (audioRef.current) {
         audioRef.current.src = audioURL;
       }
+      // Convert audio to base64 (using FileReader)
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => {
+        if (reader.result) {
+          let base64Audio = reader.result as string;
+          //elimina la parte 'data:audio/wav;base64,' de base64Audio
+          base64Audio = base64Audio.replace('data:audio/wav;base64,', '');
+          setCurrentPronunciation(base64Audio)
+        } else {
+          console.error("Error converting audio to base64");
+        }
+      };
     }
   }, [chunks]);
+  
 
+  useEffect(() => {
+    evaluatePronunciation();
+  }, [currentPronunciation]);
+  
+
+  // When the record Button is clicked for the second time
   const stopRecording = () => {
     if (mediaRecorder) {
       mediaRecorder.stop();
-      evaluatePronunciation();
       setRecordingStopped(true);
       setRecording(!recording);
     }
   };
 
+  // When the retry Button is clicked
+  const retry = () => {
+    setCorrect(null);
+    setIncorrect(null);
+    setRecordingStopped(false);
+    setChunks([]);
+  };
+
+  // When the record Button is clicked
   const record = () => {
     if (!recording) {
       startRecording();
@@ -240,6 +246,7 @@ export default function PracticeSpeaking({
     }
   };
 
+  // When the next Button is clicked
   const next = () => {
     const nextSentence = sentences.shift();
     if (nextSentence) {
@@ -279,6 +286,7 @@ export default function PracticeSpeaking({
         )}
         <Button haveIcon={true} isRound={true} Icon={nextIcon} onClick={next} />
       </div>
+      {/* Pptional to listen to the audio that has just been recorded */}
       <audio ref={audioRef} controls />
     </>
   );
