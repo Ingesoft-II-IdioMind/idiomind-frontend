@@ -3,24 +3,16 @@
 import styles from "../../../styles/Speaking.module.scss";
 import { Button } from "app/components/shared/Button";
 import { SpeakingWord } from "app/components/logged/Speaking/SpeakingWord/SpeakingWord";
+import { useBringNotesMutation } from "app/redux/features/noteApiSlice";
+import React, { useEffect } from "react";
+import {
+  HighlightArea,
+} from "@react-pdf-viewer/highlight";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { Loader } from "app/components/shared/Loader";
 
-
-const Icon1 = () => (
-  <svg
-    width="64"
-    height="71"
-    viewBox="0 0 64 71"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M61.0608 31.1979C61.8262 31.6282 62.4617 32.247 62.9036 32.9921C63.3455 33.7372 63.5781 34.5825 63.5781 35.4429C63.5781 36.3033 63.3455 37.1485 62.9036 37.8936C62.4617 38.6388 61.8262 39.2575 61.0608 39.6878L7.84956 69.5933C7.08414 70.0235 6.21587 70.25 5.33203 70.25C4.44819 70.25 3.57993 70.0235 2.81449 69.5933C2.04906 69.1631 1.41344 68.5443 0.971502 67.7992C0.529568 67.0541 0.296897 66.2088 0.296875 65.3484V5.54224C0.296897 4.68182 0.529568 3.83655 0.971502 3.09141C1.41344 2.34627 2.04906 1.72751 2.81449 1.2973C3.57993 0.8671 4.44819 0.64062 5.33203 0.640625C6.21587 0.64063 7.08414 0.867121 7.84956 1.29733L61.0608 31.2029V31.1979Z"
-      fill="white"
-    />
-  </svg>
-);
-
-const Icon2 = () => (
+const shuffleIcon = () => (
   <svg
     width="74"
     height="67"
@@ -44,7 +36,50 @@ const Icon2 = () => (
   </svg>
 );
 
+export interface Note {
+  id: number;
+  content: string;
+  highlightAreas: HighlightArea[];
+  quote: string;
+}
 export default function Speaking() {
+  const [bringNotes2, { isLoading: isLoading }] = useBringNotesMutation();
+  const [notes, setNotes] = React.useState<Note[]>([]);
+  const router = useRouter();
+
+  const randomContent = () => {
+    if (notes.length > 0) {
+      const randomIndex = Math.floor(Math.random() * notes.length);
+      const randomNote = notes[randomIndex];
+      router.push(`/logged/speaking/${randomNote.content}`);
+    } else {
+      toast.error("No notes available for selection");
+    }
+  };
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
+
+  const fetchNotes = () => {
+    bringNotes2(undefined)
+      .unwrap()
+      .then((response) => {
+        console.log(response);
+      const mappedResponse = response
+        .map((item: { id: any; cita:any; contenido: any; highlight_areas: any; }) => {
+          return {
+            content: item.cita,
+          };
+        });
+
+      setNotes([...notes, ...mappedResponse]);
+      })
+      .catch((e: { data: { detail: any } }) => {
+        toast.error(e.data.detail || "There was an error while loading unknown vocabulary.");
+      });
+  };
+
   return (
     <>
       <h1>Speaking</h1>
@@ -52,37 +87,23 @@ export default function Speaking() {
         <Button
           haveIcon={true}
           isRound={true}
-          Icon={Icon1}
-        />
-        <Button
-          haveIcon={true}
-          isRound={true}
-          Icon={Icon2}
+          Icon={shuffleIcon}
+          onClick={randomContent}
         />
       </div>
-      <div>
-        <SpeakingWord
-          id={"1"}
-          fetchWords={function (): void {
-            console.log("Function not implemented.");
-          }}
-          word={"Word"}
-        />
-        <SpeakingWord
-          id={"1"}
-          fetchWords={function (): void {
-            console.log("Function not implemented.");
-          }}
-          word={"Word"}
-        />
-        <SpeakingWord
-          id={"1"}
-          fetchWords={function (): void {
-            console.log("Function not implemented.");
-          }}
-          word={"Word"}
-        />
-      </div>
+      {isLoading ? (
+            <Loader color="orange"></Loader>
+          ) : (
+        <div>
+          {notes.map((note, index) => (
+              <SpeakingWord
+                key={index}
+                content={note.content}
+              />
+            ))}
+          
+        </div>
+      )}
     </>
   );
 }

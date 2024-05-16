@@ -1,26 +1,21 @@
-//import { useState } from "react";
 import styles from "../../Deck/Deck.module.scss";
 import { useRouter } from "next/navigation";
 
 interface SpeakingWordProps {
-  id: string;
-  fetchWords: () => void;
-  word: string;
+  content: string;
 }
 
-export const SpeakingWord = ({ id, fetchWords, word }: SpeakingWordProps) => {
+export const SpeakingWord = ({ content }: SpeakingWordProps) => {
   const router = useRouter();
-  //const [wordSpeaking, setNameDeck] = useState<string>("");
-  console.log(id);
 
   const handleClick = () => {
-    router.push(`/logged/speaking/practice`);
+    router.push(`/logged/speaking/${content}`);
   };
 
   return (
     <>
       <div className={styles.deckNav} onClick={handleClick}>
-        <h6 className={styles.deckNav__name}>{word}</h6>
+        <h6 className={styles.deckNav__name}>{content}</h6>
         <div className={styles.deckNav__options}>
           <svg
             width="30"
