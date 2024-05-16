@@ -1,30 +1,29 @@
 
 
+import { loadStripe } from '@stripe/stripe-js';
 import { useRouter } from 'next/navigation';
 import QueryString from 'query-string';
-
+import React from 'react';
 import { useEffect } from 'react';
 
-const StripeComponent = () => {
+const stripePromise = loadStripe(
+	process.env.NEXT_PUBLIC_HOST || ''
+);
+
+export default function StripeComponent() {
 	const router = useRouter();
 
-	useEffect(() => {
+	React.useEffect(() => {
 		// Check to see if this is a redirect back from Checkout
-		// const query = new URLSearchParams(window.location.search);
-		const values = QueryString.parse(String(router));
-
-		if (values.success) {
-			console.log(
-				'Order placed! You will receive an email confirmation.'
-			);
+		const query = new URLSearchParams(window.location.search);
+		if (query.get('success')) {
+		  console.log('Order placed! You will receive an email confirmation.');
 		}
-
-		if (values.canceled) {
-			console.log(
-				"Order canceled -- continue to shop around and checkout when you're ready."
-			);
+	
+		if (query.get('canceled')) {
+		  console.log('Order canceled -- continue to shop around and checkout when you’re ready.');
 		}
-	}, []);
+	  }, []);
 
 	return (
 		<section>
@@ -50,7 +49,6 @@ const StripeComponent = () => {
 	);
 };
 
-export default StripeComponent;
 
 
 // import { Elements } from "@stripe/react-stripe-js";

@@ -109,7 +109,7 @@ export default function ProfileContent() {
     <div className={styles.profile}>
       <ProfileImage />
       <div className={styles.profileContent}>
-      <StripeComponent />
+      {/* <StripeComponent /> */}
         <ul className={styles.userData}>
           <li>
             <TextField label="First Name">
