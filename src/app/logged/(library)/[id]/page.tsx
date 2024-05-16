@@ -55,8 +55,8 @@ export default function PageBook({ params }: { params: { id: string } }) {
       {isLoading ? (
           <Loader color="orange"></Loader>
       ) : (
-        // <PDFViewer fileUrl={fileUrl} idDoc={params.id}/>
-        <PDFViewer fileUrl={documentLink} idDoc={params.id} />
+        <PDFViewer fileUrl={fileUrl} idDoc={params.id}/>
+        // <PDFViewer fileUrl={documentLink} idDoc={params.id} />
       )}
     </>
   );

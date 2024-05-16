@@ -45,6 +45,7 @@ export default function Pricing() {
           name = "Free explorer"
           periodicity= "No payment"
           cardTypeRecommended={false}
+          registered = {false}
         />
         <PricingPlan
           benefits={benefitsMonth}
@@ -52,6 +53,7 @@ export default function Pricing() {
           price={"7$ /month"}
           periodicity={"Montly payment"}
           cardTypeRecommended={true}
+          registered = {false}
         />
         <PricingPlan
           benefits={benefitsFree}
@@ -59,6 +61,7 @@ export default function Pricing() {
           price={"70$ /year"}
           periodicity={"Annual payment"}
           cardTypeRecommended={false}
+          registered = {false}
         />
       </div>
     </>

@@ -10,10 +10,7 @@ export const AboutUsContent = () => {
         <div className={styles.aboutVision}>
           <h2>Vision:</h2>
           <p>
-            At IdioMind we strive to facilitate access and mastery of new
-            languages for our users through innovative tools. We constantly work
-            to ensure that our users have an immersive, pleasant and, above all,
-            effective experience when learning a new language.
+            By 2027 Idiomind will become a benchmark in language learning, being recognized for being a platform with a unique experience that integrates real-time translation, creation of flashcards, notes and exercises to strengthen linguistic skills.
           </p>
         </div>
       </section>
@@ -23,12 +20,7 @@ export const AboutUsContent = () => {
         <div className={styles.aboutMision}>
           <h2>Mision:</h2>
           <p>
-            By 2027 IdioMind will become a benchmark in language learning
-            through the use of innovative technology, offering a platform that
-            motivates and accompanies thousands of people in the process of
-            mastering a new language; breaking cultural barriers and providing
-            more opportunities, both work and personal, in an increasingly
-            interconnected world.
+          At Idiomind we strive to simplify language learning by allowing our users to translate documents in real time with context, create notes, flashcards and have access to a wide variety of grammar and phonics exercises, everything in one integrated platform.
           </p>
         </div>
       </section>
