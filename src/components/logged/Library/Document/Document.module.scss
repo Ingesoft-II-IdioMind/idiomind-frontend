@@ -36,6 +36,11 @@
         position: absolute;
     
         .documentTitle {
+            display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        overflow: hidden;
             color: $main-color;
             text-align: center;
             margin: 12px;

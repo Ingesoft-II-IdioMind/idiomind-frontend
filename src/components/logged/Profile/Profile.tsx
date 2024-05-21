@@ -128,7 +128,7 @@ export default function ProfileContent() {
           </li>
           <li>
             <TextField label="Subscription">
-              <input type="text" disabled={true} value="Free version" />
+              <input type="text" disabled={true} value="Free explorer" />
             </TextField>
           </li>
           <li>

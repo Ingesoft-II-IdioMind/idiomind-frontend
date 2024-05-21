@@ -19,7 +19,7 @@ const nextConfig = {
         return config
       },
       images: {
-        domains: ['storage.googleapis.com'],
+        domains: ['storage.googleapis.com','res.cloudinary.com'],
       },
       
 };
