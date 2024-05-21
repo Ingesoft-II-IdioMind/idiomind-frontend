@@ -5,6 +5,7 @@ import styles from "./PricingPlan.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { useStripeAnnualMutation } from "app/redux/features/stripeApiSlice";
 
 interface PricingPlanProps {
   benefits: string[];
@@ -27,6 +28,7 @@ export const PricingPlan: React.FC<PricingPlanProps> = ({
     ? "/icons/checkIconRecommended.svg"
     : "/icons/checkIcon.svg";
   const titleText = cardTypeRecommended ? "Most Common" : "Recommended";
+
 
   React.useEffect(() => {
 		// Check to see if this is a redirect back from Checkout
@@ -63,7 +65,6 @@ export const PricingPlan: React.FC<PricingPlanProps> = ({
           <form
             action={`${process.env.NEXT_PUBLIC_HOST}/api/stripe/checkout/monthly`}
             method="POST"
-            credentials= 'same-origin'
           >
             <Button type="submit">Choose this plan</Button>
           </form>
@@ -71,7 +72,6 @@ export const PricingPlan: React.FC<PricingPlanProps> = ({
           <form
             action={`${process.env.NEXT_PUBLIC_HOST}/api/stripe/checkout/annual`}
             method="POST"
-            credentials= 'same-origin'
           >
             <Button type="submit">Choose this plan</Button>
           </form>
