@@ -82,3 +82,15 @@
     transform: translateX(0);
   }
 }
+
+.link{
+  color: $main-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  &:hover{
+    color: $primary-color;
+  }
+}

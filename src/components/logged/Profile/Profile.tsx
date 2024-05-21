@@ -21,6 +21,7 @@ import { FormError } from "app/components/home/auth/FormError";
 import { FormSuccess } from "app/components/home/auth/FormSuccess";
 
 import StripeComponent from "app/components/shared/Subscription/StripeComponent";
+import Link from "next/link";
 
 export default function ProfileContent() {
   const router = useRouter();
@@ -139,7 +140,7 @@ export default function ProfileContent() {
         </ul>
         <ul className={styles.userOptions}>
           {/* <li>Edit names</li> */}
-          <li>Change subscription</li>
+          
           <li
             onClick={() => {
               setIsEditPasswordOpen(true);
@@ -148,6 +149,7 @@ export default function ProfileContent() {
           >
             Change password
           </li>
+          <li><Link href="/logged/pricing" className={styles.link}>Change subscription</Link></li>
           <li
             onClick={() => {
               setIsDeleteAccountOpen(true);

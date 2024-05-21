@@ -38,7 +38,7 @@ export const PricingPlan: React.FC<PricingPlanProps> = ({
 		if (query.get('canceled')) {
 		  console.log('Order canceled -- continue to shop around and checkout when you’re ready.');
 		}
-	  }, []);
+	}, []);
 
   return (
     <div
@@ -63,6 +63,7 @@ export const PricingPlan: React.FC<PricingPlanProps> = ({
           <form
             action={`${process.env.NEXT_PUBLIC_HOST}/api/stripe/checkout/monthly`}
             method="POST"
+            credentials= 'same-origin'
           >
             <Button type="submit">Choose this plan</Button>
           </form>
@@ -70,6 +71,7 @@ export const PricingPlan: React.FC<PricingPlanProps> = ({
           <form
             action={`${process.env.NEXT_PUBLIC_HOST}/api/stripe/checkout/annual`}
             method="POST"
+            credentials= 'same-origin'
           >
             <Button type="submit">Choose this plan</Button>
           </form>

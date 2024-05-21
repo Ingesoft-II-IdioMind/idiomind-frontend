@@ -8,7 +8,7 @@ import { useCreateExamplesMutation } from "app/redux/features/examplesApiSlice";
 import { useEvaluatePronMutation } from "app/redux/features/evaluateApiSlice";
 import { toast } from "react-toastify";
 import styles from "../../../../styles/Speaking.module.scss";
-import { set } from "zod";
+import { Loader } from "app/components/shared/Loader";
 
 const retryIcon = () => (
   <svg
@@ -80,27 +80,22 @@ export default function PracticeSpeaking({
 }: {
   params: { content: string };
 }) {
-  // Lists with the exercises per content (word || sentences)
+
+  // Lists with the exercises per content (word || sentence)
   const [createExamples, { isLoading: isLoading2 }] =
     useCreateExamplesMutation();
   const [evaluatePron, { isLoading: isLoading3 }] = useEvaluatePronMutation();
-  // Descomentar cuando se traigan del backend
-  //const [sentences, setSentences] = useState<string[]>([]);
-  const sentences = [
-    "oración uno",
-    "Este es un audio en formato WAV",
-    "oración tres",
-    "oración cuatro",
-  ]; // Eliminar estas oraciones de ejemplo
+  const [sentences, setSentences] = useState<string[]>([]);
   const [audios, setAudios] = useState<string[]>([]);
+  const [emptyAudio, setEmptyAudio] = useState<boolean>(true);
+
   // A single exercise
+  const [currentExerciseIndex, setCurrentExerciseIndex] = useState<number>(0);
   const [currentSentence, setCurrentSentence] = useState<string>("");
   const [currentAudio, setCurrentAudio] = useState<string>("");
   const [correct, setCorrect] = useState<string[] | null>([]);
   const [incorrect, setIncorrect] = useState<string[] | null>([]);
   const [currentPronunciation, setCurrentPronunciation] = useState<string>("");
-
-  const router = useRouter();
 
   // Recording stuff
   const [recording, setRecording] = useState<boolean>(false);
@@ -109,72 +104,87 @@ export default function PracticeSpeaking({
   );
   const [chunks, setChunks] = useState<BlobPart[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [emptyAudio, setEmptyAudio] = useState<boolean>(true);
   const [recordingStopped, setRecordingStopped] = useState<boolean>(false);
 
-  // Endpoint for creating five examples to practice (contet -> list[5 .wav audios in base64 (string)], list[sentences in string])
-  // const fetchExamples = () => {
-  //   createExamples({
-  //     content: params.content,
-  //   })
-  //     .unwrap()
-  //     .then((response) => {
-  //       // Descomentar cuando se traigan del backend
-  //       //setSentences(response[0]);
-  //       setAudios(
-  //         response[1].map((audio: string) => `data:audio/wav;base64,${audio}`)
-  //       );
-  //     })
-  //     .catch((e: { data?: { detail: any } }) => {
-  //       if (e.data) {
-  //         toast.error(
-  //           e.data.detail ||
-  //             "There was an error while fetching examples, please try again"
-  //         );
-  //       } else {
-  //         toast.error("An unexpected error occurred. Please try again.");
-  //       }
-  //     });
-  // };
-
-  // Endpoint for evaluating the audio created (currentPronunciation) and the sentences examples (currentSentence)
-  // const evaluatePronunciation = () => {
-  //   console.log("CurrentPronunciation: ", currentPronunciation);
-  //   evaluatePron({
-  //     audio_file_base64: currentPronunciation,
-  //     target_sentence: currentSentence,
-  //   })
-  //     .unwrap()
-  //     .then((response) => {
-  //       setCorrect(response[0]);
-  //       setIncorrect(response[1]);
-  //     })
-  //     .catch((e: { data: { detail: any } }) => {
-  //       toast.error(
-  //         e.data.detail ||
-  //           "There was an error while fetching evaluating the pronunciation, please try again"
-  //       );
-  //     });
-  // };
-
-  // // Call fetchExamples in useEffect when component mounts
-  // useEffect(() => {
-  //   fetchExamples();
-  // }, []);
+  // Router
+  const router = useRouter();
 
   // Set initial sentence and initial audio
   useEffect(() => {
-    const initialSentence = sentences.shift();
-    setCurrentSentence(initialSentence || "");
+    setCurrentSentence(sentences[currentExerciseIndex]);
+    setCurrentAudio(audios[currentExerciseIndex]);
+  }, [sentences, audios, currentExerciseIndex]);
 
-    const initialAudio = audios.shift();
-    setCurrentAudio(initialAudio || "");
-    console.log(audioRef);
+
+  // Endpoint for creating five examples to practice (contet -> list[5 .ogx audios in base64 (string)], list[sentences in string])
+  const fetchExamples = () => {
+    createExamples({
+      content: params.content,
+    })
+      .unwrap()
+      .then((response) => {
+        setSentences(response[0]);
+        setAudios(
+          response[1].map((audio:string) => `data:audio/ogg;base64,${audio}`)
+        );
+      })
+      // .catch((e) => {
+      //   if (e.data) {
+      //     toast.error(
+      //       e.data.detail ||
+      //       "There was an error while fetching examples, please try again"
+      //     );
+      //   } else {
+      //     toast.error("An unexpected error occurred. Please try again.");
+      //   }
+      // });
+  };
+
+
+  // Endpoint for evaluating the audio created (currentPronunciation) and the sentences examples (currentSentence)
+  const evaluatePronunciation = () => {
+    evaluatePron({
+      audio_file_base64: currentPronunciation,
+      target_sentence: currentSentence,
+    })
+      .unwrap()
+      .then((response) => {
+        setCorrect(response[0]);
+        setIncorrect(response[1]);
+      })
+      .catch((e: { data: { detail: any } }) => {
+        toast.error(
+          e.data.detail ||
+            "There was an error while fetching evaluating the pronunciation, please try again"
+        );
+      });
+  };
+
+  // Call fetchExamples in useEffect when component mounts
+  useEffect(() => {
+    fetchExamples();
   }, []);
+
+
+  // start recording: When the record Button is clicked for the first time
+  const startRecording = () => {
+    navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+      const newMediaRecorder = new MediaRecorder(stream);
+      setMediaRecorder(newMediaRecorder);
+  
+      newMediaRecorder.start();
+      setRecording(!recording);
+  
+      newMediaRecorder.ondataavailable = (e) => {
+        setChunks((prev) => [...prev, e.data]);
+      };
+    });
+  };
+  
 
   useEffect(() => {
     if (chunks.length > 0) {
-      const blob = new Blob(chunks, { type: "audio/wav" });
+      const blob = new Blob(chunks, { type: "audio/ogx" });
       const audioURL = window.URL.createObjectURL(blob);
       if (audioRef.current) {
         audioRef.current.src = audioURL;
@@ -185,55 +195,43 @@ export default function PracticeSpeaking({
       reader.onloadend = () => {
         if (reader.result) {
           let base64Audio = reader.result as string;
-          //elimina la parte 'data:audio/wav;base64,' de base64Audio
-          base64Audio = base64Audio.replace("data:audio/wav;base64,", "");
-          setCurrentPronunciation(base64Audio);
+          //elimina la parte 'data:audio/ ogx;base64,' de base64Audio
+          base64Audio = base64Audio.replace('data:audio/ogx;base64,', '');
+          setCurrentPronunciation(base64Audio)
         } else {
           console.error("Error converting audio to base64");
         }
       };
     }
   }, [chunks]);
+  
 
-  // useEffect(() => {
-  //   evaluatePronunciation();
-  // }, [currentPronunciation]);
+  // Llamar a evaluatePronunciation solo cuando currentPronunciation cambié su valor y sea diferente de null
+  useEffect(() => {
+    if (currentPronunciation !== "") {
+      evaluatePronunciation();
+    }
+  }, [currentPronunciation]);
+  
 
-  const startRecording = () => {
-    setCorrect(null);
-    setIncorrect(null);
-    setRecordingStopped(false);
-    setChunks([]);
-    navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-      const newMediaRecorder = new MediaRecorder(stream);
-      setMediaRecorder(newMediaRecorder);
-
-      newMediaRecorder.start();
-      setRecording(!recording);
-
-      newMediaRecorder.ondataavailable = (e) => {
-        setChunks((prev) => [...prev, e.data]);
-      };
-
-      newMediaRecorder.onstop = async () => {
-        const blob = new Blob(chunks, { type: "audio/wav" });
-        const audioURL = window.URL.createObjectURL(blob);
-        if (audioRef.current) {
-          audioRef.current.src = audioURL;
-        }
-      };
-    });
-  };
-
+  // When the record Button is clicked for the second time
   const stopRecording = () => {
     if (mediaRecorder) {
       mediaRecorder.stop();
       setRecordingStopped(true);
       setRecording(!recording);
+      setEmptyAudio(false);
     }
-    setEmptyAudio(false);
   };
-  
+
+  // When the retry Button is clicked
+  const retry = () => {
+    setCorrect(null);
+    setIncorrect(null);
+    setRecordingStopped(false);
+    setChunks([]);
+  };
+
   // When the record Button is clicked
   const record = () => {
     if (!recording) {
@@ -245,9 +243,8 @@ export default function PracticeSpeaking({
 
   // When the next Button is clicked
   const next = () => {
-    const nextSentence = sentences.shift();
-    if (nextSentence) {
-      setCurrentSentence(nextSentence);
+    if (currentExerciseIndex < sentences.length - 1) {
+      setCurrentExerciseIndex(currentExerciseIndex + 1);
     } else {
       router.push("/logged/speaking/");
     }
@@ -259,29 +256,41 @@ export default function PracticeSpeaking({
 
   return (
     <>
-      <Board
-        sentence={currentSentence}
-        audio={currentAudio}
-        correct={correct}
-        incorrect={incorrect}
-      />
-      <div className={styles.audio}>
-        {emptyAudio? (
-          <></>
+      {isLoading2 || !currentSentence || !currentAudio ?  (
+          <Loader color="orange"></Loader>
         ) : (
-          <audio ref={audioRef} className={styles.audioBar} controls />
-        )}
-      </div>
+          <>
+          <Board
+            sentence={currentSentence}
+            audio={currentAudio}
+            correct={correct}
+            incorrect={incorrect}
+          />
+          {emptyAudio? 
+            <></>
+           : 
+           <div className={styles.audio}>
+            <audio ref={audioRef} className={styles.audioBar} controls /></div>}
+            </>
+            
+        
+      )}
       <div className={styles.speakingButtons}>
-   
         <Button
           haveIcon={true}
           isRound={true}
-          Icon={recordIcon}
-          onClick={record}
-          isRecording={recording}
+          Icon={retryIcon}
+          onClick={retry}
         />
-
+        {!recordingStopped && (
+          <Button
+            haveIcon={true}
+            isRound={true}
+            Icon={recordIcon}
+            onClick={record}
+            isRecording={recording}
+          />
+        )}
         <Button haveIcon={true} isRound={true} Icon={nextIcon} onClick={next} />
       </div>
     </>
