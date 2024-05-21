@@ -5,6 +5,7 @@ import styles from "./PricingPlan.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { useStripeAnnualMutation } from "app/redux/features/stripeApiSlice";
 
 interface PricingPlanProps {
   benefits: string[];
@@ -28,6 +29,7 @@ export const PricingPlan: React.FC<PricingPlanProps> = ({
     : "/icons/checkIcon.svg";
   const titleText = cardTypeRecommended ? "Most Common" : "Recommended";
 
+
   React.useEffect(() => {
 		// Check to see if this is a redirect back from Checkout
 		const query = new URLSearchParams(window.location.search);
@@ -38,7 +40,7 @@ export const PricingPlan: React.FC<PricingPlanProps> = ({
 		if (query.get('canceled')) {
 		  console.log('Order canceled -- continue to shop around and checkout when you’re ready.');
 		}
-	  }, []);
+	}, []);
 
   return (
     <div

@@ -50,7 +50,7 @@ export default function Library() {
     bringDocuments2(undefined)
       .unwrap()
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setDocuments(response);
       })
       .catch((e) => {
@@ -101,7 +101,7 @@ export default function Library() {
       form_data.append('archivo_pdf', fileUpload);
       form_data.append('titulo', titleUpload);
       form_data.append('autor', autorUpload);
-      console.log(form_data);
+      // console.log(form_data);
       uploadDocument2({
         form_data: form_data,
       })

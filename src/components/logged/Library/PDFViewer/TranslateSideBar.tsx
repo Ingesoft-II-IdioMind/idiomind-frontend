@@ -50,11 +50,10 @@ export const TranslateSidebar: React.FC<NotesTranslatebarProps> = ({
   const [newFlashcardFront, setNewFlashcardFront] = useState<string>("");
   const [newFlashcardBack, setNewFlashcardBack] = useState<string>("");
   const [createFlashcard2, { isLoading: isLoading3 }] =
-  useCreateFlashcardMutation();
+    useCreateFlashcardMutation();
   const [decks, setDecks] = useState<DeckType[]>([]);
   const [bringDecks2, { isLoading }] = useBringDecksMutation();
   const [newFlashcardDeck, setNewFlashcardDeck] = useState<string>("");
-  
 
   const isFirstRender = useRef(true);
 
@@ -96,6 +95,7 @@ export const TranslateSidebar: React.FC<NotesTranslatebarProps> = ({
 
   const createFlashcard = () => {
     const currentDate = new Date();
+    
     createFlashcard2({
       mazo: newFlashcardDeck,
       frente: newFlashcardFront,
@@ -119,9 +119,13 @@ export const TranslateSidebar: React.FC<NotesTranslatebarProps> = ({
   const fetchDecks = () => {
     bringDecks2(undefined)
       .unwrap()
-      .then((response: SetStateAction<DeckType[]>) => {
+      .then((response: DeckType[]) => {
         // console.log(response);
         setDecks(response);
+        if (response.length > 0){
+          setNewFlashcardDeck(response[0].id);
+          console.log(newFlashcardDeck);
+        } 
       });
   };
 
@@ -132,7 +136,7 @@ export const TranslateSidebar: React.FC<NotesTranslatebarProps> = ({
   const handleSentenceInput = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setSentenceInput(event.target.value);
     if (textareaRef.current) {
-      textareaRef.current.style.height = 'inherit';
+      textareaRef.current.style.height = "inherit";
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   };
@@ -149,7 +153,7 @@ export const TranslateSidebar: React.FC<NotesTranslatebarProps> = ({
     // console.log(e.target.value);
     setNewFlashcardDeck(e.target.value);
     // console.log(newFlashcardDeck);
-  }
+  };
 
   if (!isTranslatebarOpen) {
     return null;
@@ -174,9 +178,7 @@ export const TranslateSidebar: React.FC<NotesTranslatebarProps> = ({
         ) : (
           <>
             <div className={styles.translateSidebar__section}>
-              <h6 className={styles.translateSidebar__subtitle}>
-                Original
-              </h6>
+              <h6 className={styles.translateSidebar__subtitle}>Original</h6>
               <div className={styles.translateSidebar__translatediv}>
                 <p>{translateWord}</p>
               </div>
@@ -202,7 +204,7 @@ export const TranslateSidebar: React.FC<NotesTranslatebarProps> = ({
                   value={sentenceInput}
                   placeholder="Add the sentence in which the word is used to get the translation with context."
                   onChange={handleSentenceInput}
-                  style={{ overflow: "hidden"}}
+                  style={{ overflow: "hidden" }}
                 />
               </TextField>
             </div>
@@ -224,7 +226,14 @@ export const TranslateSidebar: React.FC<NotesTranslatebarProps> = ({
               </ul>
             </div>
             <div className={styles.translateSidebar__button}>
-              <Button onClick={() => {setIsCreateFlashcardOpen(true); fetchDecks(); setNewFlashcardBack(translation); setNewFlashcardFront(translateWord.toString())}}>
+              <Button
+                onClick={() => {
+                  setIsCreateFlashcardOpen(true);
+                  fetchDecks();
+                  setNewFlashcardBack(translation);
+                  setNewFlashcardFront(translateWord.toString());
+                }}
+              >
                 Create flashcard
               </Button>
             </div>
@@ -238,48 +247,72 @@ export const TranslateSidebar: React.FC<NotesTranslatebarProps> = ({
         }}
         title="Create flashcard"
       >
-        <form>
-          <TextField label="Front side">
-            <input
-              type="text"
-              required={true}
-              placeholder="Hola"
-              value={newFlashcardFront}
-              onChange={handleNewFront}
-            />
-          </TextField>
-          <TextField label="Back side">
-            <input
-              type="text"
-              required={true}
-              placeholder="Hello"
-              value={newFlashcardBack}
-              onChange={handleNewBack}
-            />
-          </TextField>
-          <TextField label="Deck">
-            <select required value={newFlashcardDeck} onChange={(e) => handleDeckChange(e)}>
-              {decks.map((deck) => (
-                <option key={deck.id} value={deck.id}>
-                  {deck.nombre}
-                </option>
-              ))}
-            </select>
-          </TextField>
-        </form>
-        <div>
-          <Button
-            outlined={true}
-            onClick={() => {
-              setIsCreateFlashcardOpen(false);
-            }}
-          >
-            Cancel
-          </Button>
-          <Button onClick={createFlashcard}>
-            {isLoading2 ? <Loader color="white"></Loader> : "Create"}
-          </Button>
-        </div>
+        {decks.length === 0 ? (
+          <form>
+            <h6 style={{textAlign: "center"}}>Please create a deck before start creating flashcards</h6>
+            <div style={{height: "2rem"}}></div>
+            <div style={{width: "100%", alignItems: "center", display: "flex"}}>
+            <Button
+                outlined={true}
+                onClick={() => {
+                  setIsCreateFlashcardOpen(false);
+                }}
+                
+              >
+                Cancel
+              </Button>
+              </div>
+          </form>
+        ) : (
+          <>
+            <form>
+              <TextField label="Front side">
+                <input
+                  type="text"
+                  required={true}
+                  placeholder="Hola"
+                  value={newFlashcardFront}
+                  onChange={handleNewFront}
+                />
+              </TextField>
+              <TextField label="Back side">
+                <input
+                  type="text"
+                  required={true}
+                  placeholder="Hello"
+                  value={newFlashcardBack}
+                  onChange={handleNewBack}
+                />
+              </TextField>
+              <TextField label="Deck">
+                <select
+                  required
+                  value={newFlashcardDeck}
+                  onChange={(e) => handleDeckChange(e)}
+                >
+                  {decks.map((deck) => (
+                    <option key={deck.id} value={deck.id}>
+                      {deck.nombre}
+                    </option>
+                  ))}
+                </select>
+              </TextField>
+            </form>
+            <div>
+              <Button
+                outlined={true}
+                onClick={() => {
+                  setIsCreateFlashcardOpen(false);
+                }}
+              >
+                Cancel
+              </Button>
+              <Button onClick={createFlashcard}>
+                {isLoading2 ? <Loader color="white"></Loader> : "Create"}
+              </Button>
+            </div>
+          </>
+        )}
       </Modal>
     </>
   );

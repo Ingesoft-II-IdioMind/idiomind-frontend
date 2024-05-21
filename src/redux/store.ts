@@ -10,6 +10,7 @@ import { apiSlicePost } from './services/apiSlicePost';
 import { apiSliceGrammar } from './services/apiSliceGrammar';
 import { apiSliceExamples } from './services/apiSliceExamples';
 import { apiSliceEvaluate } from './services/apiSliceEvaluate';
+import { apiSliceStripe } from './services/apiSliceStripe';
 
 export const store = configureStore({
 	reducer: {
@@ -23,10 +24,11 @@ export const store = configureStore({
 		[apiSliceGrammar.reducerPath]: apiSliceGrammar.reducer,
 		[apiSliceExamples.reducerPath]: apiSliceExamples.reducer,
 		[apiSliceEvaluate.reducerPath]: apiSliceEvaluate.reducer,
+		[apiSliceStripe.reducerPath]: apiSliceStripe.reducer,
 		auth: authReducer,
 	},
 	middleware: getDefaultMiddleware =>
-		getDefaultMiddleware().concat(apiSlice.middleware, apiSliceDoc.middleware, apiSliceDeck.middleware, apiSliceFlash.middleware, apiSliceTranslate.middleware, apiSliceNote.middleware, apiSliceExamples.middleware, apiSliceEvaluate.middleware, apiSlicePost.middleware, apiSliceGrammar.middleware),
+		getDefaultMiddleware().concat(apiSlice.middleware, apiSliceDoc.middleware, apiSliceDeck.middleware, apiSliceFlash.middleware, apiSliceTranslate.middleware, apiSliceNote.middleware, apiSliceExamples.middleware, apiSliceEvaluate.middleware, apiSlicePost.middleware, apiSliceGrammar.middleware,apiSliceStripe.middleware),
 	devTools: process.env.NODE_ENV !== 'production',
 });
 
