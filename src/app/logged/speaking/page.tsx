@@ -65,7 +65,6 @@ export default function Speaking() {
     bringNotes2(undefined)
       .unwrap()
       .then((response) => {
-        console.log(response);
       const mappedResponse = response
         .map((item: { id: any; cita:any; contenido: any; highlight_areas: any; }) => {
           return {
