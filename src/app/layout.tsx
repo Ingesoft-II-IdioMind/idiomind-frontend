@@ -5,7 +5,8 @@ import "app/styles/globals.scss";
 import { SmoothScrolling } from "app/components/shared/Scroller";
 import Provider from "../redux/provider";
 import { useAppSelector } from "app/redux/hooks";
-
+import { loadScript } from "@paypal/paypal-js";
+import { useEffect } from "react";
 
 const myFont3 = Quicksand({
   subsets: ["latin"],
@@ -31,24 +32,24 @@ export const metadata: Metadata = {
   icons: { icon: "/appLogo.svg" },
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+ 
 
   return (
     <html lang="en">
       <body
         className={`${myFont2.variable} ${myFont3.variable} ${myFont4.variable}`}
       >
-      <SmoothScrolling>
-        <Provider>
+        <SmoothScrolling>
+          <Provider>
 
-        {children}
-        </Provider>
-      </SmoothScrolling>
+          {children}
+          </Provider>
+        </SmoothScrolling>
       </body>
     </html>
   );
