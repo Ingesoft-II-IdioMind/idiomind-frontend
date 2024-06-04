@@ -89,6 +89,7 @@ export default function Library() {
 
   async function uploadDocument() {
     // console.log(base64);
+
     if (titleUpload == "") {
       toast.error("Please enter a title for the document");
       return;
@@ -98,9 +99,9 @@ export default function Library() {
     } else {
       // console.log(fileUpload);
       const form_data = new FormData();
-      form_data.append('archivo_pdf', fileUpload);
-      form_data.append('titulo', titleUpload);
-      form_data.append('autor', autorUpload);
+      form_data.append("archivo_pdf", fileUpload);
+      form_data.append("titulo", titleUpload);
+      form_data.append("autor", autorUpload);
       // console.log(form_data);
       uploadDocument2({
         form_data: form_data,
@@ -174,7 +175,7 @@ export default function Library() {
         <div className={styles.documentsContainer}>
           {isLoading2 ? (
             <Loader color="orange"></Loader>
-          ) : (
+          ) : documents.length > 0 ? (
             documents.map((document, index) => (
               <Document
                 key={index}
@@ -183,6 +184,18 @@ export default function Library() {
                 onClick={() => handleClick(document.id)}
               />
             ))
+          ) : (
+            <div
+              className={styles.noBook}
+              onClick={() => {
+                setIsUploadOpen(true);
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                <path d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128H144zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39V392c0 13.3 10.7 24 24 24s24-10.7 24-24V257.9l39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z" />
+              </svg>
+              <h3>Upload your first document and begin learning.</h3>
+            </div>
           )}
         </div>
       </div>
@@ -193,45 +206,65 @@ export default function Library() {
         }}
         title="Upload document"
       >
-        <form>
-          <TextField label="Document title">
-            <input
-              type="text"
-              placeholder="Book title"
-              onChange={handleTitleUploadChange}
-            />
-          </TextField>
-          <TextField label="Author of the text">
-            <input
-              type="text"
-              placeholder="Lernen"
-              onChange={handleAutorUploadChange}
-            />
-          </TextField>
-          <TextField label="Document file">
-            <input
-              type="file"
-              accept=".pdf"
-              name="file"
-              onChange={(e) => handleFileUpload(e)}
-            />
-          </TextField>
-          <FormError message={error} />
-          <FormSuccess message={success} />
-        </form>
-        <div>
+        {documents.length >= 3 ? (
+          <form>
+          <p>
+            "You have reached your limit of 3 free document, please change your subscription to
+            continue"
+          </p>
+          <div style={{height:"16px"}}></div>
           <Button
-            outlined={true}
-            onClick={() => {
-              setIsUploadOpen(false);
-            }}
-          >
-            Cancel
-          </Button>
-          <Button onClick={uploadDocument}>
-            {isLoading ? <Loader color="white"></Loader> : "upload"}
-          </Button>
-        </div>
+          outlined={true}
+          onClick={() => {
+            setIsUploadOpen(false);
+          }}
+        >
+          Cancel
+        </Button>
+        </form>
+        ) : (
+          <>
+            <form>
+              <TextField label="Document title">
+                <input
+                  type="text"
+                  placeholder="Book title"
+                  onChange={handleTitleUploadChange}
+                />
+              </TextField>
+              <TextField label="Author of the text">
+                <input
+                  type="text"
+                  placeholder="Lernen"
+                  onChange={handleAutorUploadChange}
+                />
+              </TextField>
+              <TextField label="Document file">
+                <input
+                  type="file"
+                  accept=".pdf"
+                  name="file"
+                  onChange={(e) => handleFileUpload(e)}
+                />
+              </TextField>
+              <FormError message={error} />
+              <FormSuccess message={success} />
+            </form>
+            <div>
+              <Button
+                outlined={true}
+                onClick={() => {
+                  setIsUploadOpen(false);
+                }}
+              >
+                Cancel
+              </Button>
+              <Button onClick={uploadDocument}>
+                {isLoading ? <Loader color="white"></Loader> : "upload"}
+              </Button>
+            </div>
+          </>
+        )}
       </Modal>
     </>
   );

@@ -22,6 +22,7 @@ export default function NavbarLogged() {
       .unwrap()
       .then(() => {
         dispatch(setLogout());
+
       });
   };
 
@@ -85,9 +86,10 @@ export default function NavbarLogged() {
         <Link href="/logged/contactUs" onClick={() => setConfigOpen(!configOpen)}>
           <li>Help</li>
         </Link>
-        <Link href="/auth/login" onClick={handleLogout}>
+        <Link href="/docs/UserManual.pdf" className={styles.footer__link}><li>User manual</li></Link>
+        <div onClick={handleLogout}>
           <li>Log out</li>
-        </Link>
+        </div>
       </ul>
     </nav>
   );

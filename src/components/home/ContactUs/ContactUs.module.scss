@@ -9,8 +9,14 @@
     height: 85%;
     &__image{
         width: 50%;
-        height: 30rem;
+        height: 20rem;
         position: relative;
+        svg{
+            width: 100%;
+            height: 100%;
+        
+        }
+        
     }
     &__form{
         display: flex;
@@ -29,3 +35,4 @@
         display: none;
     }
 }
+

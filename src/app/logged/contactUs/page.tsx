@@ -1,4 +1,4 @@
-import { ContactUsForm } from "app/components/home/ContactUs";
+import ContactUsForm from "app/components/home/ContactUs/ContactUsForm";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

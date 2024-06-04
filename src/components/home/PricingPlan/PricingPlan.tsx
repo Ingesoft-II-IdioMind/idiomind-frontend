@@ -4,8 +4,11 @@ import { Button } from "app/components/shared/Button";
 import styles from "./PricingPlan.module.scss";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { useStripeAnnualMutation } from "app/redux/features/stripeApiSlice";
+import { apiCreateOrderPaypal, apiCreateOrderPaypalYear, apiOnApprovePaypal, apiOnApprovePaypalYear } from "app/services/apiPaypal";
+import { PayPalNamespace, loadScript } from "@paypal/paypal-js";
+import { toast } from "react-toastify";
 
 interface PricingPlanProps {
   benefits: string[];
@@ -28,7 +31,6 @@ export const PricingPlan: React.FC<PricingPlanProps> = ({
     ? "/icons/checkIconRecommended.svg"
     : "/icons/checkIcon.svg";
   const titleText = cardTypeRecommended ? "Most Common" : "Recommended";
-
 
   React.useEffect(() => {
 		// Check to see if this is a redirect back from Checkout
@@ -60,25 +62,36 @@ export const PricingPlan: React.FC<PricingPlanProps> = ({
         <p>{periodicity}</p>
       </div>
       <h5 className={styles.price}>{price}</h5>
-      {registered ? (
+      {registered? (
         periodicity == "Montly payment" ? (
-          <form
-            action={`${process.env.NEXT_PUBLIC_HOST}/api/stripe/checkout/monthly`}
+          <>
+          {/* <form
+             action={`${process.env.NEXT_PUBLIC_HOST}/api/stripe/checkout/monthly`}
             method="POST"
-          >
-            <Button type="submit">Choose this plan</Button>
-          </form>
+           >
+             <Button type="submit">Choose this plan</Button>
+         </form> */}
+          <Button>
+            <Link href="/logged/pricing/monthly" style={{color:"white"}}>Choose this plan</Link>
+          </Button>
+          
+          </>
         ) : periodicity == "Annual payment" ? (
-          <form
-            action={`${process.env.NEXT_PUBLIC_HOST}/api/stripe/checkout/annual`}
-            method="POST"
-          >
-            <Button type="submit">Choose this plan</Button>
-          </form>
+          <>
+          {/* <form
+             action={`${process.env.NEXT_PUBLIC_HOST}/api/stripe/checkout/annual`}
+             method="POST"
+           >
+             <Button type="submit">Choose this plan</Button>
+           </form> */}
+          <Button>
+            <Link href="/logged/pricing/yearly" style={{color:"white"}}>Choose this plan</Link>
+          </Button>
+          
+          </>
         ) : (
-          <Link href={"/auth/register"}>
-            <Button>Choose this plan</Button>
-          </Link>
+          <>
+          </>
         )
       ) : (
         <Link href={"/auth/register"}>

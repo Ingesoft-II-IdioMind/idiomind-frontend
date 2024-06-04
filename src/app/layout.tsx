@@ -8,6 +8,9 @@ import { Setup } from "app/components/shared/Setup";
 import { Navbars } from "app/components/shared/Navbar";
 import { Footer } from "app/components/shared/Footer";
 import { SidebarProvider } from "app/components/logged/Library/PDFViewer/SideBarProvider";
+import { useAppSelector } from "app/redux/hooks";
+import { loadScript } from "@paypal/paypal-js";
+import { useEffect } from "react";
 
 const myFont3 = Quicksand({
   subsets: ["latin"],
@@ -29,8 +32,11 @@ const myFont4 = Lexend({
 
 export const metadata: Metadata = {
   title: "IdioMind",
-  description: "Inmersive language learning",
+  description: "Idiomind transforms the language learning experience, offering our users a customizable approach that adapts to their individual needs, through immersive and effective tools",
   icons: { icon: "/appLogo.svg" },
+  keywords: ["language", "learning", "english", "spanish", "french"],
+  
+
 };
 
 export default function RootLayout({
@@ -38,6 +44,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+ 
+
   return (
     <html lang="en">
       <body

@@ -1,13 +1,12 @@
 import { PricingPlan } from "app/components/home/PricingPlan";
 import styles from "../../../styles/Pricing.module.scss";
 import { Metadata } from "next";
-
-export const metadata: Metadata = {
-	title: 'Pricing',
-	description: 'Pricing page',
-};
+import { useEffect } from "react";
+import { PayPalNamespace, loadScript } from "@paypal/paypal-js";
+import {  apiCreateOrderPaypal, apiOnApprovePaypal } from "app/services/apiPaypal";
 
 export default function Pricing() {
+
   const benefitsFree = [
     "Free Upload up to 50 documents",
     "Ilimited translations",
@@ -38,6 +37,7 @@ export default function Pricing() {
     <>
       <h1>Pricing</h1>
       <p className="ST center">Choose a subscription plan that suits your needs.</p>
+    
       <div className={styles.pricingPlansContainer}>
         <PricingPlan
           benefits={benefitsFree}

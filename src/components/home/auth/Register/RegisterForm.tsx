@@ -83,7 +83,7 @@ export default function RegisterForm() {
         <img src="/appLogo.svg" alt="IdioMind logo" />
         <h2>Sign up</h2>
       </div>
-      <Button
+      {/* <Button
         onClick={continueWithGoogle}
         haveIcon={true}
         Icon={() => (
@@ -97,7 +97,7 @@ export default function RegisterForm() {
       >
         Sign up with google
       </Button>
-      <FormDivider />
+      <FormDivider /> */}
       <form onSubmit={onSubmit}>
         <div className={styles.auth__form__names}>
           <TextField label="First name*">

@@ -185,7 +185,7 @@ export const TranslateSidebar: React.FC<NotesTranslatebarProps> = ({
             </div>
             <div className={styles.translateSidebar__section}>
               <h6 className={styles.translateSidebar__subtitle}>
-                Translation ({language})
+                Translation
               </h6>
               <div className={styles.translateSidebar__translatediv}>
                 <p>{translation}</p>

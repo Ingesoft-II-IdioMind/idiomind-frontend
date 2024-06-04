@@ -97,3 +97,22 @@
         }
     }
 }
+
+.noDeck{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    color: $primary-color;
+    width: 100%;
+    svg{
+        width: 20%;
+        fill: $primary-color;
+    }
+    h3{
+        margin-left: 3rem;
+        text-align: center;
+    }
+}

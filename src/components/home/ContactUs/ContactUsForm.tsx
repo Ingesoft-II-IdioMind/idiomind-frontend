@@ -5,6 +5,9 @@ import { TextField } from "app/components/shared/TextField";
 import styles from "./ContactUs.module.scss";
 import { Button } from "app/components/shared/Button";
 import { useForm } from "react-hook-form";
+import contactUsImage from 'public/images/contactUsImage.svg';
+import { ContactImage } from "./contactImage";
+
 
 type FormInputs = {
   name: string;
@@ -25,11 +28,7 @@ export default function ContactUsForm() {
   return (
     <div className={styles.contact}>
       <div className={styles.contact__image}>
-        <Image
-          src="images/contactUsImage.svg"
-          alt="Contact us image"
-          fill={true}
-        />
+        <ContactImage />
       </div>
       <form className={styles.contact__form}>
       <TextField label="Name">
