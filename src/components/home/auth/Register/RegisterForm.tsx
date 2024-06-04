@@ -8,11 +8,13 @@ import Image from "next/image";
 import { FormDivider } from "../FormDivider";
 import { useForm } from "react-hook-form";
 import { useState, useTransition } from "react";
-import { register as registerAction } from "app/actions/register";
 import { FormError } from "../FormError";
 import { FormSuccess } from "../FormSuccess";
 import { useRegisterMutation } from "app/redux/features/authApiSlice";
 import { Loader } from "app/components/shared/Loader";
+import { continueWithGoogle } from "app/utils";
+import { useRouter } from 'next/navigation';
+import { toast } from "react-toastify";
 
 type FormInputs = {
   first_name: string;
@@ -24,12 +26,13 @@ type FormInputs = {
 };
 
 export default function RegisterForm() {
+  const router = useRouter();
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [visiblePassword2, setVisiblePassword2] = useState(false);
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
-  const [register2,{isLoading}] = useRegisterMutation();
+  const [register2, { isLoading }] = useRegisterMutation();
 
   const {
     register,
@@ -42,31 +45,36 @@ export default function RegisterForm() {
   const confirmPassword = watch("re_Password");
 
   const onSubmit = handleSubmit((data: any) => {
-    register2({first_name: data.first_name, last_name: data.last_name, email: data.email, password: data.password, re_password: data.re_Password, terms: data.terms})
+    if (data.last_name === "") {
+      data.last_name = "none";
+    }
+    register2({
+      first_name: data.first_name,
+      last_name: data.last_name,
+      email: data.email,
+      password: data.password,
+      re_password: data.re_Password,
+    })
       .unwrap()
       .then(() => {
         setError(undefined);
-        setSuccess("We have sent you an email to confirm your account. Please check your inbox.");
+        setSuccess("You have been registered successfully.");
+        toast.success("You have been registered successfully.");
+        router.push('/auth/login');
       })
-      .catch(() =>{
+      .catch((e) => {
         setSuccess(undefined);
-        setError("There was an error while registering, please try again");
-      })
-
-
-    // startTransition(() => {
-    //   registerAction(data).then((data) => {
-    //     if (data?.error) {
-    //       console.log(data.error);
-    //       setSuccess(undefined);
-    //       setError(data.error);
-    //     }
-    //     if (data?.success) {
-    //       setError(undefined);
-    //       setSuccess(data.success);
-    //     }
-    //   });
-    // });
+        if (e.data && e.data.password) {
+          setError(e.data.password.join(" "));
+        } else if (e.data && e.data.email) {
+          setError(e.data.email.join(" "));
+        } else {
+          setError(
+            e.message ||
+              "There was an error while registering, please try again"
+          );
+        }
+      });
   });
 
   return (
@@ -75,10 +83,8 @@ export default function RegisterForm() {
         <img src="/appLogo.svg" alt="IdioMind logo" />
         <h2>Sign up</h2>
       </div>
-      <Button
-        onClick={() => {
-          console.log("Button clicked!");
-        }}
+      {/* <Button
+        onClick={continueWithGoogle}
         haveIcon={true}
         Icon={() => (
           <Image
@@ -88,8 +94,10 @@ export default function RegisterForm() {
             height={30}
           />
         )}
-      >Sign up with google</Button>
-      <FormDivider />
+      >
+        Sign up with google
+      </Button>
+      <FormDivider /> */}
       <form onSubmit={onSubmit}>
         <div className={styles.auth__form__names}>
           <TextField label="First name*">
@@ -152,7 +160,7 @@ export default function RegisterForm() {
                 message: "*Password must contain at least one number",
               },
             })}
-            placeholder="(At least 8 characters and 1 number)"
+            placeholder="(At least 8 long and 1 number)"
           />
           {!visiblePassword ? (
             <svg
@@ -234,11 +242,14 @@ export default function RegisterForm() {
         )}
         <FormError message={error} />
         <FormSuccess message={success} />
-        <Button type="submit" disabled={isLoading}> {isLoading ? <Loader color="white"/> : "Sign up"}</Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? <Loader color="white" /> : "Sign up"}
+        </Button>
       </form>
 
       <p>
-        You already have an account? <Link href={"/auth/login"}>Log in here</Link>
+        You already have an account?{" "}
+        <Link href={"/auth/login"}>Log in here</Link>
       </p>
     </div>
   );

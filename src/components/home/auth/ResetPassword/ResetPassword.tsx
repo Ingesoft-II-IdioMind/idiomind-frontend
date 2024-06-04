@@ -3,15 +3,12 @@
 import { Button } from "app/components/shared/Button";
 import styles from "../Auth.module.scss";
 import { TextField } from "app/components/shared/TextField";
-import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { useState, useTransition } from "react";
-import { useLoginMutation } from "app/redux/features/authApiSlice";
+import { useState} from "react";
+import { useResetPasswordMutation } from "app/redux/features/authApiSlice";
 import { FormSuccess } from "../FormSuccess";
-import { useAppDispatch } from "app/redux/hooks";
-import { setAuth } from "app/redux/features/authSlice";
-import { useRouter } from 'next/navigation';
 import { Loader } from "app/components/shared/Loader";
+import { FormError } from "../FormError";
 
 type FormInputs = {
   email: string;
@@ -19,12 +16,9 @@ type FormInputs = {
 };
 
 export default function ResetPasswordForm() {
-  const router = useRouter();
-  const [visiblePassword, setVisiblePassword] = useState(false);
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
-  const [login2, { isLoading }] = useLoginMutation();
-  const dispatch = useAppDispatch();
+  const [resetPassword2, { isLoading }] = useResetPasswordMutation();
 
   const {
     register,
@@ -35,18 +29,16 @@ export default function ResetPasswordForm() {
   //const router = useRouter()
 
   const onSubmit = handleSubmit((data) => {
-    login2({email: data.email, password: data.password})
-      .unwrap()
-      .then(() => {
-        dispatch(setAuth());
-        setError(undefined);
-        setSuccess("You have been logged successfully");
-        router.push('/logged');
-      })
-      .catch(() => {
-        setSuccess(undefined);
-        setError("There was an error while login, please try again");
-      });
+    resetPassword2(data.email)
+    .unwrap()
+    .then(() => {
+      setError(undefined);
+      setSuccess('Request sent, check your email for reset link');
+    })
+    .catch(() => {
+      setSuccess(undefined);
+      setError('Failed to sent request');
+    });
   });
 
   return (
@@ -76,6 +68,8 @@ export default function ResetPasswordForm() {
         {errors.email && (
           <span className={styles.errorInput}>{errors.email.message}</span>
         )}
+        <FormError message={error} />
+        <FormSuccess message={success} />
         <Button type="submit" >{isLoading ? <Loader color="white"/> : "Request password reset"}</Button>
       </form>
       <div></div>

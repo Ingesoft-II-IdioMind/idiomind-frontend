@@ -1,4 +1,5 @@
 "use client";
+
 import styles from "./Navbar.module.scss";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -6,7 +7,7 @@ import Link from 'next/link';
 import { useState } from "react";
 
 
-export const Navbar = () => {
+export default function Navbar () {
   const [menuOpen, setMenuOpen] = useState(false);
     return (
       <nav className = {styles.navbar}>

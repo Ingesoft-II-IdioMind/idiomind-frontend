@@ -34,6 +34,7 @@ const baseQueryWithReauth: BaseQueryFn<
 				);
 				if (refreshResult.data) {
 					api.dispatch(setAuth());
+
 					result = await baseQuery(args, api, extraOptions);
 				} else {
 					api.dispatch(logout());
@@ -49,8 +50,10 @@ const baseQueryWithReauth: BaseQueryFn<
 	return result;
 };
 
+
 export const apiSlice = createApi({
 	reducerPath: 'api',
 	baseQuery: baseQueryWithReauth,
 	endpoints: builder => ({}),
 });
+

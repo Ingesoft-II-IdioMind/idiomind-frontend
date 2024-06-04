@@ -35,6 +35,11 @@
       //display: block;
       //margin-left: auto;
       height: 2rem;
+      cursor: pointer;
+      &:hover {
+        fill: $secondary-color;
+        transition: ease-in-out 0.2s;
+      }
     }
   }
   &__content {
@@ -50,6 +55,10 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        div {
+          flex-direction: row;
+          align-items: center;
+        }
       }
     }
     div{

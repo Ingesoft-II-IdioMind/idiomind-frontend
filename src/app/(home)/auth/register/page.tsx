@@ -8,7 +8,6 @@ export const metadata: Metadata = {
 	description: 'register page',
 };
 
-
 export default function Register() {
     return (
       <div className={styles.auth}>

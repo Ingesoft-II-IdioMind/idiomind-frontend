@@ -17,6 +17,7 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
+        animation: slideInFromLeft 2s ease-in-out;
         p{
             color: $primary-color;
             font-size: 24px;
@@ -168,3 +169,12 @@
         }
     }
 }
+
+@keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }

@@ -6,16 +6,17 @@ import styles from "../Auth.module.scss";
 import { TextField } from "app/components/shared/TextField";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { FormDivider } from "../FormDivider";
 import { FormError } from "../FormError";
-import { login } from "app/actions/login";
 import { useLoginMutation } from "app/redux/features/authApiSlice";
 import { FormSuccess } from "../FormSuccess";
 import { useAppDispatch } from "app/redux/hooks";
 import { setAuth } from "app/redux/features/authSlice";
 import { useRouter } from 'next/navigation';
 import { Loader } from "app/components/shared/Loader";
+import { toast } from "react-toastify";
+import { continueWithGoogle } from "app/utils";
 
 type FormInputs = {
   email: string;
@@ -29,6 +30,7 @@ export default function LoginForm() {
   const [success, setSuccess] = useState<string | undefined>("");
   const [login2, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
+  
 
   const {
     register,
@@ -36,20 +38,19 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm<FormInputs>();
 
-  //const router = useRouter()
-
   const onSubmit = handleSubmit((data) => {
     login2({email: data.email, password: data.password})
       .unwrap()
       .then(() => {
-        dispatch(setAuth());
         setError(undefined);
+        toast.success('Logged in');
+        dispatch(setAuth());
         setSuccess("You have been logged successfully");
         router.push('/logged');
       })
-      .catch(() => {
+      .catch((e) => {
         setSuccess(undefined);
-        setError("There was an error while login, please try again");
+        setError(e.data.detail || "There was an error while login, please try again");
       });
   });
 
@@ -125,7 +126,7 @@ export default function LoginForm() {
           <Link href={"/auth/register"}>Register here</Link>
         </p>
       </form>
-      <FormDivider />
+      {/* <FormDivider />
       <Button
         haveIcon={true}
         Icon={() => (
@@ -136,7 +137,10 @@ export default function LoginForm() {
             height={25}
           />
         )}
-      >Log in with google</Button>
+        onClick={continueWithGoogle}
+      >
+      Log in with Google 
+    </Button> */}
       <div></div>
     </div>
   );

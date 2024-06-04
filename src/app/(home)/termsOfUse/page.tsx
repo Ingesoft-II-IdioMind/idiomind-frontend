@@ -1,5 +1,12 @@
 import styles from "../../../styles/TermsOfUse.module.scss";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: 'Terms of Use',
+	description: 'Terms of Use page',
+};
+
 export default function TermsOfUse() {
   return (
     <>

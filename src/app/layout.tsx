@@ -3,7 +3,11 @@ import type { Metadata } from "next";
 import { Lexend, Quicksand, Rubik } from "next/font/google";
 import "app/styles/globals.scss";
 import { SmoothScrolling } from "app/components/shared/Scroller";
-import Provider from "../redux/provider";
+import Provider from "app/redux/provider";
+import { Setup } from "app/components/shared/Setup";
+import { Navbars } from "app/components/shared/Navbar";
+import { Footer } from "app/components/shared/Footer";
+import { SidebarProvider } from "app/components/logged/Library/PDFViewer/SideBarProvider";
 import { useAppSelector } from "app/redux/hooks";
 import { loadScript } from "@paypal/paypal-js";
 import { useEffect } from "react";
@@ -28,8 +32,11 @@ const myFont4 = Lexend({
 
 export const metadata: Metadata = {
   title: "IdioMind",
-  description: "Inmersive language learning",
+  description: "Idiomind transforms the language learning experience, offering our users a customizable approach that adapts to their individual needs, through immersive and effective tools",
   icons: { icon: "/appLogo.svg" },
+  keywords: ["language", "learning", "english", "spanish", "french"],
+  
+
 };
 
 export default function RootLayout({
@@ -44,12 +51,15 @@ export default function RootLayout({
       <body
         className={`${myFont2.variable} ${myFont3.variable} ${myFont4.variable}`}
       >
-        <SmoothScrolling>
-          <Provider>
-
+        {/* <SmoothScrolling> */}
+        <Provider>
+        <SidebarProvider>
+          <Setup />
+          {/* <Navbars /> */}
           {children}
-          </Provider>
-        </SmoothScrolling>
+          </SidebarProvider>
+        </Provider>
+        {/* </SmoothScrolling> */}
       </body>
     </html>
   );
