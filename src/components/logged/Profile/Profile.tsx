@@ -20,6 +20,9 @@ import Cookies from "js-cookie";
 import { FormError } from "app/components/home/auth/FormError";
 import { FormSuccess } from "app/components/home/auth/FormSuccess";
 
+import StripeComponent from "app/components/shared/Subscription/StripeComponent";
+import Link from "next/link";
+
 export default function ProfileContent() {
   const router = useRouter();
   const { data: user, isLoading, isFetching } = useRetrieveUserQuery();
@@ -42,6 +45,7 @@ export default function ProfileContent() {
     useChangePasswordMutation();
 
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    console.log(user);
     setPassword(event.target.value);
   };
 
@@ -106,6 +110,7 @@ export default function ProfileContent() {
     <div className={styles.profile}>
       <ProfileImage />
       <div className={styles.profileContent}>
+      {/* <StripeComponent /> */}
         <ul className={styles.userData}>
           <li>
             <TextField label="First Name">
@@ -124,20 +129,27 @@ export default function ProfileContent() {
           </li>
           <li>
             <TextField label="Subscription">
-              <input type="text" disabled={true} value="Free version" />
+              <input type="text" disabled={true} value="Free explorer" />
+            </TextField>
+          </li>
+          <li>
+            <TextField label="Mother lenguage">
+              <input type="text" disabled={true} value="English" />
             </TextField>
           </li>
         </ul>
         <ul className={styles.userOptions}>
           {/* <li>Edit names</li> */}
-          <li>Change subscription</li>
+          
           <li
             onClick={() => {
               setIsEditPasswordOpen(true);
+              console.log(user);
             }}
           >
             Change password
           </li>
+          <li><Link href="/logged/pricing" className={styles.link}>Change subscription</Link></li>
           <li
             onClick={() => {
               setIsDeleteAccountOpen(true);

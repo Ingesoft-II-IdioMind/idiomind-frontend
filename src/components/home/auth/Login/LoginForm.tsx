@@ -126,7 +126,7 @@ export default function LoginForm() {
           <Link href={"/auth/register"}>Register here</Link>
         </p>
       </form>
-      <FormDivider />
+      {/* <FormDivider />
       <Button
         haveIcon={true}
         Icon={() => (
@@ -140,7 +140,7 @@ export default function LoginForm() {
         onClick={continueWithGoogle}
       >
       Log in with Google 
-    </Button>
+    </Button> */}
       <div></div>
     </div>
   );

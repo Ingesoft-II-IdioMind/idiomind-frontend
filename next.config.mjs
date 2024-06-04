@@ -18,6 +18,11 @@ const nextConfig = {
         config.externals.push({ canvas: 'commonjs canvas' })
         return config
       },
+      images: {
+        domains: ['storage.googleapis.com','res.cloudinary.com'],
+      },
+      
 };
+
 
 export default nextConfig;

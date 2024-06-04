@@ -1,1 +1,3 @@
-export {PDFViewer} from './PDFViewer';
+import { PdfViewer } from "react-pdf-selection";
+
+export {PdfViewer};
